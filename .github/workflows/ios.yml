@@ -6,12 +6,23 @@ name: iOS simulator build & screenshots
 # Manual trigger only: macOS minutes are expensive on private repositories.
 on:
   workflow_dispatch:
+    inputs:
+      commit_screenshots:
+        description: 'Commit the captured screenshots to docs/previews/screenshots on this branch'
+        type: boolean
+        default: false
+      screenshot_prefix:
+        description: 'File name prefix, e.g. 2026-11-01-milestone-01'
+        type: string
+        default: '2026-11-01-milestone-01'
 
 jobs:
   ios:
     name: Simulator build + Maestro screenshots
     runs-on: macos-latest
     timeout-minutes: 90
+    permissions:
+      contents: write
     env:
       APP_VARIANT: preview
     steps:
@@ -55,6 +66,25 @@ jobs:
       - name: Fallback screenshot
         if: failure()
         run: xcrun simctl io "$SIM_UDID" screenshot screenshots/phase1-ios-fallback.png || true
+      - name: Commit screenshots to the branch (manual runs only)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.commit_screenshots }}
+        env:
+          PREFIX: ${{ inputs.screenshot_prefix }}
+          PLATFORM: iOS simulator
+        run: |
+          set -e
+          mkdir -p docs/previews/screenshots
+          for f in screenshots/phase1-*.png; do
+            [ -e "$f" ] || continue
+            base=$(basename "$f" .png); base=${base#phase1-}
+            cp "$f" "docs/previews/screenshots/${PREFIX}-${base}.png"
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/previews/screenshots
+          if git diff --cached --quiet; then echo "No screenshots to commit"; exit 0; fi
+          git commit -m "docs: add ${PLATFORM} screenshots from CI run ${GITHUB_RUN_ID}"
+          for i in 1 2 3; do git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && break; sleep 5; done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
