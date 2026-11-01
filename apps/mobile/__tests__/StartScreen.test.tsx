@@ -17,8 +17,8 @@ describe('StartScreen', () => {
 
   it('navigates to the system check and the benchmark', async () => {
     await render(<StartScreen />);
-    fireEvent.press(screen.getByTestId('start-system-check'));
-    fireEvent.press(screen.getByTestId('start-benchmark'));
+    await fireEvent.press(screen.getByTestId('start-system-check'));
+    await fireEvent.press(screen.getByTestId('start-benchmark'));
     expect(mockPush.mock.calls).toEqual([['/system-check'], ['/dev/stress']]);
   });
 });

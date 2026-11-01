@@ -5,7 +5,16 @@ Produkt: [PROJECT_BRIEF.md](PROJECT_BRIEF.md) · Architektur: [docs/architecture
 
 ## Aktueller Stand
 
-Phase 0 (Analyse & Konzept) abgeschlossen. **Keine größeren Implementierungen ohne Freigabe des Product Owners** für die jeweils nächste Phase (siehe [docs/product/roadmap.md](docs/product/roadmap.md)).
+Phase 1 (Foundation) umgesetzt, **wartet auf Review**. Phase 2 erst nach Freigabe des Product Owners (siehe [docs/product/roadmap.md](docs/product/roadmap.md)).
+
+PO-Vorgaben aus der Freigabe von Phase 1 (dauerhaft gültig):
+
+1. Originalbilder nie destruktiv verändern – Engine nutzt nur abgeleitete Arbeitsversionen ([data-model.md](docs/architecture/data-model.md)).
+2. Engine-Performance früh mit 256 Teilen auf echten Geräten messen (256-Teile-Test, [testing.md](docs/development/testing.md)).
+3. Kompatibilität pnpm / Expo Router / native Module zuerst prüfen (erledigt, [setup.md §5](docs/development/setup.md)).
+4. Designsystem zentral halten – keine individuellen Farb-/Abstandswerte in Screens.
+5. Android und iOS immer parallel berücksichtigen (CI baut beide).
+6. Kein Force-Push, keine Änderungen an der Remote-Konfiguration.
 
 ## Arbeitsweise
 
@@ -19,6 +28,10 @@ Phase 0 (Analyse & Konzept) abgeschlossen. **Keine größeren Implementierungen 
 - `packages/puzzle-engine`, `image-processing`, `game-progression`: **reines TypeScript**, keine Imports von `react`, `react-native`, `expo-*`. Deterministisch, seed-basiert, vollständig getestet.
 - `apps/mobile/app/` (Expo Router) enthält nur dünne Routen; Logik in `features/*`, Expo-Zugriffe in `services/*`, Persistenz in `storage/*`.
 - Persistente Daten → SQLite. Zustand nur für flüchtigen UI-/Session-State.
+- App-Imports **ohne Dateiendung** (Metro löst sonst `*.web.ts`/`*.native.ts` nicht auf). Pfad-Alias `@/` = `apps/mobile/`.
+- Routen in `app/` sind nur Re-Exports von Screens aus `features/*`.
+- Skia nur lazy laden (`React.lazy` + `loadSkia()`), nie direkt in Routen importieren.
+- Reanimated Shared Values in Komponenten via `.get()`/`.set()`; in Worklets `.value` erlaubt.
 - Neue Abhängigkeiten nur mit Begründung (in PR/Commit + ggf. `docs/security/privacy.md` SDK-Liste). Expo/RN-Pakete nur via `npx expo install`.
 - Keine leeren Module/Ordner „für später“.
 
@@ -32,7 +45,7 @@ Phase 0 (Analyse & Konzept) abgeschlossen. **Keine größeren Implementierungen 
 
 ## Designregeln
 
-- Nur Tokens aus `packages/ui/src/tokens.ts` – **keine Hex-Werte, Radien oder Schriftgrößen direkt in Screens**.
+- Nur Tokens aus `packages/ui/src/tokens.ts` – **keine Hex-Werte, Radien oder Schriftgrößen direkt in Screens**. ESLint verbietet Roh-Farben in `app/` und `features/`; Transparenzen über `withAlpha(palette.x, a)`.
 - Nur Komponenten aus `packages/ui` für Buttons, Karten, Chips, Modals usw.; keine screen-eigenen Varianten.
 - Maskottchen ausschließlich über `<Mascot emotion=… />` ([Guidelines](docs/design/mascot-guidelines.md)). Nie die Referenzfigur oder fremde Marken nachbilden.
 - Touch-Ziele ≥ 56 dp, CTA 64 dp, Kontrast WCAG AA, Reduced Motion respektieren.
@@ -62,6 +75,12 @@ Phase 0 (Analyse & Konzept) abgeschlossen. **Keine größeren Implementierungen 
 ```bash
 pnpm install
 pnpm typecheck
+pnpm lint
+pnpm format:check
 pnpm test
+pnpm --filter @puzzle-studio/mobile export:native   # Metro-Bundle Android + iOS prüfen
 pnpm design:preview   # Konzept-Mockups neu rendern
+pnpm brand:assets     # Interims-Icon/Splash/Beispielbild neu rendern
 ```
+
+Native Builds & echte Screenshots: GitHub Actions `android.yml` (bei Push) und `ios.yml` (manuell). Details: [docs/development/setup.md](docs/development/setup.md).

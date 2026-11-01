@@ -1,6 +1,6 @@
 # Architektur – Überblick
 
-Status: **Vorschlag (Phase 0)** – zur Freigabe. Implementiert ist bisher nur `packages/ui` (Design-Tokens).
+Status: **Freigegeben (PO, nach Phase 0)** · **umgesetzt bis Phase 1**: Monorepo, `apps/mobile` (Expo SDK 58), `packages/ui` (Tokens + Basiskomponenten), Tooling, CI. Engine-, Bild- und Progressions-Pakete folgen in ihren Phasen.
 
 ## 1. Leitprinzipien
 
@@ -8,40 +8,45 @@ Local-First · Offline-First · Modular · Type-Safe · Engine unabhängig von R
 
 ## 2. Stack (Stand npm 2026-11-01)
 
-| Bereich          | Wahl                                                                                           | Bemerkung                                                                        |
-| ---------------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| Framework        | Expo SDK 58 (React Native 0.88, New Architecture)                                              | Versionen aller `expo-*`/RN-Pakete ausschließlich über `npx expo install` setzen |
-| Sprache          | TypeScript 5.9, `strict` + `noUncheckedIndexedAccess` + `exactOptionalPropertyTypes`           | `tsconfig.base.json`                                                             |
-| Navigation       | Expo Router (Datei-basiert)                                                                    | Typed Routes aktiv                                                               |
-| Rendering Puzzle | `@shopify/react-native-skia`                                                                   | Ein Canvas für Brett + alle Teile, Bild-Shader pro Teil                          |
-| Gesten           | `react-native-gesture-handler`                                                                 | ein Pan-Gesture-Handler auf dem Canvas, Hit-Test in der Engine                   |
-| Animation        | `react-native-reanimated` 4                                                                    | Shared Values für Drag/Snap, UI-Thread                                           |
-| Datenbank        | `expo-sqlite`                                                                                  | Migrations versioniert in `apps/mobile/storage/migrations`                       |
-| Bilder           | `expo-image-picker` (System-Picker), `expo-image-manipulator`, `expo-file-system`              | keine Medienbibliotheks-Vollberechtigung                                         |
-| State            | `zustand` (nur für UI-Session-State)                                                           | Persistente Daten = SQLite, nicht Zustand                                        |
-| Tests            | Vitest (reine TS-Pakete), Jest + `jest-expo` + RNTL (App), Maestro (E2E/UI-Flows, Screenshots) |                                                                                  |
-| Build            | EAS Build (iOS Cloud, Android)                                                                 | Windows-Entwicklung, kein lokales Xcode                                          |
-| Package Manager  | pnpm 10 Workspaces                                                                             | `node-linker=hoisted` für Metro-Kompatibilität (wird beim Expo-Setup geprüft)    |
-| Cloud-Backup     | Supabase – **nicht im MVP**                                                                    | nur Schnittstelle vorbereitet                                                    |
+| Bereich          | Wahl                                                                                                       | Bemerkung                                                                        |
+| ---------------- | ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Framework        | Expo SDK 58 (React Native 0.88, New Architecture)                                                          | Versionen aller `expo-*`/RN-Pakete ausschließlich über `npx expo install` setzen |
+| Sprache          | TypeScript 6.0 (Expo-SDK-58-Vorgabe), `strict` + `noUncheckedIndexedAccess` + `exactOptionalPropertyTypes` | `tsconfig.base.json`                                                             |
+| Navigation       | Expo Router (Datei-basiert)                                                                                | Typed Routes aktiv                                                               |
+| Rendering Puzzle | `@shopify/react-native-skia`                                                                               | Ein Canvas für Brett + alle Teile, Bild-Shader pro Teil                          |
+| Gesten           | `react-native-gesture-handler`                                                                             | ein Pan-Gesture-Handler auf dem Canvas, Hit-Test in der Engine                   |
+| Animation        | `react-native-reanimated` 4.7 + `react-native-worklets` 0.13                                               | Shared Values für Drag/Snap, UI-Thread                                           |
+| Datenbank        | `expo-sqlite`                                                                                              | Migrations versioniert in `apps/mobile/storage/migrations`                       |
+| Bilder           | `expo-image-picker` (System-Picker), `expo-image-manipulator`, `expo-file-system`                          | keine Medienbibliotheks-Vollberechtigung                                         |
+| State            | `zustand` (nur für UI-Session-State)                                                                       | Persistente Daten = SQLite, nicht Zustand                                        |
+| Tests            | Vitest (reine TS-Pakete), Jest + `jest-expo` + RNTL (App), Maestro (E2E/UI-Flows, Screenshots)             |                                                                                  |
+| Build            | EAS Build (iOS Cloud, Android)                                                                             | Windows-Entwicklung, kein lokales Xcode                                          |
+| Package Manager  | pnpm 10 Workspaces                                                                                         | `node-linker=hoisted` – in Phase 1 geprüft und festgelegt (siehe setup.md §5)    |
+| Cloud-Backup     | Supabase – **nicht im MVP**                                                                                | nur Schnittstelle vorbereitet                                                    |
 
 ## 3. Monorepo
 
 ```text
 puzzle-studio/
-├── apps/mobile/                 Expo-App (Phase 1)
-│   ├── app/                     Expo-Router-Routen (dünn: nur Komposition)
+├── apps/mobile/                 ✅ Expo-App (Phase 1)
+│   ├── app/                     Expo-Router-Routen (dünn: nur Re-Exports der Feature-Screens)
 │   ├── features/<feature>/      Screens, Hooks, feature-lokale Komponenten
-│   │   onboarding · home · creator · puzzle · collection · achievements · parent
-│   ├── services/                Adapter zu Expo-APIs (Picker, FS, Haptics, Audio)
-│   ├── storage/                 SQLite-Zugriff, Repositories, Migrations
-│   └── store/                   Zustand-Stores (Session/UI)
+│   │   ✅ foundation · system-check · benchmark (Dev-Werkzeug, 256-Teile-Test)
+│   │   ⏳ onboarding · home · creator · puzzle · collection · achievements · parent
+│   ├── services/                Plattform-Adapter (✅ skiaLoader / .web)
+│   ├── i18n/                    ✅ typisierte Texte (de)
+│   ├── assets/                  ✅ brand/ (Interims-Icon, Splash), samples/ (eigene Beispielbilder)
+│   ├── .maestro/                ✅ E2E-/Screenshot-Flows
+│   ├── storage/ · store/        ⏳ Phase 3/5 (SQLite-Repositories, Zustand)
+│   ├── app.config.ts · eas.json ✅ Varianten development/preview/production
 ├── packages/
-│   ├── ui/                      ✅ Tokens · (Phase 2) Komponenten, Mascot, Dekor
-│   ├── puzzle-engine/           (Phase 4) reines TS: Grid, Geometrie, Hit-Test, Snap, Serialisierung
-│   ├── image-processing/        (Phase 3) reines TS: Crop-Mathe, Größen, Seitenverhältnisse
-│   ├── game-progression/        (Phase 6) reines TS: Achievements, Belohnungen
-│   └── shared/                  (bei Bedarf) gemeinsame Typen/IDs/Result-Typen
-├── scripts/design-preview/      ✅ Konzept-Mockup-Renderer
+│   ├── ui/                      ✅ Tokens · Text · PrimaryButton · SecondaryButton · Surface · Screen · StatusPill
+│   ├── puzzle-engine/           ⏳ Phase 4 – reines TS
+│   ├── image-processing/        ⏳ Phase 3 – reines TS
+│   ├── game-progression/        ⏳ Phase 6 – reines TS
+│   └── shared/                  bei Bedarf
+├── scripts/design-preview/      ✅ Mockup-, Icon- und Beispielbild-Renderer
+├── .github/workflows/           ✅ ci.yml · android.yml · ios.yml
 └── docs/
 ```
 
@@ -57,7 +62,13 @@ apps/mobile ──► packages/ui ──► (react-native, react-native-svg / sk
      └──► packages/game-progression  (keine RN-Imports!)
 ```
 
-Pakete ohne UI dürfen weder `react-native` noch `expo-*` importieren – wird per ESLint `no-restricted-imports` erzwungen und durch Vitest in Node geprüft.
+Pakete ohne UI dürfen weder `react-native` noch `expo-*` importieren – wird per ESLint `no-restricted-imports` erzwungen (heute für `tokens.ts`, ab Phase 3/4 für die reinen Pakete) und durch Vitest in Node geprüft.
+
+### Plattform-Dateien & Imports
+
+- Plattformspezifisches Verhalten über `*.web.ts` / `*.native.ts`-Dateien (z. B. `services/skiaLoader.web.ts`).
+- App-Imports **ohne Dateiendung** – sonst ignoriert Metro die Plattform-Varianten.
+- Skia-Module werden **lazy** geladen (`React.lazy` nach `loadSkia()`), damit Web (CanvasKit/WASM) und Native denselben Code nutzen.
 
 ## 4. Laufzeit-Architektur
 
@@ -71,6 +82,13 @@ Pakete ohne UI dürfen weder `react-native` noch `expo-*` importieren – wird p
    ├─► Service (services/)     ← Expo-APIs (Picker, FS, Manipulator)
    └─► Engine (packages/*)     ← reine Logik, deterministisch, getestet
 ```
+
+### Rendering-Strategie (im 256-Teile-Test validiert)
+
+- Ruhende Teile → **eine** gecachte `SkPicture` (neu aufgezeichnet nur bei Drag-Start/Drop).
+- Gezogenes Teil → live aus Reanimated Shared Values auf dem UI-Thread.
+- Hit-Test als Worklet auf dem UI-Thread (Bounding-Box + z-Order; in Phase 4 + Punkt-in-Pfad).
+- Offener Punkt für Phase 5: Picture-Neuaufzeichnung bei 256 Teilen auf echten Geräten messen; Alternative: Teile in Kacheln/Ebenen gruppieren.
 
 ### Gameplay-Datenfluss
 

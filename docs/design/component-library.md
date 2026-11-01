@@ -1,6 +1,6 @@
 # Component Library (Plan)
 
-Status: **geplant für Phase 2**. Alle Komponenten liegen in `packages/ui` (plattformneutral, nur React Native + `react-native-svg`/Skia) und verwenden ausschließlich Tokens aus `packages/ui/src/tokens.ts`. In den Konzept-Mockups (`docs/design/concept/`) sind sie bereits als CSS-Klassen vorgeformt.
+Status: **Basis umgesetzt (Phase 1)**: `Text`, `PrimaryButton`, `SecondaryButton`, `Surface`, `Screen`, `StatusPill` sowie Helfer `shadowStyle`, `textStyle`, `withAlpha`. Alle übrigen Komponenten folgen in Phase 2. Alle Komponenten liegen in `packages/ui` (plattformneutral, nur React Native + `react-native-svg`/Skia) und verwenden ausschließlich Tokens aus `packages/ui/src/tokens.ts`. In den Konzept-Mockups (`docs/design/concept/`) sind sie bereits als CSS-Klassen vorgeformt.
 
 | Komponente             | Zweck                                           | Wichtige Props                                                                     | Mockup-Vorbild                   |
 | ---------------------- | ----------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------- |

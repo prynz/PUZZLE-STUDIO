@@ -28,6 +28,7 @@ jobs:
       - run: pnpm format:check
       - run: pnpm test
       - name: Expo doctor (dependency compatibility)
-        run: pnpm --filter @puzzle-studio/mobile exec expo-doctor
+        working-directory: apps/mobile
+        run: pnpm doctor
       - name: Metro bundle for Android + iOS (Hermes)
         run: pnpm --filter @puzzle-studio/mobile export:native

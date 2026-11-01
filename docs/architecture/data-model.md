@@ -1,16 +1,22 @@
 # Datenmodell (Entwurf)
 
-Status: **Entwurf** – wird mit Phase 3/5 als SQLite-Migration `001_initial.sql` umgesetzt und hier aktualisiert.
+Status: **Entwurf** (aktualisiert Phase 1: nicht-destruktiver Bild-Workflow) – wird mit Phase 3/5 als SQLite-Migration `001_initial.sql` umgesetzt und hier aktualisiert.
 
-## Speicherorte
+## Speicherorte – nicht-destruktiver Bild-Workflow
 
-| Daten                                                                | Ort                                             | Hinweis                  |
-| -------------------------------------------------------------------- | ----------------------------------------------- | ------------------------ |
-| Original (zugeschnitten, max. 2048 px Kante, JPEG q≈0,85, ohne EXIF) | `documentDirectory/images/<imageId>/source.jpg` | wird nie geloggt         |
-| Spielbild (max. 1536 px)                                             | `…/<imageId>/play.jpg`                          | Skia-Textur              |
-| Thumbnail (512 px)                                                   | `…/<imageId>/thumb.jpg`                         | Sammlung/Home            |
-| Metadaten, Fortschritt, Einstellungen                                | SQLite `puzzle-studio.db`                       |                          |
-| Temporäre Picker-/Crop-Dateien                                       | `cacheDirectory`                                | nach Erstellung gelöscht |
+**Grundsatz (PO-Vorgabe Phase 1):** Das Original wird **nie überschrieben oder verändert**. Zuschnitt, Drehung und Skalierung sind **Parameter**, keine Bearbeitung des Originals. Die Puzzle-Engine arbeitet ausschließlich mit **abgeleiteten Arbeitsversionen**, die jederzeit aus Original + Parametern neu erzeugt werden können.
+
+| Daten                                                                                                         | Ort                                                 | Hinweis                                                  |
+| ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- | -------------------------------------------------------- |
+| **Original** – bytegleiche Kopie dessen, was Picker/Kamera liefern (Galerie-Foto des Geräts bleibt unberührt) | `documentDirectory/images/<imageId>/original.<ext>` | read-only behandelt, nie geloggt, verlässt das Gerät nie |
+| **Arbeitsversion** – Zuschnitt/Drehung angewendet, max. 1536 px, JPEG q≈0,85, **ohne EXIF/GPS**               | `…/<imageId>/work-<transformHash>.jpg`              | Skia-Textur der Engine; Cache, jederzeit neu erzeugbar   |
+| **Thumbnail** – 512 px, ohne EXIF                                                                             | `…/<imageId>/thumb-<transformHash>.jpg`             | Sammlung/Home; Cache                                     |
+| Metadaten, Zuschnitt-Parameter, Fortschritt, Einstellungen                                                    | SQLite `puzzle-studio.db`                           |                                                          |
+| Temporäre Picker-/Crop-Dateien                                                                                | `cacheDirectory`                                    | nach Übernahme gelöscht                                  |
+
+`transformHash` = Hash aus (Crop-Rechteck, Drehung, Zielgröße, Pipeline-Version). Ändert sich ein Parameter, entsteht eine neue Arbeitsversion; die alte wird aufgeräumt, wenn kein Puzzle sie mehr nutzt. Mehrere Puzzles aus demselben Foto (z. B. 9 und 64 Teile, anderer Ausschnitt) teilen sich ein Original.
+
+Speicherplatz: Originale können groß sein (12–48 MP). Der Elternbereich zeigt den Verbrauch und erlaubt „Originale nach Fertigstellung entfernen“ (dann bleibt nur die Arbeitsversion; Neu-Zuschnitt nicht mehr möglich – wird vorher erklärt).
 
 ## Tabellen
 
@@ -28,6 +34,12 @@ CREATE TABLE puzzle (
   id            TEXT PRIMARY KEY,
   image_id      TEXT NOT NULL REFERENCES image(id) ON DELETE CASCADE,
   title         TEXT,                      -- optional, lokal
+  crop_x        REAL NOT NULL,             -- Zuschnitt relativ zum Original (0..1), nicht-destruktiv
+  crop_y        REAL NOT NULL,
+  crop_w        REAL NOT NULL,
+  crop_h        REAL NOT NULL,
+  rotation      INTEGER NOT NULL DEFAULT 0,-- 0 | 90 | 180 | 270
+  work_file     TEXT NOT NULL,             -- abgeleitete Arbeitsversion (Cache, neu erzeugbar)
   rows          INTEGER NOT NULL,
   cols          INTEGER NOT NULL,
   shape         TEXT NOT NULL,             -- 'classic' | 'square'
@@ -70,7 +82,7 @@ Achievement-Definitionen sind **Code** (`packages/game-progression`), nicht Date
 
 ## Löschen
 
-`deletePuzzle(id)`: Transaktion löscht `puzzle` (+ `puzzle_state` per Cascade); falls das Bild von keinem anderen Puzzle genutzt wird, werden `image`-Zeile **und** der Ordner `images/<imageId>/` entfernt. „Alle lokalen Daten löschen“ (Elternbereich) entfernt DB-Datei und `images/` vollständig.
+`deletePuzzle(id)`: Transaktion löscht `puzzle` (+ `puzzle_state` per Cascade) und nicht mehr genutzte Arbeitsversionen; falls das Original von keinem anderen Puzzle genutzt wird, werden `image`-Zeile **und** der Ordner `images/<imageId>/` (inkl. Original) entfernt. Löschen ist die einzige Operation, die ein Original entfernt – und nur auf ausdrückliche Aktion hin. „Alle lokalen Daten löschen“ (Elternbereich) entfernt DB-Datei und `images/` vollständig.
 
 ## Settings-Keys (MVP)
 

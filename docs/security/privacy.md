@@ -1,6 +1,6 @@
 # Datenschutz & Kindersicherheit
 
-Status: **Konzept** – wird mit jeder Phase fortgeschrieben. Dies ist keine Rechtsberatung; vor Veröffentlichung sind DSGVO (inkl. Art. 8), Apple App Store Kids Category (Guideline 1.3, 5.1.4) und Google Play Families Policy fachlich/rechtlich zu prüfen.
+Status: **Konzept, Stand Phase 1** (Berechtigungen und SDK-Liste sind umgesetzt bzw. aktuell) – wird mit jeder Phase fortgeschrieben. Dies ist keine Rechtsberatung; vor Veröffentlichung sind DSGVO (inkl. Art. 8), Apple App Store Kids Category (Guideline 1.3, 5.1.4) und Google Play Families Policy fachlich/rechtlich zu prüfen.
 
 ## Grundsätze (verbindlich)
 
@@ -24,11 +24,13 @@ Keine Registrierung · keine Werbung · keine Analytics/Tracking-SDKs · kein St
 | Android 13+                                     | **keine** Medienberechtigung – Android Photo Picker |                                                                     |                |
 | Mikrofon, Standort, Kontakte, Netzwerk-Tracking | **nie**                                             |                                                                     |                |
 
-`expo-image-picker` wird so konfiguriert, dass keine unnötigen Berechtigungen (z. B. `RECORD_AUDIO`, `READ_MEDIA_*`) im Manifest landen – wird in Phase 3 per Manifest-Prüfung im CI verifiziert.
+Umsetzung (Phase 1): `expo-image-picker` mit `photosPermission: false` und `microphonePermission: false`; in `app.config.ts` sind `RECORD_AUDIO`, `READ/WRITE_EXTERNAL_STORAGE`, `READ_MEDIA_*` und Standort als `blockedPermissions` gesetzt. Der Android-CI-Workflow prüft das **gemergte Manifest** und schlägt fehl, falls eine dieser Berechtigungen auftaucht; die tatsächliche Berechtigungsliste liegt jedem Build als `permissions.txt` bei. Ein Unit-Test sichert die Konfiguration ab.
 
 ## Bildverarbeitung
 
-- EXIF-Orientierung wird angewendet, **EXIF/GPS-Metadaten werden verworfen** (Neu-Encoding via Image Manipulator).
+- **Original bleibt unverändert** (nicht-destruktiv, siehe [data-model.md](../architecture/data-model.md)). Es liegt ausschließlich in der App-Sandbox, wird nie hochgeladen, exportiert oder geloggt. Es kann – wie vom Gerät geliefert – EXIF-/GPS-Metadaten enthalten; diese werden nie ausgelesen oder angezeigt.
+- Alle **Arbeitsversionen und Thumbnails** werden neu encodiert: EXIF-Orientierung wird angewendet, **EXIF/GPS-Metadaten werden verworfen**. Nur Arbeitsversionen werden von Engine und UI verwendet.
+- Optionaler späterer Export (Post-MVP) nutzt ausschließlich metadatenfreie Arbeitsversionen.
 - Interne Dateinamen sind UUIDs; Originaldateinamen werden nicht gespeichert.
 - **Logging-Regel:** Keine Bildinhalte, Pfade mit Nutzerbezug, EXIF-Daten oder Dateinamen in Logs. Logger-Wrapper erlaubt nur IDs und Fehlercodes.
 
@@ -46,6 +48,17 @@ Einzelnes Puzzle (inkl. ungenutztem Bild) · alle Puzzles · „Alle lokalen Dat
 
 Zufällige Rechenaufgabe in Worten bzw. „Halte die Taste 3 Sekunden gedrückt und tippe auf die Zahl …“, ohne visuelle Hinweise für Leseanfänger. **Die Schranke ersetzt keine rechtlich erforderliche Einwilligung.**
 
-## SDK-Liste
+## SDK-Liste (Stand Phase 1, `apps/mobile/package.json`)
 
-Wird in Phase 1 mit dem tatsächlichen `package.json` gefüllt (nur Expo-Module + Skia/Reanimated/Gesture Handler/Zustand; keine Netzwerk-SDKs).
+| Paket                                                                                                              | Zweck                                                                       | Netzwerk / Daten nach außen    |
+| ------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------- | ------------------------------ |
+| `expo`, `expo-router`, `expo-linking`, `expo-constants`, `expo-status-bar`, `expo-system-ui`, `expo-splash-screen` | App-Grundgerüst, Navigation                                                 | nein                           |
+| `expo-dev-client`                                                                                                  | Nur Development-Build (Verbindung zum lokalen Metro-Server des Entwicklers) | nur im Dev-Build, lokal        |
+| `expo-font`, `@expo-google-fonts/nunito`                                                                           | Schrift, **in der App gebündelt**                                           | nein (kein Abruf zur Laufzeit) |
+| `expo-image`, `expo-linear-gradient`, `react-native-svg`                                                           | Darstellung                                                                 | nein                           |
+| `expo-image-picker`, `expo-image-manipulator`, `expo-file-system`                                                  | Bildauswahl, -verarbeitung, Ablage                                          | nein                           |
+| `expo-sqlite`                                                                                                      | Lokale Datenbank                                                            | nein                           |
+| `@shopify/react-native-skia`, `react-native-reanimated`, `react-native-worklets`, `react-native-gesture-handler`   | Puzzle-Rendering, Animation, Gesten                                         | nein                           |
+| `react-native-safe-area-context`, `react-native-screens`, `react-native-web`, `react-dom`                          | Layout / Web-Vorschau                                                       | nein                           |
+
+Keine Analytics-, Werbe-, Crash-Reporting-, Login- oder Cloud-SDKs. Neue Abhängigkeiten werden hier vor dem Merge eingetragen.

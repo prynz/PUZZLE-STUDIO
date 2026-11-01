@@ -2,36 +2,46 @@
 
 Kindgerechte Puzzle-App für iOS und Android: aus eigenen Fotos werden Puzzles – erstellen, spielen, sammeln, entdecken.
 
-![Konzept-Mockup (keine App-Screenshots)](docs/design/concept/concept-mockup-overview.png)
-<sub>Konzept-Mockup – noch keine implementierte App.</sub>
-
 ## Projektstand
 
-**Phase 0 – Analyse & Konzept abgeschlossen.** Vorhanden: Design-Tokens (`packages/ui`), Design-System-Doku, Maskottchen-Konzept, Konzept-Mockups, Architektur- und Produktdoku. Die Expo-App folgt in Phase 1 nach Freigabe.
-Aktueller Bericht: [docs/previews/milestone-reports/2026-11-01-milestone-00-analysis-and-concept.md](docs/previews/milestone-reports/2026-11-01-milestone-00-analysis-and-concept.md)
+**Phase 1 – Foundation umgesetzt** (wartet auf Review): Expo-App (SDK 58, Expo Router) im pnpm-Monorepo, zentrales Designsystem (`packages/ui`), Systemcheck aller nativen Module, früher 256-Teile-Performance-Test, ESLint/Prettier/Vitest/Jest, GitHub-Actions-CI mit nativen Android- und iOS-Builds, EAS-Konfiguration.
+Aktueller Bericht: [docs/previews/milestone-reports/2026-11-01-milestone-01-foundation.md](docs/previews/milestone-reports/2026-11-01-milestone-01-foundation.md)
+
+Konzept-Mockups (keine App-Screenshots): [docs/design/concept/](docs/design/concept/) · Echte Screenshots: [docs/previews/screenshots/](docs/previews/screenshots/)
 
 ## Struktur
 
 ```text
-packages/ui/              Design-Tokens (Single Source of Truth)
-scripts/design-preview/   Renderer für die Konzept-Mockups
+apps/mobile/              Expo-App (Expo Router, Skia, Reanimated, Gesture Handler, SQLite)
+packages/ui/              Design-Tokens + Basiskomponenten (Single Source of Truth)
+scripts/design-preview/   Renderer für Mockups, Interims-Icons und Beispielbilder
+.github/workflows/        CI · Android-Build + Emulator-Screenshots · iOS-Simulator-Build
 docs/                     Produkt, Architektur, Design, Engine, Datenschutz, Entwicklung, Previews
 ```
 
 ## Voraussetzungen
 
-Node.js ≥ 22.18, pnpm 10 (`corepack enable`). Für die App ab Phase 1 zusätzlich: EAS CLI, Expo-Konto, Android Studio (Emulator). iOS-Builds laufen über EAS Cloud Build (kein Xcode nötig). Details: [docs/development/setup.md](docs/development/setup.md).
+Node.js ≥ 22.18, pnpm 10 (`corepack enable`). Für native Builds: Android Studio (Android) bzw. EAS CLI + Expo-Konto (iOS-Geräte, TestFlight). Details: [docs/development/setup.md](docs/development/setup.md).
 
 ## Befehle
 
 ```bash
-pnpm install          # Abhängigkeiten
-pnpm typecheck        # TypeScript (strict)
-pnpm test             # Tests (ab Phase 1/4)
-pnpm design:preview   # Konzept-Mockups neu rendern (Playwright + Chromium nötig)
+pnpm install
 ```
 
-Build- und Testbefehle für die App (EAS, Development Builds, TestFlight, Android APK/AAB) werden in Phase 1 ergänzt: [docs/development/setup.md](docs/development/setup.md), [docs/development/testing.md](docs/development/testing.md).
+```bash
+pnpm typecheck && pnpm lint && pnpm test
+```
+
+```bash
+cd apps/mobile && pnpm android
+```
+
+```bash
+cd apps/mobile && pnpm web
+```
+
+EAS-Builds, TestFlight und Android-APK/AAB: [docs/development/setup.md §4](docs/development/setup.md) · Tests: [docs/development/testing.md](docs/development/testing.md)
 
 ## Dokumentation
 
