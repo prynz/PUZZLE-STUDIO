@@ -120,7 +120,7 @@ jobs:
         if: always()
         run: |
           mkdir -p screenshots
-          find . -path ./node_modules -prune -o -name '*.png' -newer apk -print | grep -E 'phase1-' | xargs -I{} cp {} screenshots/ || true
+          find . -path ./node_modules -prune -o -path ./screenshots -prune -o -name 'phase1-*.png' -print | xargs -I{} cp {} screenshots/ || true
           ls -la screenshots
       - name: Commit screenshots to the branch (manual runs only)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.commit_screenshots }}
@@ -130,11 +130,13 @@ jobs:
         run: |
           set -e
           mkdir -p docs/previews/screenshots
-          for f in screenshots/phase1-*.png; do
-            [ -e "$f" ] || continue
+          # Maestro stores takeScreenshot paths relative to the flow file
+          find . -path ./node_modules -prune -o -name 'phase1-*.png' -print > shots.txt
+          cat shots.txt
+          while read -r f; do
             base=$(basename "$f" .png); base=${base#phase1-}
             cp "$f" "docs/previews/screenshots/${PREFIX}-${base}.png"
-          done
+          done < shots.txt
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/previews/screenshots
