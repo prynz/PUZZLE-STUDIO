@@ -8,21 +8,21 @@ Keine Registrierung · keine Werbung · keine Analytics/Tracking-SDKs · kein St
 
 ## Verarbeitete Daten (MVP)
 
-| Daten | Zweck | Ort | Verlässt das Gerät? |
-|---|---|---|---|
-| Vom Kind gewählte/aufgenommene Bilder (zugeschnitten, ohne EXIF) | Puzzle erzeugen | App-Sandbox `documentDirectory/images` | Nein |
-| Puzzle-Metadaten & Fortschritt | Fortsetzen, Sammlung | SQLite (App-Sandbox) | Nein |
-| Erfolge, Einstellungen | Belohnungen, Präferenzen | SQLite | Nein |
-| Absturzberichte | — | — | Nicht erhoben (MVP) |
+| Daten                                                            | Zweck                    | Ort                                    | Verlässt das Gerät? |
+| ---------------------------------------------------------------- | ------------------------ | -------------------------------------- | ------------------- |
+| Vom Kind gewählte/aufgenommene Bilder (zugeschnitten, ohne EXIF) | Puzzle erzeugen          | App-Sandbox `documentDirectory/images` | Nein                |
+| Puzzle-Metadaten & Fortschritt                                   | Fortsetzen, Sammlung     | SQLite (App-Sandbox)                   | Nein                |
+| Erfolge, Einstellungen                                           | Belohnungen, Präferenzen | SQLite                                 | Nein                |
+| Absturzberichte                                                  | —                        | —                                      | Nicht erhoben (MVP) |
 
 ## Berechtigungen
 
-| Plattform | Berechtigung | Wann | Begründung |
-|---|---|---|---|
-| iOS/Android | Kamera | erst beim Tippen auf „Foto aufnehmen“ | Foto aufnehmen |
-| iOS | Fotos | **keine** – System-Picker (PHPicker) braucht keine Vollberechtigung | |
-| Android 13+ | **keine** Medienberechtigung – Android Photo Picker | | |
-| Mikrofon, Standort, Kontakte, Netzwerk-Tracking | **nie** | | |
+| Plattform                                       | Berechtigung                                        | Wann                                                                | Begründung     |
+| ----------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------------- | -------------- |
+| iOS/Android                                     | Kamera                                              | erst beim Tippen auf „Foto aufnehmen“                               | Foto aufnehmen |
+| iOS                                             | Fotos                                               | **keine** – System-Picker (PHPicker) braucht keine Vollberechtigung |                |
+| Android 13+                                     | **keine** Medienberechtigung – Android Photo Picker |                                                                     |                |
+| Mikrofon, Standort, Kontakte, Netzwerk-Tracking | **nie**                                             |                                                                     |                |
 
 `expo-image-picker` wird so konfiguriert, dass keine unnötigen Berechtigungen (z. B. `RECORD_AUDIO`, `READ_MEDIA_*`) im Manifest landen – wird in Phase 3 per Manifest-Prüfung im CI verifiziert.
 

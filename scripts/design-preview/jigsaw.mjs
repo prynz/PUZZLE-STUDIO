@@ -20,10 +20,30 @@ export function rng(seed) {
 // Tab template in edge-local coordinates: u ∈ [0,1] along the edge,
 // v = outward displacement (fraction of edge length). Cubic segments.
 const TAB = [
-  [[0.0, 0], [0.32, 0.0], [0.42, 0.02], [0.4, 0.1]],
-  [[0.4, 0.1], [0.37, 0.2], [0.38, 0.27], [0.5, 0.27]],
-  [[0.5, 0.27], [0.62, 0.27], [0.63, 0.2], [0.6, 0.1]],
-  [[0.6, 0.1], [0.58, 0.02], [0.68, 0.0], [1.0, 0]],
+  [
+    [0.0, 0],
+    [0.32, 0.0],
+    [0.42, 0.02],
+    [0.4, 0.1],
+  ],
+  [
+    [0.4, 0.1],
+    [0.37, 0.2],
+    [0.38, 0.27],
+    [0.5, 0.27],
+  ],
+  [
+    [0.5, 0.27],
+    [0.62, 0.27],
+    [0.63, 0.2],
+    [0.6, 0.1],
+  ],
+  [
+    [0.6, 0.1],
+    [0.58, 0.02],
+    [0.68, 0.0],
+    [1.0, 0],
+  ],
 ];
 
 /** Builds an edge as a list of cubic segments in absolute coordinates. */
@@ -42,7 +62,11 @@ function edge(p0, p1, sign, jitter) {
   return TAB.map((seg) => seg.map(map));
 }
 
-const reverse = (segs) => segs.slice().reverse().map(([a, b, c, d]) => [d, c, b, a]);
+const reverse = (segs) =>
+  segs
+    .slice()
+    .reverse()
+    .map(([a, b, c, d]) => [d, c, b, a]);
 const fmt = (p) => `${p[0].toFixed(2)} ${p[1].toFixed(2)}`;
 
 /**
@@ -82,7 +106,8 @@ export function jigsaw({ rows, cols, width, height, seed = 1 }) {
       const bottom = i === rows - 1 ? edge([x1, y1], [x0, y1], 0) : reverse(hEdges[i + 1][j]);
       const left = j === 0 ? edge([x0, y1], [x0, y0], 0) : reverse(vEdges[j][i]);
       const segs = [...top, ...right, ...bottom, ...left];
-      const d = `M${fmt(segs[0][0])} ` + segs.map(([, c1, c2, p]) => `C${fmt(c1)} ${fmt(c2)} ${fmt(p)}`).join(' ') + 'Z';
+      const d =
+        `M${fmt(segs[0][0])} ` + segs.map(([, c1, c2, p]) => `C${fmt(c1)} ${fmt(c2)} ${fmt(p)}`).join(' ') + 'Z';
       pieces.push({ row: i, col: j, d, x: x0, y: y0, w: pw, h: ph });
     }
   }

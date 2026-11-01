@@ -1,12 +1,24 @@
 {
   "name": "@puzzle-studio/ui",
   "private": true,
-  "version": "0.0.0",
-  "description": "Design tokens (and later: component library) for PUZZLE STUDIO.",
+  "version": "0.1.0",
+  "description": "Design tokens and component library for PUZZLE STUDIO.",
   "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./tokens": "./src/tokens.ts"
+  },
   "scripts": {
-    "typecheck": "tsc -p tsconfig.json"
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "expo-linear-gradient": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-reanimated": "*",
+    "react-native-safe-area-context": "*"
   }
 }

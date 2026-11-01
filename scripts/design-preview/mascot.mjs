@@ -87,10 +87,16 @@ function eyes(kind) {
       )
       .join('');
   const arcUp = [L, R]
-    .map((x) => `<path d="M${x - 10} ${y + 3} Q${x} ${y - 10} ${x + 10} ${y + 3}" fill="none" stroke="${C.eye}" stroke-width="5" stroke-linecap="round"/>`)
+    .map(
+      (x) =>
+        `<path d="M${x - 10} ${y + 3} Q${x} ${y - 10} ${x + 10} ${y + 3}" fill="none" stroke="${C.eye}" stroke-width="5" stroke-linecap="round"/>`,
+    )
     .join('');
   const arcDown = [L, R]
-    .map((x) => `<path d="M${x - 10} ${y - 1} Q${x} ${y + 9} ${x + 10} ${y - 1}" fill="none" stroke="${C.eye}" stroke-width="4.5" stroke-linecap="round"/>`)
+    .map(
+      (x) =>
+        `<path d="M${x - 10} ${y - 1} Q${x} ${y + 9} ${x + 10} ${y - 1}" fill="none" stroke="${C.eye}" stroke-width="4.5" stroke-linecap="round"/>`,
+    )
     .join('');
   switch (kind) {
     case 'happy':
@@ -162,11 +168,43 @@ function mouth(kind) {
 export const EMOTIONS = {
   greeting: { label: 'Begrüßung', eyes: 'open', mouth: 'open', brows: '', left: 'down', right: 'wave', extra: 'wave' },
   happy: { label: 'Fröhlich', eyes: 'happy', mouth: 'big', brows: '', left: 'rest', right: 'rest', extra: '' },
-  thinking: { label: 'Nachdenklich', eyes: 'look-up', mouth: 'hmm', brows: 'think', left: 'down', right: 'none', extra: 'think' },
-  surprised: { label: 'Überrascht', eyes: 'wide', mouth: 'o', brows: 'raised', left: 'point', right: 'point', extra: '' },
-  excited: { label: 'Begeistert', eyes: 'sparkle', mouth: 'big', brows: '', left: 'up', right: 'up', extra: 'sparkles' },
+  thinking: {
+    label: 'Nachdenklich',
+    eyes: 'look-up',
+    mouth: 'hmm',
+    brows: 'think',
+    left: 'down',
+    right: 'none',
+    extra: 'think',
+  },
+  surprised: {
+    label: 'Überrascht',
+    eyes: 'wide',
+    mouth: 'o',
+    brows: 'raised',
+    left: 'point',
+    right: 'point',
+    extra: '',
+  },
+  excited: {
+    label: 'Begeistert',
+    eyes: 'sparkle',
+    mouth: 'big',
+    brows: '',
+    left: 'up',
+    right: 'up',
+    extra: 'sparkles',
+  },
   success: { label: 'Geschafft!', eyes: 'happy', mouth: 'big', brows: '', left: 'up', right: 'up', extra: 'trophy' },
-  encourage: { label: 'Ermutigung', eyes: 'open', mouth: 'smile', brows: 'soft', left: 'down', right: 'point', extra: 'heart' },
+  encourage: {
+    label: 'Ermutigung',
+    eyes: 'open',
+    mouth: 'smile',
+    brows: 'soft',
+    left: 'down',
+    right: 'point',
+    extra: 'heart',
+  },
   sleeping: { label: 'Schläft', eyes: 'sleep', mouth: 'tiny', brows: '', left: 'rest', right: 'rest', extra: 'zzz' },
 };
 
@@ -179,9 +217,20 @@ function extras(kind) {
       return `<circle cx="196" cy="70" r="5" fill="${C.star}" opacity="0.7"/><circle cx="208" cy="54" r="8" fill="${C.star}" opacity="0.7"/>
               <text x="208" y="60" text-anchor="middle" font-family="Nunito" font-weight="900" font-size="13" fill="#fff">?</text>`;
     case 'sparkles':
-      return star(28, 70, 10, '#FFE18A', 10) + star(214, 58, 8, C.star, -8) + star(18, 112, 5, C.star) + star(226, 104, 6, '#FFE18A');
+      return (
+        star(28, 70, 10, '#FFE18A', 10) +
+        star(214, 58, 8, C.star, -8) +
+        star(18, 112, 5, C.star) +
+        star(226, 104, 6, '#FFE18A')
+      );
     case 'trophy':
-      return star(120, 10, 14, '#FFE18A', 0) + star(40, 40, 8, C.star, 12) + star(200, 36, 9, '#FFE18A', -12) + star(22, 92, 5, '#FFBBAA') + star(222, 96, 6, C.star);
+      return (
+        star(120, 10, 14, '#FFE18A', 0) +
+        star(40, 40, 8, C.star, 12) +
+        star(200, 36, 9, '#FFE18A', -12) +
+        star(22, 92, 5, '#FFBBAA') +
+        star(222, 96, 6, C.star)
+      );
     case 'heart':
       return `<path d="M214 92 c-6 -8 -18 -4 -14 6 c2 5 14 13 14 13 s12 -8 14 -13 c4 -10 -8 -14 -14 -6z" fill="#FFBBAA"/>`;
     case 'zzz':

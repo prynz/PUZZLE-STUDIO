@@ -11,11 +11,12 @@ interface PuzzleStateV1 {
   v: 1;
   pieces: Array<{
     id: number;
-    x: number; y: number;      // normalisiert 0..1 relativ zum Spielfeld (geräteunabhängig)
+    x: number;
+    y: number; // normalisiert 0..1 relativ zum Spielfeld (geräteunabhängig)
     placed: boolean;
-    group?: number;            // für Nachbar-Snapping
+    group?: number; // für Nachbar-Snapping
   }>;
-  z: number[];                 // z-Order (Piece-IDs)
+  z: number[]; // z-Order (Piece-IDs)
   moves: number;
   referenceVisible: boolean;
 }

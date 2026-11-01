@@ -1,0 +1,120 @@
+name: Android build & emulator screenshots
+
+# Native Android build without EAS credentials:
+#  - preview APK (release, debug-signed, JS bundled)  → install & screenshot on emulator
+#  - development APK (expo-dev-client, needs Metro)  → for local development
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, 'claude/**']
+    paths:
+      - 'apps/mobile/**'
+      - 'packages/ui/**'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/android.yml'
+
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build ${{ matrix.variant }} APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - variant: preview
+            gradleTask: assembleRelease
+            apkPath: android/app/build/outputs/apk/release/app-release.apk
+          - variant: development
+            gradleTask: assembleDebug
+            apkPath: android/app/build/outputs/apk/debug/app-debug.apk
+    env:
+      APP_VARIANT: ${{ matrix.variant }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - run: pnpm install --frozen-lockfile
+      - name: Expo prebuild (android)
+        working-directory: apps/mobile
+        run: pnpm exec expo prebuild --platform android --no-install --clean
+      - name: Gradle ${{ matrix.gradleTask }}
+        working-directory: apps/mobile/android
+        run: ./gradlew ${{ matrix.gradleTask }} -PreactNativeArchitectures=x86_64,arm64-v8a --no-daemon
+      - name: Check merged permissions (privacy)
+        working-directory: apps/mobile
+        run: |
+          MANIFEST=$(find android/app/build/intermediates -path '*merged_manifest*' -name AndroidManifest.xml | head -1)
+          echo "Manifest: $MANIFEST"
+          grep -o 'android.permission.[A-Z_]*' "$MANIFEST" | sort -u | tee permissions.txt
+          if grep -E 'RECORD_AUDIO|READ_MEDIA_IMAGES|READ_MEDIA_VIDEO|ACCESS_FINE_LOCATION|ACCESS_COARSE_LOCATION' permissions.txt; then
+            echo "::error::Privacy-sensitive permission found in merged manifest"; exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: puzzle-studio-${{ matrix.variant }}-apk
+          path: |
+            apps/mobile/${{ matrix.apkPath }}
+            apps/mobile/permissions.txt
+          retention-days: 14
+
+  screenshots:
+    name: Emulator run + Maestro screenshots
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: puzzle-studio-preview-apk
+          path: apk
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Install Maestro
+        run: |
+          curl -fsSL "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+      - name: Run on Android emulator (API 34, Pixel 6)
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: |
+            adb install -r "$(find apk -name '*.apk' | head -1)"
+            mkdir -p screenshots
+            maestro test -e PLATFORM=android apps/mobile/.maestro/phase1-screenshots.yaml --test-output-dir=maestro-output
+            adb shell dumpsys gfxinfo com.puzzlestudio.app.preview > screenshots/gfxinfo.txt || true
+      - name: Collect screenshots
+        if: always()
+        run: |
+          mkdir -p screenshots
+          find . -path ./node_modules -prune -o -name '*.png' -newer apk -print | grep -E 'phase1-' | xargs -I{} cp {} screenshots/ || true
+          ls -la screenshots
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-emulator-screenshots
+          path: |
+            screenshots
+            maestro-output
+          retention-days: 14

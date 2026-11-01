@@ -1,15 +1,15 @@
 # Teststrategie
 
-| Ebene | Werkzeug | Umfang | Wann |
-|---|---|---|---|
-| Typen | `tsc --noEmit` (strict) | alle Pakete | jede Änderung, CI |
-| Lint | ESLint (+ `no-restricted-imports` für reine Pakete) | alle | jede Änderung, CI |
-| Unit | Vitest (Node) | `puzzle-engine`, `image-processing` (Mathe), `game-progression`, Tokens | jede Änderung, CI |
-| Integration | Jest + `jest-expo`, In-Memory-SQLite/Mocks der Expo-Module | Repositories, Migrations, Erstellen/Speichern/Wiederherstellen/Löschen | CI |
-| Komponenten/UI | React Native Testing Library | Komponenten, Screens, Navigation | CI |
-| E2E / Flows | Maestro (Android-Emulator lokal, iOS über EAS-Build + Gerät/Simulator-Cloud) | Onboarding, Erstellen, Puzzeln, Sammlung, Elternbereich | pro Meilenstein |
-| Screenshots | Maestro `takeScreenshot` → `docs/previews/screenshots/` | | pro Meilenstein |
-| Manuell | Checkliste (iOS + Android, klein/groß, Gesten, Accessibility, Performance) | | pro Meilenstein |
+| Ebene          | Werkzeug                                                                     | Umfang                                                                  | Wann              |
+| -------------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------- |
+| Typen          | `tsc --noEmit` (strict)                                                      | alle Pakete                                                             | jede Änderung, CI |
+| Lint           | ESLint (+ `no-restricted-imports` für reine Pakete)                          | alle                                                                    | jede Änderung, CI |
+| Unit           | Vitest (Node)                                                                | `puzzle-engine`, `image-processing` (Mathe), `game-progression`, Tokens | jede Änderung, CI |
+| Integration    | Jest + `jest-expo`, In-Memory-SQLite/Mocks der Expo-Module                   | Repositories, Migrations, Erstellen/Speichern/Wiederherstellen/Löschen  | CI                |
+| Komponenten/UI | React Native Testing Library                                                 | Komponenten, Screens, Navigation                                        | CI                |
+| E2E / Flows    | Maestro (Android-Emulator lokal, iOS über EAS-Build + Gerät/Simulator-Cloud) | Onboarding, Erstellen, Puzzeln, Sammlung, Elternbereich                 | pro Meilenstein   |
+| Screenshots    | Maestro `takeScreenshot` → `docs/previews/screenshots/`                      |                                                                         | pro Meilenstein   |
+| Manuell        | Checkliste (iOS + Android, klein/groß, Gesten, Accessibility, Performance)   |                                                                         | pro Meilenstein   |
 
 ## Pflicht-Tests der Engine
 

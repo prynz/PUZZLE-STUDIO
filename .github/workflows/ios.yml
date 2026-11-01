@@ -1,0 +1,65 @@
+name: iOS simulator build & screenshots
+
+# Compiles the iOS app natively on a macOS runner WITHOUT Apple credentials
+# (simulator build, code signing disabled) and captures real screenshots on
+# the iOS simulator. Device/TestFlight builds go through EAS (see docs).
+# Manual trigger only: macOS minutes are expensive on private repositories.
+on:
+  workflow_dispatch:
+
+jobs:
+  ios:
+    name: Simulator build + Maestro screenshots
+    runs-on: macos-latest
+    timeout-minutes: 90
+    env:
+      APP_VARIANT: preview
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - run: pnpm install --frozen-lockfile
+      - name: Expo prebuild (ios, includes pod install)
+        working-directory: apps/mobile
+        run: pnpm exec expo prebuild --platform ios --clean
+      - name: xcodebuild (Release, iphonesimulator, unsigned)
+        working-directory: apps/mobile/ios
+        run: |
+          WS=$(ls -d *.xcworkspace | head -1); SCHEME="${WS%.xcworkspace}"
+          echo "Workspace: $WS  Scheme: $SCHEME"
+          xcodebuild -workspace "$WS" -scheme "$SCHEME" -configuration Release -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' -derivedDataPath build CODE_SIGNING_ALLOWED=NO | tail -n 40
+          ls build/Build/Products/Release-iphonesimulator/
+      - name: Boot simulator and install
+        run: |
+          UDID=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for k,v in sorted(d.items(), reverse=True) if 'iOS' in k for x in v if x['name'].startswith('iPhone')))")
+          echo "SIM_UDID=$UDID" >> "$GITHUB_ENV"
+          xcrun simctl boot "$UDID"
+          xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl install "$UDID" "$(ls -d apps/mobile/ios/build/Build/Products/Release-iphonesimulator/*.app | head -1)"
+      - name: Install Maestro
+        run: |
+          curl -fsSL "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+      - name: Run Maestro flow
+        run: |
+          mkdir -p screenshots
+          maestro --device "$SIM_UDID" test -e PLATFORM=ios apps/mobile/.maestro/phase1-screenshots.yaml --test-output-dir=maestro-output
+      - name: Fallback screenshot
+        if: failure()
+        run: xcrun simctl io "$SIM_UDID" screenshot screenshots/phase1-ios-fallback.png || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios-simulator-screenshots
+          path: |
+            screenshots
+            maestro-output
+          retention-days: 14

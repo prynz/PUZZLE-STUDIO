@@ -23,11 +23,12 @@ Eingabe: gewünschte Teilezahl `n` (Preset 4…256) oder `rows × cols`, Bildsei
 
 ```ts
 interface PieceShape {
-  id: number;            // row * cols + col
-  row: number; col: number;
-  cell: Rect;            // Zielzelle im Bildraum
-  bounds: Rect;          // inkl. Tabs
-  path: PathCommand[];   // Bildraum, renderer-unabhängig
+  id: number; // row * cols + col
+  row: number;
+  col: number;
+  cell: Rect; // Zielzelle im Bildraum
+  bounds: Rect; // inkl. Tabs
+  path: PathCommand[]; // Bildraum, renderer-unabhängig
 }
 ```
 

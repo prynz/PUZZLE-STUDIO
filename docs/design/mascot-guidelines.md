@@ -7,13 +7,13 @@ Die React-Native-Komponente `<Mascot emotion="…" />` entsteht in Phase 2 aus d
 
 Pino ist ein kleines, weiches **Puzzleteil**. Er ist neugierig, geduldig und freut sich über jeden Fortschritt – nie ungeduldig, nie enttäuscht.
 
-| Merkmal | Umsetzung |
-|---|---|
-| Silhouette | Abgerundetes Quadrat mit Puzzle-**Tab als Kopf-„Knubbel“**, seitliche Tabs als Arme, kurze Füße |
-| Farbe | Honiggelb-Verlauf `#FFF0B8 → #FFE18A → #F8C95A`, sanfte Kontur `#E9A93C` @45 % |
-| Markenzeichen | Lavendelfarbener Stern-Clip am Kopf (`#B9A7F8`) – verbindet Figur und UI-Markenfarbe |
-| Gesicht | Große Navy-Augen mit 2 Glanzpunkten, Peach-Wangen @55 %, kleiner Mund |
-| Licht | Glanzlicht oben links, heller Bauch-Bogen |
+| Merkmal       | Umsetzung                                                                                       |
+| ------------- | ----------------------------------------------------------------------------------------------- |
+| Silhouette    | Abgerundetes Quadrat mit Puzzle-**Tab als Kopf-„Knubbel“**, seitliche Tabs als Arme, kurze Füße |
+| Farbe         | Honiggelb-Verlauf `#FFF0B8 → #FFE18A → #F8C95A`, sanfte Kontur `#E9A93C` @45 %                  |
+| Markenzeichen | Lavendelfarbener Stern-Clip am Kopf (`#B9A7F8`) – verbindet Figur und UI-Markenfarbe            |
+| Gesicht       | Große Navy-Augen mit 2 Glanzpunkten, Peach-Wangen @55 %, kleiner Mund                           |
+| Licht         | Glanzlicht oben links, heller Bauch-Bogen                                                       |
 
 ## Abgrenzung zur Referenz
 
@@ -21,16 +21,16 @@ Die Referenzfigur (lila Blob mit Spross) wird **nicht** kopiert: andere Grundfar
 
 ## Zustände
 
-| # | `emotion` | Einsatz |
-|---|---|---|
-| 1 | `greeting` | Welcome, App-Start, leere Zustände |
-| 2 | `happy` | Home-Begrüßung, Teil eingerastet |
-| 3 | `thinking` | Creator (Auswahl), Laden |
-| 4 | `surprised` | Neues Achievement entdeckt |
-| 5 | `excited` | Neues Puzzle erstellt |
-| 6 | `success` | Puzzle abgeschlossen |
-| 7 | `encourage` | Längere Pause ohne Fortschritt, „Fast geschafft!“ |
-| 8 | `sleeping` | Pause-Screen, Ruhemodus, Nachtmodus |
+| #   | `emotion`   | Einsatz                                           |
+| --- | ----------- | ------------------------------------------------- |
+| 1   | `greeting`  | Welcome, App-Start, leere Zustände                |
+| 2   | `happy`     | Home-Begrüßung, Teil eingerastet                  |
+| 3   | `thinking`  | Creator (Auswahl), Laden                          |
+| 4   | `surprised` | Neues Achievement entdeckt                        |
+| 5   | `excited`   | Neues Puzzle erstellt                             |
+| 6   | `success`   | Puzzle abgeschlossen                              |
+| 7   | `encourage` | Längere Pause ohne Fortschritt, „Fast geschafft!“ |
+| 8   | `sleeping`  | Pause-Screen, Ruhemodus, Nachtmodus               |
 
 ## Regeln
 

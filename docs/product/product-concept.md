@@ -5,12 +5,12 @@ Leitidee: **CREATE · PLAY · COLLECT · DISCOVER**
 
 ## Zielgruppen
 
-| Alter | Schwierigkeit | Empfohlene Teile | Standard-Form |
-|---|---|---|---|
-| 2–4 | Sehr einfach | 4–9 | Quadrate, großes Einrasten |
-| 4–7 | Einfach–mittel | 9–36 | Klassisch |
-| 6–10 | Mittel–anspruchsvoll | 36–100 | Klassisch |
-| Ältere / Profis | Anspruchsvoll | 100–256 | Klassisch |
+| Alter           | Schwierigkeit        | Empfohlene Teile | Standard-Form              |
+| --------------- | -------------------- | ---------------- | -------------------------- |
+| 2–4             | Sehr einfach         | 4–9              | Quadrate, großes Einrasten |
+| 4–7             | Einfach–mittel       | 9–36             | Klassisch                  |
+| 6–10            | Mittel–anspruchsvoll | 36–100           | Klassisch                  |
+| Ältere / Profis | Anspruchsvoll        | 100–256          | Klassisch                  |
 
 Empfehlungen, keine Sperren. Eltern legen im Elternbereich eine Standard-Schwierigkeit fest; Kinder können im Creator jederzeit wechseln.
 

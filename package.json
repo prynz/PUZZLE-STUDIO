@@ -2,7 +2,7 @@
   "name": "puzzle-studio",
   "private": true,
   "version": "0.0.0",
-  "description": "PUZZLE STUDIO – kindgerechte Puzzle-App für iOS und Android (Expo / React Native).",
+  "description": "PUZZLE STUDIO \u2013 kindgerechte Puzzle-App f\u00fcr iOS und Android (Expo / React Native).",
   "packageManager": "pnpm@10.28.0",
   "engines": {
     "node": ">=22.18"
@@ -10,10 +10,19 @@
   "scripts": {
     "typecheck": "pnpm -r --if-present typecheck",
     "test": "pnpm -r --if-present test",
-    "design:preview": "node scripts/design-preview/render.mjs"
+    "design:preview": "node scripts/design-preview/render.mjs",
+    "brand:assets": "node scripts/design-preview/render-brand-assets.mjs",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
     "@fontsource/nunito": "^5.2.7",
-    "typescript": "~5.9.3"
+    "eslint": "^9.39.5",
+    "eslint-config-expo": "~58.0.4",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.9.10",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.5"
   }
 }

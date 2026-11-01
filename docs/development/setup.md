@@ -4,16 +4,16 @@ Status: Phase 0 – nur Tokens + Mockup-Renderer lauffähig. Die Expo-Abschnitte
 
 ## Voraussetzungen (Windows 11)
 
-| Tool | Version | Hinweis |
-|---|---|---|
-| Node.js | ≥ 22.18 (LTS) | Type-Stripping für `.ts`-Imports in Node-Skripten |
-| pnpm | 10.x | `corepack enable` und dann `corepack prepare pnpm@10.28.0 --activate` |
-| Git | aktuell | `git config core.autocrlf input` empfohlen |
-| VS Code | aktuell | Extensions: ESLint, Prettier, Expo Tools |
-| Android Studio | aktuell | Emulator + SDK für Android-Dev-Builds |
-| EAS CLI | aktuell | `pnpm add -g eas-cli`, `eas login` |
-| Expo-Konto | — | für EAS Build / iOS-Builds |
-| Apple Developer Account | — | für iOS-Geräte-Builds & TestFlight |
+| Tool                    | Version       | Hinweis                                                               |
+| ----------------------- | ------------- | --------------------------------------------------------------------- |
+| Node.js                 | ≥ 22.18 (LTS) | Type-Stripping für `.ts`-Imports in Node-Skripten                     |
+| pnpm                    | 10.x          | `corepack enable` und dann `corepack prepare pnpm@10.28.0 --activate` |
+| Git                     | aktuell       | `git config core.autocrlf input` empfohlen                            |
+| VS Code                 | aktuell       | Extensions: ESLint, Prettier, Expo Tools                              |
+| Android Studio          | aktuell       | Emulator + SDK für Android-Dev-Builds                                 |
+| EAS CLI                 | aktuell       | `pnpm add -g eas-cli`, `eas login`                                    |
+| Expo-Konto              | —             | für EAS Build / iOS-Builds                                            |
+| Apple Developer Account | —             | für iOS-Geräte-Builds & TestFlight                                    |
 
 Lokales Xcode ist nicht nötig: iOS-Builds laufen über **EAS Cloud Build**.
 

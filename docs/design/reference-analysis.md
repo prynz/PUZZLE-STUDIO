@@ -6,28 +6,28 @@ Die Referenz zeigt drei Onboarding-Screens einer fremden App („Peekaboo“). F
 
 ## 1. Gesamteindruck
 
-| Merkmal | Beobachtung | Übernahme für PUZZLE STUDIO |
-|---|---|---|
-| Stil | Soft-Pastel-Cartoon, gemalte 2D-Illustration mit weichen Verläufen, keine harten Konturen | ✅ Gleicher Illustrationsstil |
-| Stimmung | Ruhig, warm, freundlich, „gentle“ | ✅ Leitmotiv „sanft & spielerisch“ |
-| Dichte | Sehr wenig Text pro Screen, eine Hauptaktion | ✅ Max. 1 primäre CTA pro Screen |
-| Aufbau | Titel oben → Untertitel → Figur als Bildmittelpunkt → CTA unten | ✅ Onboarding identisch aufgebaut, Home/Creator angelehnt |
+| Merkmal  | Beobachtung                                                                               | Übernahme für PUZZLE STUDIO                               |
+| -------- | ----------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| Stil     | Soft-Pastel-Cartoon, gemalte 2D-Illustration mit weichen Verläufen, keine harten Konturen | ✅ Gleicher Illustrationsstil                             |
+| Stimmung | Ruhig, warm, freundlich, „gentle“                                                         | ✅ Leitmotiv „sanft & spielerisch“                        |
+| Dichte   | Sehr wenig Text pro Screen, eine Hauptaktion                                              | ✅ Max. 1 primäre CTA pro Screen                          |
+| Aufbau   | Titel oben → Untertitel → Figur als Bildmittelpunkt → CTA unten                           | ✅ Onboarding identisch aufgebaut, Home/Creator angelehnt |
 
 ## 2. Farbe (gemessen)
 
 Farbproben aus der Referenz (Pixel-Clustering, 24er Quantisierung), mit der Brief-Palette abgeglichen:
 
-| Bereich | gemessen (ca.) | Token |
-|---|---|---|
-| Screen-Hintergrund 1 | `#F0F0D8`–`#FFF1D8` (warmes Creme) | `cream #FFF8ED` |
-| Screen-Hintergrund 2 | `#F0D8D8`–`#F0E3EC` (Blush/Lavendel) | `pink #F9EAF0`, `gradient.screenDream` |
-| Gelber Button | `#F0D890` → `#F0C060` (Verlauf von hell nach Honig) | `gradient.buttonAccent` |
-| Lila Button | `#9078C0` → `#7860C0` | `gradient.buttonPrimary` (`#B3A0F0 → #9983D4 → #7E68BE`) |
-| Fortschritts-Punkt aktiv | `#8465AF` | `purple` / `purple600` |
-| Fortschritts-Punkt inaktiv | `#DDC2DB` | `lavender200` |
-| Auswahlkarten | Mint-/Gelb-/Rosé-Tönungen | `surface.mint / yellow / pink` |
-| Wiese | `#AAB06C`, Pastellgrün | `green`, `green600` |
-| Wangen | `#F7BCCB` | `peach` (Maskottchen `#FFA996` @55 %) |
+| Bereich                    | gemessen (ca.)                                      | Token                                                    |
+| -------------------------- | --------------------------------------------------- | -------------------------------------------------------- |
+| Screen-Hintergrund 1       | `#F0F0D8`–`#FFF1D8` (warmes Creme)                  | `cream #FFF8ED`                                          |
+| Screen-Hintergrund 2       | `#F0D8D8`–`#F0E3EC` (Blush/Lavendel)                | `pink #F9EAF0`, `gradient.screenDream`                   |
+| Gelber Button              | `#F0D890` → `#F0C060` (Verlauf von hell nach Honig) | `gradient.buttonAccent`                                  |
+| Lila Button                | `#9078C0` → `#7860C0`                               | `gradient.buttonPrimary` (`#B3A0F0 → #9983D4 → #7E68BE`) |
+| Fortschritts-Punkt aktiv   | `#8465AF`                                           | `purple` / `purple600`                                   |
+| Fortschritts-Punkt inaktiv | `#DDC2DB`                                           | `lavender200`                                            |
+| Auswahlkarten              | Mint-/Gelb-/Rosé-Tönungen                           | `surface.mint / yellow / pink`                           |
+| Wiese                      | `#AAB06C`, Pastellgrün                              | `green`, `green600`                                      |
+| Wangen                     | `#F7BCCB`                                           | `peach` (Maskottchen `#FFA996` @55 %)                    |
 
 Ergebnis: Die Brief-Palette deckt die Referenz gut ab. Ergänzt wurden **Tonstufen** (100/200/600/700) für Flächen, gedrückte Zustände und kontrastreichen Text.
 

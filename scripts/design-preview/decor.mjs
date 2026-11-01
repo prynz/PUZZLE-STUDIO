@@ -80,14 +80,22 @@ export const icon = {
     <path d="M12 21 L16 16 L19 19 L21 17 L24 21" ${stroke(active ? P.navy : P.greyPurple)} fill="none"/></svg>`,
   awards: (active) => `<svg width="30" height="30" viewBox="0 0 30 30">
     <polygon points="${starPath(15, 15.5, 11, 0.5)}" fill="${active ? P.yellow : P.lavender100}" ${stroke(active ? P.navy : P.greyPurple)}/></svg>`,
-  back: () => `<svg width="22" height="22" viewBox="0 0 22 22"><path d="M13 5 L7 11 L13 17" fill="none" ${stroke(P.navy)}/></svg>`,
-  chevron: (c = P.navy) => `<svg width="20" height="20" viewBox="0 0 20 20"><path d="M8 5 L13 10 L8 15" fill="none" ${stroke(c)} stroke-width="3"/></svg>`,
-  pause: () => `<svg width="22" height="22" viewBox="0 0 22 22"><rect x="6" y="5" width="3.6" height="12" rx="1.8" fill="${P.navy}"/><rect x="12.4" y="5" width="3.6" height="12" rx="1.8" fill="${P.navy}"/></svg>`,
-  eye: () => `<svg width="24" height="24" viewBox="0 0 24 24"><path d="M2.5 12 Q12 3 21.5 12 Q12 21 2.5 12Z" fill="#fff" ${stroke(P.navy)}/><circle cx="12" cy="12" r="3.6" fill="${P.purple}"/></svg>`,
-  lock: () => `<svg width="22" height="22" viewBox="0 0 22 22"><rect x="4.5" y="10" width="13" height="9" rx="3" fill="${P.lavender100}" ${stroke(P.greyPurple)} stroke-width="2"/><path d="M7.5 10 V8 A3.5 3.5 0 0 1 14.5 8 V10" fill="none" ${stroke(P.greyPurple)} stroke-width="2"/></svg>`,
-  sort: () => `<svg width="20" height="20" viewBox="0 0 20 20"><path d="M4 6 H16 M6 10 H14 M8 14 H12" fill="none" ${stroke(P.navy)}/></svg>`,
-  check: (c = '#fff') => `<svg width="16" height="16" viewBox="0 0 16 16"><path d="M3.5 8.5 L6.5 11.5 L12.5 5" fill="none" ${stroke(c)} stroke-width="2.8"/></svg>`,
-  rotate: () => `<svg width="24" height="24" viewBox="0 0 24 24"><path d="M18 9 A7 7 0 1 0 19 14" fill="none" ${stroke(P.navy)}/><path d="M18 4 V9 H13" fill="none" ${stroke(P.navy)}/></svg>`,
+  back: () =>
+    `<svg width="22" height="22" viewBox="0 0 22 22"><path d="M13 5 L7 11 L13 17" fill="none" ${stroke(P.navy)}/></svg>`,
+  chevron: (c = P.navy) =>
+    `<svg width="20" height="20" viewBox="0 0 20 20"><path d="M8 5 L13 10 L8 15" fill="none" ${stroke(c)} stroke-width="3"/></svg>`,
+  pause: () =>
+    `<svg width="22" height="22" viewBox="0 0 22 22"><rect x="6" y="5" width="3.6" height="12" rx="1.8" fill="${P.navy}"/><rect x="12.4" y="5" width="3.6" height="12" rx="1.8" fill="${P.navy}"/></svg>`,
+  eye: () =>
+    `<svg width="24" height="24" viewBox="0 0 24 24"><path d="M2.5 12 Q12 3 21.5 12 Q12 21 2.5 12Z" fill="#fff" ${stroke(P.navy)}/><circle cx="12" cy="12" r="3.6" fill="${P.purple}"/></svg>`,
+  lock: () =>
+    `<svg width="22" height="22" viewBox="0 0 22 22"><rect x="4.5" y="10" width="13" height="9" rx="3" fill="${P.lavender100}" ${stroke(P.greyPurple)} stroke-width="2"/><path d="M7.5 10 V8 A3.5 3.5 0 0 1 14.5 8 V10" fill="none" ${stroke(P.greyPurple)} stroke-width="2"/></svg>`,
+  sort: () =>
+    `<svg width="20" height="20" viewBox="0 0 20 20"><path d="M4 6 H16 M6 10 H14 M8 14 H12" fill="none" ${stroke(P.navy)}/></svg>`,
+  check: (c = '#fff') =>
+    `<svg width="16" height="16" viewBox="0 0 16 16"><path d="M3.5 8.5 L6.5 11.5 L12.5 5" fill="none" ${stroke(c)} stroke-width="2.8"/></svg>`,
+  rotate: () =>
+    `<svg width="24" height="24" viewBox="0 0 24 24"><path d="M18 9 A7 7 0 1 0 19 14" fill="none" ${stroke(P.navy)}/><path d="M18 4 V9 H13" fill="none" ${stroke(P.navy)}/></svg>`,
   /** Illustrated tiles for the creator source picker. */
   camera: () => `<svg width="56" height="56" viewBox="0 0 56 56">
     <rect x="6" y="15" width="44" height="31" rx="9" fill="${P.sky}"/><rect x="18" y="9" width="16" height="9" rx="4" fill="${P.sky600}"/>

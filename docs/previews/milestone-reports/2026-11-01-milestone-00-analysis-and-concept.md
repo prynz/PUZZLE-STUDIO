@@ -6,10 +6,10 @@
 
 ## 1. Repository-Analyse
 
-| Repo | Befund |
-|---|---|
+| Repo                  | Befund                                                                                   |
+| --------------------- | ---------------------------------------------------------------------------------------- |
 | `prynz/PUZZLE-STUDIO` | Leer: keine Commits, keine Branches auf dem Remote. Nichts zu erhalten, keine Konflikte. |
-| `prynz/PLAYVERSE` | Ebenfalls leer. Nicht Teil dieses Auftrags, daher **unverändert**. |
+| `prynz/PLAYVERSE`     | Ebenfalls leer. Nicht Teil dieses Auftrags, daher **unverändert**.                       |
 
 Fehlende Grundlagen (jetzt angelegt oder geplant): Workspace-Konfiguration ✅, TS-Basis ✅, Design-Tokens ✅, Dokumentation ✅, Expo-App ⏳ (Phase 1), Lint/Test/CI ⏳ (Phase 1).
 
@@ -28,17 +28,17 @@ CLAUDE.md · PROJECT_BRIEF.md · README.md
 
 ## 3. Designkonzept – Kernentscheidungen
 
-| Entscheidung | Begründung |
-|---|---|
-| Palette aus dem Brief + Tonstufen 100/200/600/700 | Referenz gemessen und abgeglichen; Stufen für Flächen und gedrückte Zustände |
-| Text sekundär `#6C6680` statt `#77718A` | WCAG AA (4,41 → 5,17 : 1 auf Creme) |
-| Weiß auf Lila nur für fette Labels ≥ 19 px | 3,2 : 1 reicht nur für Large Text |
-| Nur Nunito (600–900), kein Inter | eine Familie genügt; weniger Ladezeit, ruhigeres Bild |
+| Entscheidung                                               | Begründung                                                                                        |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Palette aus dem Brief + Tonstufen 100/200/600/700          | Referenz gemessen und abgeglichen; Stufen für Flächen und gedrückte Zustände                      |
+| Text sekundär `#6C6680` statt `#77718A`                    | WCAG AA (4,41 → 5,17 : 1 auf Creme)                                                               |
+| Weiß auf Lila nur für fette Labels ≥ 19 px                 | 3,2 : 1 reicht nur für Large Text                                                                 |
+| Nur Nunito (600–900), kein Inter                           | eine Familie genügt; weniger Ladezeit, ruhigeres Bild                                             |
 | Maskottchen **Pino**: gelbes Puzzleteil mit Lavendel-Stern | klar eigenständig gegenüber der Referenzfigur (Farbe, Silhouette, Accessoire), thematisch passend |
-| Gelb = „Los/Spielen“, Lila = „Weiter/Erstellen“ | entspricht der Referenz (gelber Welcome-, lila Continue-Button) |
-| Hintergrund-Presets statt freier Deko | Konsistenz, Dekoration stört nie die Bedienung |
-| Fehler in Peach statt Rot | kindgerecht, kein Alarm |
-| Form „Quadrate“ zusätzlich zu „Klassisch“ | 2–4-Jährige |
+| Gelb = „Los/Spielen“, Lila = „Weiter/Erstellen“            | entspricht der Referenz (gelber Welcome-, lila Continue-Button)                                   |
+| Hintergrund-Presets statt freier Deko                      | Konsistenz, Dekoration stört nie die Bedienung                                                    |
+| Fehler in Peach statt Rot                                  | kindgerecht, kein Alarm                                                                           |
+| Form „Quadrate“ zusätzlich zu „Klassisch“                  | 2–4-Jährige                                                                                       |
 
 ## 4. Geplante Screens
 
@@ -51,6 +51,7 @@ Onboarding (3) · Home · Creator (Quelle → Zuschnitt → Teile/Form → Vorsc
 ![Tokens](../../design/concept/concept-design-tokens.png)
 
 Selbstkritische Design-QA der Mockups:
+
 - ✅ Pastellwelt, Rundungen, weiche Schatten, Wolken/Sterne/Wiese entsprechen der Referenz.
 - ✅ Eine Hauptaktion pro Screen, große Touch-Flächen.
 - ⚠️ Der Stil von Pino ist eine gute Vektor-Basis, erreicht aber noch nicht den „gemalten“ Illustrationsgrad der Referenz → Feinschliff (ggf. Illustrator:in) vor Release; Geometrie bleibt Vektor.
@@ -59,16 +60,16 @@ Selbstkritische Design-QA der Mockups:
 
 ## Technische Risiken
 
-| Risiko | Auswirkung | Gegenmaßnahme |
-|---|---|---|
-| Skia-Performance bei 256 Teilen (Clip + Shader pro Teil) | Ruckeln auf älteren Android-Geräten | Teile als vorgerenderte `SkImage`/Picture cachen, nur gezogenes Teil live zeichnen; früher Benchmark-Spike in Phase 4 |
-| Speicher bei großen Fotos (12–48 MP) | Abstürze (OOM) | Sofort nach Auswahl auf ≤ 2048 px verkleinern, Spielbild ≤ 1536 px, Textur-Größe begrenzen |
-| pnpm + Metro (Symlinks) | Build-/Resolver-Fehler | `node-linker=hoisted` oder Expo-Monorepo-Vorgaben, in Phase 1 als erstes verifiziert |
-| iOS ohne Mac | langsamer Feedback-Zyklus | EAS Development Build + registriertes Gerät; Maestro-Flows für Screenshots über EAS-Workflows |
-| Echte Screenshots aus dieser Cloud-Umgebung | Hier läuft kein iOS-Simulator/Android-Emulator | Screenshots für Milestones auf dem Windows-Rechner (Android-Emulator) bzw. per EAS/Gerät erzeugen; alternativ Expo Web nur als **gekennzeichnete** Hilfsansicht |
-| Gesten-Konflikte (Pan vs. Scroll im Ablagebereich, Zoom) | Fehlbedienung durch Kinder | Ein zentraler Gesture-Handler auf dem Canvas, Engine entscheidet per Hit-Test |
-| Store-Richtlinien Kids Category / Families | Ablehnung | keine Dritt-SDKs, keine externen Links ohne Eltern-Schranke, Datenschutzangaben früh vorbereiten |
-| Wiederherstellung nach Engine-Änderung | Geometrie passt nicht mehr | `engineVersion` pro Puzzle, alte Algorithmen bleiben erhalten (siehe serialization.md) |
+| Risiko                                                   | Auswirkung                                     | Gegenmaßnahme                                                                                                                                                   |
+| -------------------------------------------------------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Skia-Performance bei 256 Teilen (Clip + Shader pro Teil) | Ruckeln auf älteren Android-Geräten            | Teile als vorgerenderte `SkImage`/Picture cachen, nur gezogenes Teil live zeichnen; früher Benchmark-Spike in Phase 4                                           |
+| Speicher bei großen Fotos (12–48 MP)                     | Abstürze (OOM)                                 | Sofort nach Auswahl auf ≤ 2048 px verkleinern, Spielbild ≤ 1536 px, Textur-Größe begrenzen                                                                      |
+| pnpm + Metro (Symlinks)                                  | Build-/Resolver-Fehler                         | `node-linker=hoisted` oder Expo-Monorepo-Vorgaben, in Phase 1 als erstes verifiziert                                                                            |
+| iOS ohne Mac                                             | langsamer Feedback-Zyklus                      | EAS Development Build + registriertes Gerät; Maestro-Flows für Screenshots über EAS-Workflows                                                                   |
+| Echte Screenshots aus dieser Cloud-Umgebung              | Hier läuft kein iOS-Simulator/Android-Emulator | Screenshots für Milestones auf dem Windows-Rechner (Android-Emulator) bzw. per EAS/Gerät erzeugen; alternativ Expo Web nur als **gekennzeichnete** Hilfsansicht |
+| Gesten-Konflikte (Pan vs. Scroll im Ablagebereich, Zoom) | Fehlbedienung durch Kinder                     | Ein zentraler Gesture-Handler auf dem Canvas, Engine entscheidet per Hit-Test                                                                                   |
+| Store-Richtlinien Kids Category / Families               | Ablehnung                                      | keine Dritt-SDKs, keine externen Links ohne Eltern-Schranke, Datenschutzangaben früh vorbereiten                                                                |
+| Wiederherstellung nach Engine-Änderung                   | Geometrie passt nicht mehr                     | `engineVersion` pro Puzzle, alte Algorithmen bleiben erhalten (siehe serialization.md)                                                                          |
 
 ## 6. Qualitätsprüfung dieses Meilensteins
 

@@ -67,7 +67,10 @@ function board() {
 function mascotSheet() {
   const cells = Object.entries(EMOTIONS)
     .map(
-      ([k, e], i) => `<div style="background:#fff;border-radius:28px;padding:16px 10px 18px;display:flex;flex-direction:column;align-items:center;box-shadow:0 6px 18px rgba(56,51,79,.08)">
+      (
+        [k, e],
+        i,
+      ) => `<div style="background:#fff;border-radius:28px;padding:16px 10px 18px;display:flex;flex-direction:column;align-items:center;box-shadow:0 6px 18px rgba(56,51,79,.08)">
       ${mascot({ emotion: k, size: 200 })}
       <div style="font:900 20px Nunito;color:${P.navy};margin-top:6px">${i + 1}. ${e.label}</div>
       <div style="font:700 14px Nunito;color:${P.greyPurple}">emotion="${k}"</div></div>`,
@@ -96,7 +99,11 @@ function tokenSheet() {
     ['Grey Purple', P.greyPurple, 'Text sekundär'],
   ]
     .map(
-      ([n, c, u]) => `<div style="width:160px"><div style="height:96px;border-radius:24px;background:${c};border:2px solid rgba(56,51,79,.08)"></div>
+      ([
+        n,
+        c,
+        u,
+      ]) => `<div style="width:160px"><div style="height:96px;border-radius:24px;background:${c};border:2px solid rgba(56,51,79,.08)"></div>
       <div style="font:900 16px Nunito;color:${P.navy};margin-top:8px">${n}</div><div style="font:700 13px Nunito;color:${P.greyPurple}">${c} · ${u}</div></div>`,
     )
     .join('');

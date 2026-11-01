@@ -12,11 +12,13 @@ export const SCREEN = { width: 390, height: 844 };
 
 const grad = (g) => `linear-gradient(${g.angle}deg, ${g.colors.join(', ')})`;
 const sh = (s) => `0 ${s.offsetY}px ${s.blur}px rgba(56,51,79,${s.opacity})`;
-const type = (t) => `font-size:${t.fontSize}px;line-height:${t.lineHeight}px;font-weight:${t.fontWeight};letter-spacing:${t.letterSpacing}px;`;
+const type = (t) =>
+  `font-size:${t.fontSize}px;line-height:${t.lineHeight}px;font-weight:${t.fontWeight};letter-spacing:${t.letterSpacing}px;`;
 
 /** CSS shared by every mockup – every value comes from a token. */
 export function css(fontDir) {
-  const face = (w) => `@font-face{font-family:'Nunito';font-weight:${w};src:url('${fontDir}/nunito-latin-${w}-normal.woff2') format('woff2');}`;
+  const face = (w) =>
+    `@font-face{font-family:'Nunito';font-weight:${w};src:url('${fontDir}/nunito-latin-${w}-normal.woff2') format('woff2');}`;
   return `
 ${[600, 700, 800, 900].map(face).join('\n')}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -187,7 +189,10 @@ export function creator() {
     <div style="display:flex;gap:8px;flex-wrap:nowrap;overflow:hidden;margin-right:-24px">
       ${sizes
         .slice(0, 6)
-        .map((s) => `<div class="chip ${s === sel ? 'on' : ''}" style="flex:none;height:52px;min-width:56px;justify-content:center;font-size:18px;font-weight:800;${s === sel ? '' : `color:${P.navy}`}">${s}</div>`)
+        .map(
+          (s) =>
+            `<div class="chip ${s === sel ? 'on' : ''}" style="flex:none;height:52px;min-width:56px;justify-content:center;font-size:18px;font-weight:800;${s === sel ? '' : `color:${P.navy}`}">${s}</div>`,
+        )
         .join('')}
     </div>
     <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:12px;background:${P.mint100}">

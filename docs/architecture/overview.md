@@ -8,21 +8,21 @@ Local-First · Offline-First · Modular · Type-Safe · Engine unabhängig von R
 
 ## 2. Stack (Stand npm 2026-11-01)
 
-| Bereich | Wahl | Bemerkung |
-|---|---|---|
-| Framework | Expo SDK 58 (React Native 0.88, New Architecture) | Versionen aller `expo-*`/RN-Pakete ausschließlich über `npx expo install` setzen |
-| Sprache | TypeScript 5.9, `strict` + `noUncheckedIndexedAccess` + `exactOptionalPropertyTypes` | `tsconfig.base.json` |
-| Navigation | Expo Router (Datei-basiert) | Typed Routes aktiv |
-| Rendering Puzzle | `@shopify/react-native-skia` | Ein Canvas für Brett + alle Teile, Bild-Shader pro Teil |
-| Gesten | `react-native-gesture-handler` | ein Pan-Gesture-Handler auf dem Canvas, Hit-Test in der Engine |
-| Animation | `react-native-reanimated` 4 | Shared Values für Drag/Snap, UI-Thread |
-| Datenbank | `expo-sqlite` | Migrations versioniert in `apps/mobile/storage/migrations` |
-| Bilder | `expo-image-picker` (System-Picker), `expo-image-manipulator`, `expo-file-system` | keine Medienbibliotheks-Vollberechtigung |
-| State | `zustand` (nur für UI-Session-State) | Persistente Daten = SQLite, nicht Zustand |
-| Tests | Vitest (reine TS-Pakete), Jest + `jest-expo` + RNTL (App), Maestro (E2E/UI-Flows, Screenshots) | |
-| Build | EAS Build (iOS Cloud, Android) | Windows-Entwicklung, kein lokales Xcode |
-| Package Manager | pnpm 10 Workspaces | `node-linker=hoisted` für Metro-Kompatibilität (wird beim Expo-Setup geprüft) |
-| Cloud-Backup | Supabase – **nicht im MVP** | nur Schnittstelle vorbereitet |
+| Bereich          | Wahl                                                                                           | Bemerkung                                                                        |
+| ---------------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Framework        | Expo SDK 58 (React Native 0.88, New Architecture)                                              | Versionen aller `expo-*`/RN-Pakete ausschließlich über `npx expo install` setzen |
+| Sprache          | TypeScript 5.9, `strict` + `noUncheckedIndexedAccess` + `exactOptionalPropertyTypes`           | `tsconfig.base.json`                                                             |
+| Navigation       | Expo Router (Datei-basiert)                                                                    | Typed Routes aktiv                                                               |
+| Rendering Puzzle | `@shopify/react-native-skia`                                                                   | Ein Canvas für Brett + alle Teile, Bild-Shader pro Teil                          |
+| Gesten           | `react-native-gesture-handler`                                                                 | ein Pan-Gesture-Handler auf dem Canvas, Hit-Test in der Engine                   |
+| Animation        | `react-native-reanimated` 4                                                                    | Shared Values für Drag/Snap, UI-Thread                                           |
+| Datenbank        | `expo-sqlite`                                                                                  | Migrations versioniert in `apps/mobile/storage/migrations`                       |
+| Bilder           | `expo-image-picker` (System-Picker), `expo-image-manipulator`, `expo-file-system`              | keine Medienbibliotheks-Vollberechtigung                                         |
+| State            | `zustand` (nur für UI-Session-State)                                                           | Persistente Daten = SQLite, nicht Zustand                                        |
+| Tests            | Vitest (reine TS-Pakete), Jest + `jest-expo` + RNTL (App), Maestro (E2E/UI-Flows, Screenshots) |                                                                                  |
+| Build            | EAS Build (iOS Cloud, Android)                                                                 | Windows-Entwicklung, kein lokales Xcode                                          |
+| Package Manager  | pnpm 10 Workspaces                                                                             | `node-linker=hoisted` für Metro-Kompatibilität (wird beim Expo-Setup geprüft)    |
+| Cloud-Backup     | Supabase – **nicht im MVP**                                                                    | nur Schnittstelle vorbereitet                                                    |
 
 ## 3. Monorepo
 

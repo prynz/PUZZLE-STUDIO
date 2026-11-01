@@ -153,6 +153,18 @@ export const fontFamily = {
   body: 'Nunito',
 } as const;
 
+/**
+ * Native font face names per weight (as registered via @expo-google-fonts/nunito).
+ * React Native cannot synthesize weights for custom fonts, so the `Text`
+ * component maps `fontWeight` → `fontFace` instead of using `fontWeight`.
+ */
+export const fontFace = {
+  '600': 'Nunito_600SemiBold',
+  '700': 'Nunito_700Bold',
+  '800': 'Nunito_800ExtraBold',
+  '900': 'Nunito_900Black',
+} as const;
+
 export const fontWeight = {
   semibold: '600',
   bold: '700',
@@ -290,6 +302,7 @@ export const tokens = {
   color,
   gradient,
   fontFamily,
+  fontFace,
   fontWeight,
   typography,
   spacing,

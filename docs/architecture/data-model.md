@@ -4,13 +4,13 @@ Status: **Entwurf** – wird mit Phase 3/5 als SQLite-Migration `001_initial.sql
 
 ## Speicherorte
 
-| Daten | Ort | Hinweis |
-|---|---|---|
-| Original (zugeschnitten, max. 2048 px Kante, JPEG q≈0,85, ohne EXIF) | `documentDirectory/images/<imageId>/source.jpg` | wird nie geloggt |
-| Spielbild (max. 1536 px) | `…/<imageId>/play.jpg` | Skia-Textur |
-| Thumbnail (512 px) | `…/<imageId>/thumb.jpg` | Sammlung/Home |
-| Metadaten, Fortschritt, Einstellungen | SQLite `puzzle-studio.db` | |
-| Temporäre Picker-/Crop-Dateien | `cacheDirectory` | nach Erstellung gelöscht |
+| Daten                                                                | Ort                                             | Hinweis                  |
+| -------------------------------------------------------------------- | ----------------------------------------------- | ------------------------ |
+| Original (zugeschnitten, max. 2048 px Kante, JPEG q≈0,85, ohne EXIF) | `documentDirectory/images/<imageId>/source.jpg` | wird nie geloggt         |
+| Spielbild (max. 1536 px)                                             | `…/<imageId>/play.jpg`                          | Skia-Textur              |
+| Thumbnail (512 px)                                                   | `…/<imageId>/thumb.jpg`                         | Sammlung/Home            |
+| Metadaten, Fortschritt, Einstellungen                                | SQLite `puzzle-studio.db`                       |                          |
+| Temporäre Picker-/Crop-Dateien                                       | `cacheDirectory`                                | nach Erstellung gelöscht |
 
 ## Tabellen
 

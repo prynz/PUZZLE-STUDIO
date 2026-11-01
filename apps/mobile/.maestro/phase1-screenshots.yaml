@@ -1,0 +1,50 @@
+# Phase 1 – real screenshots of the running preview build (Android emulator / iOS simulator).
+# Screenshot names get the platform prefix via the PLATFORM env var.
+appId: com.puzzlestudio.app.preview
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: 'Hallo, ich bin Pino!'
+    timeout: 30000
+- takeScreenshot: screenshots/phase1-${PLATFORM}-01-start
+- tapOn:
+    id: 'start-system-check'
+- extendedWaitUntil:
+    visible: 'Datenbank \(SQLite\)'
+    timeout: 15000
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/phase1-${PLATFORM}-02-system-check
+- scrollUntilVisible:
+    element:
+      id: 'drag-probe'
+    direction: DOWN
+- swipe:
+    from:
+      id: 'drag-probe'
+    direction: RIGHT
+    duration: 800
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: 'picker-probe'
+    direction: DOWN
+- takeScreenshot: screenshots/phase1-${PLATFORM}-03-system-check-interactions
+- scrollUntilVisible:
+    element:
+      text: 'Zurück'
+    direction: DOWN
+- tapOn: 'Zurück'
+- tapOn:
+    id: 'start-benchmark'
+- extendedWaitUntil:
+    visible: 'Bilder/s'
+    timeout: 20000
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/phase1-${PLATFORM}-04-benchmark-256
+- swipe:
+    start: '50%,55%'
+    end: '70%,40%'
+    duration: 1500
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/phase1-${PLATFORM}-05-benchmark-after-drag
