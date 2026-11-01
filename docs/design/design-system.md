@@ -1,0 +1,127 @@
+# PUZZLE STUDIO – Design System
+
+> **Single Source of Truth:** [`packages/ui/src/tokens.ts`](../../packages/ui/src/tokens.ts)
+> Diese Datei beschreibt die Regeln. Werte stehen ausschließlich im Code.
+> Visuelle Übersicht: [`concept/concept-design-tokens.png`](concept/concept-design-tokens.png)
+
+**Stil:** Soft Pastel Cartoon · Whimsical Illustration · Premium Kids App · Gentle Playful UI
+Grundlage: [reference-analysis.md](reference-analysis.md)
+
+## 1. Prinzipien
+
+1. **Sanft statt laut** – Pastell, weiche Verläufe, keine Neon- oder Alarmfarben (auch Fehler sind Peach, nicht Rot).
+2. **Eine Hauptaktion pro Screen** – klar erkennbar, groß, unten im Daumenbereich.
+3. **Illustration statt Icon-Font** – eigene, runde, zweifarbige Icons und Illustrationen.
+4. **Ruhige Ränder, freie Mitte** – Dekoration nur am Rand; Inhalt hat immer Vorrang.
+5. **Kinderhände** – Touch-Ziele ≥ 56 dp, primäre Buttons 64 dp.
+6. **Konsistenz vor Kreativität pro Screen** – keine Screen-individuellen Button- oder Kartenstile.
+
+## 2. Farben
+
+| Rolle | Token | Wert | Verwendung |
+|---|---|---|---|
+| Haupt-Hintergrund | `color.background.primary` | `#FFF8ED` | dominante Fläche |
+| Sekundär-Hintergrund | `color.background.secondary` | `#F9EAF0` | Verläufe, Sektionen |
+| Marke | `color.brand.lavender` / `.purple` | `#B9A7F8` / `#9983D4` | Wiedererkennung, Fortschritt, Auswahl |
+| Primär-Aktion | `color.action.primary` | `#9983D4` | „Weiter“, „Puzzle erstellen“ |
+| Positive Aktion | `color.action.accent` | `#FFE18A` | „Los geht's“, „Spielen“, Belohnung |
+| Ergänzung | `palette.sky`, `palette.mint` | `#A9DDF4`, `#B7E7D1` | Spieltisch, Erfolg |
+| Text primär | `color.text.primary` | `#38334F` | Titel, Labels |
+| Text sekundär | `color.text.secondary` | `#6C6680` | Fließtext (AA-konform, s. Analyse) |
+
+Tonstufen `*100` = Kartenflächen, `*600` = gedrückt/Icons, `purple700` = kleiner Text auf hellen Flächen.
+
+**Kontrastregeln (WCAG 2.2 AA):**
+- Navy auf allen Hintergründen: ≥ 9 : 1 ✅
+- Weiß auf `purple` (3,2 : 1) nur für **fette Labels ≥ 19 px** (Large Text). Kleinere Texte auf Lila → `purple700` bzw. Navy.
+- Navy auf Gelb-Button: 9,3 : 1 ✅
+
+## 3. Verläufe
+
+| Token | Einsatz |
+|---|---|
+| `gradient.screenWarm` | Standard-Hintergrund (Creme → Blush) |
+| `gradient.screenDream` | Erzähl-/Creator-Screens (Lavendel-Hauch) |
+| `gradient.playTable` | Spieltisch – kontrastarm, damit Teile hervortreten |
+| `gradient.buttonAccent` / `buttonPrimary` | Buttons (vertikal, hell → satt) |
+| `gradient.meadow`, `gradient.mascotBody` | Illustration |
+
+## 4. Typografie
+
+Eine Familie: **Nunito** (600/700/800/900), in der App via `@expo-google-fonts/nunito` eingebettet (offline, kein Netzwerkabruf).
+
+| Token | Größe/Zeile | Gewicht | Einsatz |
+|---|---|---|---|
+| `hero` | 40/46 | 900 | Onboarding-Titel |
+| `title1` | 32/38 | 900 | Screen-Titel |
+| `title2` | 26/32 | 800 | Karten-Hero |
+| `title3` | 21/27 | 800 | Sektionen |
+| `bodyLarge` | 18/26 | 600 | Untertitel |
+| `body` | 16/23 | 600 | Fließtext (Minimum für Kinder) |
+| `button` | 20/24 | 800 | Buttons |
+| `label` | 15/20 | 700 | Chips, Karten-Labels |
+| `caption` | 13/18 | 700 | Meta-Infos (nur Eltern-relevante Details) |
+
+Regeln: keine Gewichte < 600, keine Großbuchstaben-Fließtexte, Dynamic Type bis 130 % ohne Layoutbruch.
+
+## 5. Abstände, Radien, Größen
+
+- **4-pt-Raster:** `spacing.xxs 4` … `huge 56`. Screen-Rand = `xl (24)`.
+- **Radien:** `sm 12` (Thumbnails klein) · `md 18` (Bilder in Karten) · `lg 24` (Karten) · `xl 32` (Navigation, Sheets) · `sheet 36` · `pill` (Buttons, Chips).
+- **Touch:** `touch.min 48` · `touch.child 56` · `touch.cta 64`.
+- **Icons:** `20 / 28 / 36 / 48`, Illustrationen `72`.
+
+## 6. Schatten
+
+Navy-getönt, max. zwei Ebenen pro Screen: `shadow.card` (Karten), `shadow.raised` (Buttons, Navigation), `shadow.lifted` (gezogenes Puzzleteil). Android über `elevation`.
+
+## 7. Bewegung
+
+| Token | Wert | Einsatz |
+|---|---|---|
+| `duration.fast` | 160 ms | Press-Feedback |
+| `duration.base` | 240 ms | Übergänge |
+| `duration.gentle` | 360 ms | Karten erscheinen |
+| `duration.celebrate` | 1400 ms | Abschluss-Feier |
+| `spring.press` | — | Button-Scale auf `pressScale 0.96` |
+| `spring.snap` | — | Teil rastet ein (+ leichtes Overshoot) |
+| `easing.playful` | `0.34,1.56,0.64,1` | „Boop“-Effekte |
+
+**Reduced Motion:** Systemeinstellung (`AccessibilityInfo.isReduceMotionEnabled`) + eigener Schalter im Elternbereich → Feder-Animationen werden zu kurzen Fades, Maskottchen-Idle und Partikel entfallen. Keine Dauer-Animationen im Hintergrund.
+
+## 8. Hintergrund- & Dekorationssystem
+
+Bausteine: `CloudIllustration`, `StarDecoration` (Stern, Funkeln), `Leaf`, `Flower`, `Meadow`.
+`DecorativeBackground` bekommt ein **Preset** pro Screen-Typ statt freier Platzierung:
+
+| Preset | Screens | Elemente |
+|---|---|---|
+| `meadow` | Welcome, Erfolg | Wolken oben, Wiese + Blumen unten |
+| `sky` | Home, Sammlung, Erfolge | 1–2 Wolken, 3–4 Sterne am Rand |
+| `dream` | Onboarding 2, Creator | Lavendel-Verlauf, Wolken, Funkeln |
+| `table` | Gameplay | keine Dekoration (Fokus) |
+| `calm` | Elternbereich | nur Verlauf |
+
+Dekoration ist `pointerEvents="none"`, `accessible={false}` und liegt nie hinter Text.
+
+## 9. Ikonografie
+
+Eigene SVG-Icons (abgerundete Linien 2,6 px, zweifarbig: Navy-Kontur + Pastellfüllung; aktiv = Gelb-Füllung). Kein generisches Icon-Set als Ersatz für Illustrationen. Vorlage: `scripts/design-preview/decor.mjs` → in Phase 2 nach `packages/ui` portiert.
+
+## 10. Plattformkonsistenz
+
+- Gleiche Optik auf iOS und Android (keine nativen Standard-Controls ohne Anpassung).
+- Safe Areas via `react-native-safe-area-context`.
+- Android-Ripple deaktiviert zugunsten des gemeinsamen Scale-Feedbacks.
+
+## 11. Design-QA-Checkliste (vor „fertig“)
+
+- [ ] Entspricht der Referenz (Pastell, Rundungen, Stimmung)?
+- [ ] Nur Tokens, keine Hex-Werte im Screen?
+- [ ] Maskottchen aus der `Mascot`-Komponente (keine Einzelgrafik)?
+- [ ] Touch-Ziele ≥ 56 dp, CTA 64 dp?
+- [ ] Kontrast AA geprüft?
+- [ ] Eine klare Hauptaktion?
+- [ ] Alle sichtbaren Elemente funktionieren?
+- [ ] Reduced Motion geprüft?
+- [ ] iOS- und Android-Screenshot verglichen?

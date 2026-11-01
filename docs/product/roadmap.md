@@ -1,0 +1,22 @@
+# Roadmap & Entwicklungsphasen
+
+| Phase | Inhalt | Ergebnis / Abnahme | Status |
+|---|---|---|---|
+| **0 – Analyse & Konzept** | Repo-Analyse, Referenzanalyse, Design-System, Mockups, Architektur, Basisdoku | Milestone-Report 00, Freigabe durch PO | ✅ abgeschlossen, **wartet auf Freigabe** |
+| 1 – Foundation | Expo-App in `apps/mobile`, pnpm/Metro-Setup, TS strict, ESLint/Prettier, Vitest/Jest, CI (GitHub Actions: typecheck, lint, test), EAS-Profile, Fonts | App startet auf iOS (EAS Dev Build) + Android, CI grün | geplant |
+| 2 – Design & Navigation | `packages/ui`-Komponenten, Mascot, Hintergrund-Presets, Onboarding, Home, Tabs, i18n | Erste echte Screenshots (Milestone 02) | geplant |
+| 3 – Image Workflow | Picker, Kamera, Crop/Rotate, Resize, Thumbnails, Dateiablage, Beispielbilder | Bild → gespeichertes `image` | geplant |
+| 4 – Puzzle Engine | Grid, Kanten, Geometrie, Bildmapping, Hit-Test, Snap, Serialisierung + Tests | ≥ 95 % Coverage Engine, Benchmarks | geplant |
+| 5 – Gameplay | Skia-Rendering, Drag & Drop, Vorlage, Fortschritt, Save/Restore, Feier | 256 Teile flüssig auf Referenzgeräten | geplant |
+| 6 – Sammlung & Progression | Galerie, Filter, Sortierung, Achievements, Belohnungen | | geplant |
+| 7 – Elternbereich | Eltern-Schranke, Einstellungen, Speicherverwaltung, Datenschutz, Backup-Schnittstelle | | geplant |
+| 8 – QA & Optimierung | Geräte-Tests, Performance, Accessibility, Security-Review | Testprotokoll | geplant |
+| 9 – Release | EAS Production Builds, TestFlight, Play Internal Testing, Icons, Splash, Store-Assets, Datenschutzangaben | Store-Einreichung | geplant |
+
+## Nach dem MVP
+
+1. Spielmodi: Easy Assist, Silhouette, Rotation, Memory, Educational, Family Puzzle
+2. Creative Workshop (Zeichnen, Sticker, Rahmen, Collagen, Text)
+3. Puzzle Room (fertige Puzzles aufhängen, Räume dekorieren)
+4. Export (Bild, druckfähiges PDF), später physische Produkte
+5. Optionales Cloud-Backup (Supabase, nur mit Eltern-Einwilligung)
