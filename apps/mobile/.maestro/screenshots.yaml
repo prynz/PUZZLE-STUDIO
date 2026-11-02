@@ -4,6 +4,7 @@ appId: com.puzzlestudio.app.preview
 ---
 - launchApp:
     clearState: true
+- runFlow: dismiss-system-dialogs.yaml
 - extendedWaitUntil:
     visible: 'Hallo, ich bin Pino!'
     timeout: 90000
@@ -70,6 +71,7 @@ appId: com.puzzlestudio.app.preview
 - stopApp
 - launchApp:
     clearState: false
+- runFlow: dismiss-system-dialogs.yaml
 - extendedWaitUntil:
     visible: 'Was puzzeln wir heute?'
     timeout: 60000

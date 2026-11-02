@@ -1,0 +1,8 @@
+# Emulator housekeeping: close "… isn't responding" system dialogs (not app related).
+appId: com.puzzlestudio.app.preview
+---
+- runFlow:
+    when:
+      visible: "isn't responding"
+    commands:
+      - tapOn: 'Wait'
