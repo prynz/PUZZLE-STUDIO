@@ -1,5 +1,6 @@
 import { Asset } from 'expo-asset';
 import * as ImagePicker from 'expo-image-picker';
+import { Platform } from 'react-native';
 
 import type { ImageSourceKind } from '@/storage/images/types';
 
@@ -56,12 +57,25 @@ export async function takePhoto(): Promise<PickResult> {
   return a ? { status: 'ok', image: fromAsset(a, 'camera') } : { status: 'canceled' };
 }
 
-/** Bundled sample picture (own illustrations, offline). */
+/**
+ * Bundled sample picture (own illustrations, offline).
+ *
+ * Android release builds ship images as drawable resources and expo-asset then reports the
+ * bare resource name ("assets_samples_seaboat") as `localUri`. That displays fine but is no
+ * file: the manipulator and the original-copy need one. In that case the asset is copied into
+ * the cache first (expo-asset's native download supports resource names).
+ */
 export async function loadSample(module: number): Promise<PendingImage> {
   const asset = Asset.fromModule(module);
+  if (Platform.OS === 'android' && asset.localUri && !asset.localUri.includes(':')) {
+    asset.localUri = null;
+    asset.downloaded = false;
+  }
   await asset.downloadAsync();
+  const uri = asset.localUri;
+  if (!uri) throw new Error('Sample asset has no local file');
   return {
-    uri: asset.localUri ?? asset.uri,
+    uri,
     width: asset.width ?? 1200,
     height: asset.height ?? 900,
     extension: 'jpg',

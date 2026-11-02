@@ -18,6 +18,7 @@ import { useSharedValue, withTiming } from 'react-native-reanimated';
 import { t } from '@/i18n';
 import { deriveImages } from '@/services/imagePipeline';
 import { useImages } from '@/store/images';
+import { describeError } from '@/utils/errors';
 
 import { CropView, MAX_ZOOM } from './CropView';
 
@@ -64,11 +65,13 @@ export function CropScreen() {
     if (!frame) return;
     setBusy(true);
     setFailed(false);
+    let stage: 'derive' | 'store' = 'derive';
     try {
       const rotated = rotatedSize(original, rotation);
       const scale = coverScale(rotated, frame) * zoom.get();
       const crop = cropFromView(rotated, frame, scale, tx.get(), ty.get());
       const derived = await deriveImages(pending.uri, original, rotation, crop);
+      stage = 'store';
       await add({
         sourceUri: pending.uri,
         sourceKind: pending.kind,
@@ -81,7 +84,9 @@ export function CropScreen() {
       });
       setPending(null);
       router.dismissTo('/create');
-    } catch {
+    } catch (e) {
+      // Visible to the child as a friendly message; the log carries no paths or image data.
+      console.warn(`[image-save] ${stage} failed: ${describeError(e)}`);
       setFailed(true);
       setBusy(false);
     }

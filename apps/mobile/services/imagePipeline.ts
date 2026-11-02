@@ -23,13 +23,20 @@ export async function deriveImages(
   rotation: Rotation,
   crop: CropRect,
 ): Promise<DerivedImages> {
-  const rotated = rotatedSize(original, rotation);
-  const px = cropToPixels(crop, rotated);
-  const target = fitWithin({ width: px.width, height: px.height }, WORK_MAX_EDGE);
-
+  // Rotate first, then crop against the size the decoder ACTUALLY produced. Asset metadata
+  // can differ from the decoded bitmap (Android resource density, EXIF orientation), and an
+  // out-of-bounds crop would fail the whole save.
   let ctx = ImageManipulator.manipulate(sourceUri);
   if (rotation !== 0) ctx = ctx.rotate(rotation);
-  const workRef = await ctx.crop(px).resize({ width: target.width, height: target.height }).renderAsync();
+  const rotatedRef = await ctx.renderAsync();
+  const decoded = rotatedRef.width > 0 && rotatedRef.height > 0 ? rotatedRef : rotatedSize(original, rotation);
+  const px = cropToPixels(crop, { width: decoded.width, height: decoded.height });
+  const target = fitWithin({ width: px.width, height: px.height }, WORK_MAX_EDGE);
+
+  const workRef = await ImageManipulator.manipulate(rotatedRef)
+    .crop(px)
+    .resize({ width: target.width, height: target.height })
+    .renderAsync();
   const work = await workRef.saveAsync({ format: SaveFormat.JPEG, compress: 0.85 });
 
   const thumbSize = fitWithin({ width: work.width, height: work.height }, THUMB_MAX_EDGE);
