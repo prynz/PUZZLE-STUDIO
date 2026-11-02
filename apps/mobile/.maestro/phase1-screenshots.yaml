@@ -38,7 +38,7 @@ appId: com.puzzlestudio.app.preview
 - tapOn:
     id: 'start-benchmark'
 - extendedWaitUntil:
-    visible: 'Bilder/s'
+    visible: 'Züge'
     timeout: 20000
 - waitForAnimationToEnd
 - takeScreenshot: screenshots/phase1-${PLATFORM}-04-benchmark-256

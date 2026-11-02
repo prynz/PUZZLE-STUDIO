@@ -36,9 +36,22 @@ export function Screen({ children, background = 'warm', scroll = false, contentS
   return (
     <LinearGradient colors={backgrounds[background].colors} style={styles.root}>
       {scroll ? (
-        <ScrollView contentContainerStyle={[padding, { paddingBottom: spacing.xxl }, contentStyle]}>
-          {children}
-        </ScrollView>
+        // Safe-area top stays outside the ScrollView so content never scrolls under the status bar.
+        <View style={[styles.root, { paddingTop: insets.top }]}>
+          <ScrollView
+            contentContainerStyle={[
+              {
+                paddingTop: spacing.md,
+                paddingLeft: padding.paddingLeft,
+                paddingRight: padding.paddingRight,
+                paddingBottom: spacing.xxl,
+              },
+              contentStyle,
+            ]}
+          >
+            {children}
+          </ScrollView>
+        </View>
       ) : (
         <View style={[styles.root, padding, contentStyle]}>{children}</View>
       )}
