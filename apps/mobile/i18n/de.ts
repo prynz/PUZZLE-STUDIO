@@ -113,6 +113,7 @@ export const de = {
   'bench.intro': 'Leistungstest für die Puzzle-Darstellung. Zieh ein Teil und beobachte die Bildrate.',
   'bench.pieces': 'Teile',
   'bench.build': 'Aufbau ms',
+  'bench.hit': 'Treffer µs',
   'bench.fps': 'fps',
   'bench.minFps': 'min',
   'bench.moves': 'Züge',

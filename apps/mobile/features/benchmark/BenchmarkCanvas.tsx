@@ -14,6 +14,15 @@ import {
   type SkImage,
   type SkPath,
 } from '@shopify/react-native-skia';
+import {
+  ENGINE_VERSION,
+  buildHitGrid,
+  generatePuzzle,
+  hitShapesFor,
+  hitTest,
+  toSvgPath,
+  type PieceShape,
+} from '@puzzle-studio/puzzle-engine';
 import { palette, withAlpha } from '@puzzle-studio/ui';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { GestureDetector, usePanGesture } from 'react-native-gesture-handler';
@@ -22,7 +31,7 @@ import { scheduleOnRN } from 'react-native-worklets';
 
 import sample from '@/assets/samples/meadow-house.jpg';
 
-import { generatePieces, hitTest, scatter, type BenchPiece } from './benchmarkGeometry';
+import { measureHitTest, scatter } from './scatter';
 
 export const ROWS = 16;
 export const COLS = 16;
@@ -32,6 +41,8 @@ export interface BenchmarkStats {
   pieces: number;
   buildMs: number;
   recordMs: number;
+  /** Engine hit-test, average µs per touch on this device. */
+  hitUs: number;
   fps: number;
   minFps: number;
   moves: number;
@@ -57,7 +68,7 @@ const liftShadow = withAlpha(palette.navy, 0.22);
 function drawPiece(
   canvas: SkCanvas,
   image: SkImage,
-  piece: BenchPiece,
+  piece: PieceShape,
   path: SkPath,
   x: number,
   y: number,
@@ -90,10 +101,19 @@ export function BenchmarkCanvas({ width, height, seed, onStats }: Props) {
   const geometry = useMemo(() => {
     // eslint-disable-next-line react-hooks/purity -- benchmark: timing is the purpose of this memo
     const t0 = performance.now();
-    const pieces = generatePieces(ROWS, COLS, boardW, boardH, 7);
-    const paths = pieces.map((p) => Skia.Path.MakeFromSVGString(p.d) ?? Skia.Path.Make());
+    const puzzle = generatePuzzle({
+      engineVersion: ENGINE_VERSION,
+      seed: 7,
+      rows: ROWS,
+      cols: COLS,
+      shape: 'classic',
+      width: boardW,
+      height: boardH,
+    });
+    const pieces = puzzle.pieces;
+    const paths = pieces.map((p) => Skia.Path.MakeFromSVGString(toSvgPath(p.path)) ?? Skia.Path.Make());
     // eslint-disable-next-line react-hooks/purity -- benchmark timing
-    return { pieces, paths, buildMs: performance.now() - t0 };
+    return { pieces, paths, shapes: hitShapesFor(puzzle), buildMs: performance.now() - t0 };
   }, [boardW, boardH]);
 
   const initial = useMemo(
@@ -108,10 +128,31 @@ export function BenchmarkCanvas({ width, height, seed, onStats }: Props) {
     onStats({ pieces: geometry.pieces.length, buildMs: geometry.buildMs });
   }, [geometry, onStats]);
 
+  // Engine hit-test index over the play area (rebuilt after each drop – O(n), < 1 ms).
+  const playArea = useMemo(() => ({ x: 0, y: 0, w: width, h: height }), [width, height]);
+  const grid = useMemo(
+    () => buildHitGrid(geometry.shapes, pos.xs, pos.ys, order, playArea, Math.max(pw, ph)),
+    [geometry, pos, order, playArea, pw, ph],
+  );
+  const zRank = useMemo(() => {
+    const rank = new Array<number>(geometry.pieces.length).fill(-1);
+    order.forEach((id, i) => (rank[id] = i));
+    return rank;
+  }, [geometry, order]);
+
+  useEffect(() => {
+    const us = measureHitTest((x, y) => hitTest(x, y, grid, geometry.shapes, pos.xs, pos.ys, zRank), playArea);
+    onStats({ hitUs: us });
+    // measured once per layout/shuffle, not after every move
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [geometry, playArea]);
+
   // ---- shared state for the UI thread ------------------------------------
   const xs = useSharedValue<number[]>(initial.xs);
   const ys = useSharedValue<number[]>(initial.ys);
-  const zOrder = useSharedValue<number[]>(order);
+  const hitGrid = useSharedValue(grid);
+  const ranks = useSharedValue<number[]>(zRank);
+  const shapes = useSharedValue(geometry.shapes);
   const activeId = useSharedValue(-1);
   const dragX = useSharedValue(0);
   const dragY = useSharedValue(0);
@@ -125,8 +166,10 @@ export function BenchmarkCanvas({ width, height, seed, onStats }: Props) {
     ys.value = pos.ys;
   }, [pos, xs, ys]);
   useEffect(() => {
-    zOrder.value = order;
-  }, [order, zOrder]);
+    hitGrid.set(grid);
+    ranks.set(zRank);
+    shapes.set(geometry.shapes);
+  }, [grid, zRank, geometry, hitGrid, ranks, shapes]);
 
   // ---- static layer: one picture with all resting pieces -----------------
   const picture = useMemo(() => {
@@ -185,7 +228,7 @@ export function BenchmarkCanvas({ width, height, seed, onStats }: Props) {
     minDistance: 0,
     onBegin: (e) => {
       'worklet';
-      const id = hitTest(e.x, e.y, xs.value, ys.value, zOrder.value, pw, ph);
+      const id = hitTest(e.x, e.y, hitGrid.value, shapes.value, xs.value, ys.value, ranks.value);
       activeId.value = id;
       if (id < 0) return;
       const px = xs.value[id] ?? 0;
@@ -194,8 +237,8 @@ export function BenchmarkCanvas({ width, height, seed, onStats }: Props) {
       offY.value = e.y - py;
       dragX.value = px;
       dragY.value = py;
-      cellX.value = (id % COLS) * pw;
-      cellY.value = Math.floor(id / COLS) * ph;
+      cellX.value = shapes.value.cellX[id] ?? 0;
+      cellY.value = shapes.value.cellY[id] ?? 0;
       scheduleOnRN(startDrag, id);
     },
     onUpdate: (e) => {
