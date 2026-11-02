@@ -94,6 +94,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ],
   experiments: {
     typedRoutes: true,
+    // Web preview hosted under a sub-path (GitHub Pages: /<repo>/). Unset for native builds and local dev.
+    ...(process.env.EXPO_BASE_URL ? { baseUrl: process.env.EXPO_BASE_URL } : {}),
   },
   extra: {
     variant,
