@@ -14,6 +14,8 @@ import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { SettingsProvider } from '@/store/settings';
+
 // Keep the native splash until fonts are ready (prevents a flash of fallback text).
 SplashScreen.preventAutoHideAsync().catch(() => {
   // Already hidden (e.g. fast refresh) – safe to ignore.
@@ -40,14 +42,16 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={styles.root}>
       <SafeAreaProvider>
-        <StatusBar style="dark" />
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            contentStyle: { backgroundColor: color.background.primary },
-            animation: 'fade',
-          }}
-        />
+        <SettingsProvider>
+          <StatusBar style="dark" />
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: { backgroundColor: color.background.primary },
+              animation: 'fade',
+            }}
+          />
+        </SettingsProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

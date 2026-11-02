@@ -13,7 +13,7 @@ on:
       screenshot_prefix:
         description: 'File name prefix, e.g. 2026-11-01-milestone-01'
         type: string
-        default: '2026-11-01-milestone-01'
+        default: '2026-11-02-milestone-02'
   push:
     branches: [main, 'claude/**']
     paths:
@@ -114,13 +114,13 @@ jobs:
             adb install -r "$(find apk -name '*.apk' | head -1)"
             mkdir -p screenshots
             adb logcat -c
-            maestro test -e PLATFORM=android apps/mobile/.maestro/phase1-screenshots.yaml --test-output-dir=maestro-output || (echo '=== logcat (errors) ==='; adb logcat -d '*:E' | tail -n 120; echo '=== logcat (ReactNativeJS) ==='; adb logcat -d -s ReactNativeJS:V ReactNative:V | tail -n 80; echo '=== top activity ==='; adb shell dumpsys activity activities | grep -E 'mResumedActivity|topResumedActivity' ; echo '=== ui texts ==='; maestro hierarchy > hierarchy.json; grep -oE '"(text|accessibilityText|resource-id|class)" : "[^"]+"' hierarchy.json | grep -v systemui | head -n 120; echo '=== window focus ==='; adb shell dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' ; exit 1)
+            maestro test -e PLATFORM=android apps/mobile/.maestro/screenshots.yaml --test-output-dir=maestro-output || (echo '=== logcat (errors) ==='; adb logcat -d '*:E' | tail -n 120; echo '=== logcat (ReactNativeJS) ==='; adb logcat -d -s ReactNativeJS:V ReactNative:V | tail -n 80; echo '=== top activity ==='; adb shell dumpsys activity activities | grep -E 'mResumedActivity|topResumedActivity' ; echo '=== ui texts ==='; maestro hierarchy > hierarchy.json; grep -oE '"(text|accessibilityText|resource-id|class)" : "[^"]+"' hierarchy.json | grep -v systemui | head -n 120; echo '=== window focus ==='; adb shell dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' ; exit 1)
             adb shell dumpsys gfxinfo com.puzzlestudio.app.preview > screenshots/gfxinfo.txt || true
       - name: Collect screenshots
         if: always()
         run: |
           mkdir -p screenshots
-          find . -path ./node_modules -prune -o -path ./screenshots -prune -o -name 'phase1-*.png' -print | xargs -I{} cp {} screenshots/ || true
+          find . -path ./node_modules -prune -o -path ./screenshots -prune -o -name 'shot-*.png' -print | xargs -I{} cp {} screenshots/ || true
           ls -la screenshots
       - name: Commit screenshots to the branch (manual runs only)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.commit_screenshots }}
@@ -131,10 +131,10 @@ jobs:
           set -e
           mkdir -p docs/previews/screenshots
           # Maestro stores takeScreenshot paths relative to the flow file
-          find . -path ./node_modules -prune -o -name 'phase1-*.png' -print > shots.txt
+          find . -path ./node_modules -prune -o -name 'shot-*.png' -print > shots.txt
           cat shots.txt
           while read -r f; do
-            base=$(basename "$f" .png); base=${base#phase1-}
+            base=$(basename "$f" .png); base=${base#shot-}
             cp "$f" "docs/previews/screenshots/${PREFIX}-${base}.png"
           done < shots.txt
           git config user.name "github-actions[bot]"

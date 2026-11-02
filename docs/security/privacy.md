@@ -8,12 +8,12 @@ Keine Registrierung · keine Werbung · keine Analytics/Tracking-SDKs · kein St
 
 ## Verarbeitete Daten (MVP)
 
-| Daten                                                            | Zweck                    | Ort                                    | Verlässt das Gerät? |
-| ---------------------------------------------------------------- | ------------------------ | -------------------------------------- | ------------------- |
-| Vom Kind gewählte/aufgenommene Bilder (zugeschnitten, ohne EXIF) | Puzzle erzeugen          | App-Sandbox `documentDirectory/images` | Nein                |
-| Puzzle-Metadaten & Fortschritt                                   | Fortsetzen, Sammlung     | SQLite (App-Sandbox)                   | Nein                |
-| Erfolge, Einstellungen                                           | Belohnungen, Präferenzen | SQLite                                 | Nein                |
-| Absturzberichte                                                  | —                        | —                                      | Nicht erhoben (MVP) |
+| Daten                                                            | Zweck                    | Ort                                                     | Verlässt das Gerät? |
+| ---------------------------------------------------------------- | ------------------------ | ------------------------------------------------------- | ------------------- |
+| Vom Kind gewählte/aufgenommene Bilder (zugeschnitten, ohne EXIF) | Puzzle erzeugen          | App-Sandbox `documentDirectory/images`                  | Nein                |
+| Puzzle-Metadaten & Fortschritt                                   | Fortsetzen, Sammlung     | SQLite (App-Sandbox)                                    | Nein                |
+| Erfolge, Einstellungen (u. a. Spielhilfe-Profil)                 | Belohnungen, Präferenzen | SQLite; in der Web-Vorschau `localStorage` des Browsers | Nein                |
+| Absturzberichte                                                  | —                        | —                                                       | Nicht erhoben (MVP) |
 
 ## Berechtigungen
 

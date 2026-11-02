@@ -115,7 +115,21 @@ Eigene SVG-Icons (abgerundete Linien 2,6 px, zweifarbig: Navy-Kontur + Pastellf�
 - Safe Areas via `react-native-safe-area-context`.
 - Android-Ripple deaktiviert zugunsten des gemeinsamen Scale-Feedbacks.
 
-## 11. Design-QA-Checkliste (vor „fertig“)
+## 11. Änderbarkeit (Styles sind noch nicht final)
+
+Alle Gestaltungswerte sind zentral – spätere Anpassungen sind eine Änderung an **einer** Stelle:
+
+| Änderung                                                                 | Datei                                                                                                  | wirkt auf                         |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | --------------------------------- |
+| Farben, Verläufe, Schatten, Radien, Abstände, Schriftgrößen, Animationen | `packages/ui/src/tokens.ts`                                                                            | alle Screens + Mockups            |
+| Aussehen von Buttons, Karten, Navigation …                               | `packages/ui/src/components/*`                                                                         | jede Verwendung                   |
+| Wolken, Sterne, Wiese, Icons                                             | `packages/ui/src/illustrations/`                                                                       | alle Hintergründe/Icons + Mockups |
+| Hintergrund-Zusammenstellung pro Screen-Typ                              | `packages/ui/src/illustrations/backgrounds.ts` (Presets)                                               | alle Screens mit diesem Preset    |
+| Maskottchen                                                              | siehe [mascot-guidelines.md](mascot-guidelines.md#austauschbarkeit-po-maskottchen-wird-noch-angepasst) | überall                           |
+
+Absicherung: ESLint verbietet Roh-Farben in Screens; Vitest prüft nach jeder Token-Änderung automatisch die WCAG-Kontraste, das 4-pt-Raster und Touch-Größen. CI zeigt sofort, wenn eine Stiländerung die Lesbarkeit verschlechtert.
+
+## 12. Design-QA-Checkliste (vor „fertig“)
 
 - [ ] Entspricht der Referenz (Pastell, Rundungen, Stimmung)?
 - [ ] Nur Tokens, keine Hex-Werte im Screen?

@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet, View, type StyleProp, type ViewStyle } from 're
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { gradient, spacing } from '../tokens.ts';
+import { DecorativeBackground, type BackgroundPreset } from './DecorativeBackground.tsx';
 
 export type ScreenBackground = 'warm' | 'dream' | 'table';
 
@@ -20,13 +21,25 @@ export interface ScreenProps {
   contentStyle?: StyleProp<ViewStyle>;
   /** Content pinned to the bottom (e.g. primary CTA), respects the safe area. */
   footer?: ReactNode;
+  /** Illustration preset behind the content (clouds, stars, meadow …). */
+  decor?: BackgroundPreset;
+  /** Extra bottom padding for content, e.g. above a floating tab bar. */
+  bottomInset?: number;
 }
 
 /**
  * Screen scaffold: token gradient background, safe areas, standard gutter.
- * Decorative illustration presets (clouds, stars…) arrive in Phase 2.
+ * Optional `decor` adds the shared illustration layer (DecorativeBackground).
  */
-export function Screen({ children, background = 'warm', scroll = false, contentStyle, footer }: ScreenProps) {
+export function Screen({
+  children,
+  background = 'warm',
+  scroll = false,
+  contentStyle,
+  footer,
+  decor,
+  bottomInset = 0,
+}: ScreenProps) {
   const insets = useSafeAreaInsets();
   const padding = {
     paddingTop: insets.top + spacing.md,
@@ -35,6 +48,7 @@ export function Screen({ children, background = 'warm', scroll = false, contentS
   };
   return (
     <LinearGradient colors={backgrounds[background].colors} style={styles.root}>
+      {decor ? <DecorativeBackground preset={decor} /> : null}
       {scroll ? (
         // Safe-area top stays outside the ScrollView so content never scrolls under the status bar.
         <View style={[styles.root, { paddingTop: insets.top }]}>
@@ -44,7 +58,7 @@ export function Screen({ children, background = 'warm', scroll = false, contentS
                 paddingTop: spacing.md,
                 paddingLeft: padding.paddingLeft,
                 paddingRight: padding.paddingRight,
-                paddingBottom: spacing.xxl,
+                paddingBottom: spacing.xxl + bottomInset,
               },
               contentStyle,
             ]}
@@ -53,7 +67,7 @@ export function Screen({ children, background = 'warm', scroll = false, contentS
           </ScrollView>
         </View>
       ) : (
-        <View style={[styles.root, padding, contentStyle]}>{children}</View>
+        <View style={[styles.root, padding, { paddingBottom: bottomInset }, contentStyle]}>{children}</View>
       )}
       {footer ? (
         <View

@@ -5,7 +5,7 @@ Produkt: [PROJECT_BRIEF.md](PROJECT_BRIEF.md) · Architektur: [docs/architecture
 
 ## Aktueller Stand
 
-Phase 1 (Foundation) umgesetzt, **wartet auf Review**. Phase 2 erst nach Freigabe des Product Owners (siehe [docs/product/roadmap.md](docs/product/roadmap.md)).
+Phase 2 (Design & Navigation) umgesetzt, **wartet auf Review**. Phase 3 erst nach Freigabe des Product Owners (siehe [docs/product/roadmap.md](docs/product/roadmap.md)). Maskottchen und Styles sind **noch nicht final** – Änderungen nur zentral (Tokens, `packages/ui/src/mascot`, `packages/ui/src/illustrations`).
 
 PO-Vorgaben aus der Freigabe von Phase 1 (dauerhaft gültig):
 
@@ -14,7 +14,8 @@ PO-Vorgaben aus der Freigabe von Phase 1 (dauerhaft gültig):
 3. Kompatibilität pnpm / Expo Router / native Module zuerst prüfen (erledigt, [setup.md §5](docs/development/setup.md)).
 4. Designsystem zentral halten – keine individuellen Farb-/Abstandswerte in Screens.
 5. Android und iOS immer parallel berücksichtigen (CI baut beide).
-6. Kein Force-Push, keine Änderungen an der Remote-Konfiguration.
+6. Spielhilfe-Profile (Kleinkind/Kind/Profi) steuern die Bedienlogik unabhängig von der Teilezahl ([gameplay-concept.md](docs/product/gameplay-concept.md)).
+7. Kein Force-Push, keine Änderungen an der Remote-Konfiguration.
 
 ## Arbeitsweise
 

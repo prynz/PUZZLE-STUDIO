@@ -1,0 +1,84 @@
+# Real screenshots of the running preview build (Android emulator / iOS simulator).
+# File names: shot-<PLATFORM>-NN-<screen>.png → committed as <prefix>-<PLATFORM>-NN-<screen>.png
+appId: com.puzzlestudio.app.preview
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: 'Hallo, ich bin Pino!'
+    timeout: 90000
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-01-onboarding-welcome
+- tapOn:
+    id: 'onb-next'
+- extendedWaitUntil:
+    visible: 'Erstellen, puzzeln, sammeln'
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-02-onboarding-promise
+- tapOn:
+    id: 'onb-next'
+- extendedWaitUntil:
+    visible: 'Wer puzzelt?'
+    timeout: 10000
+- tapOn:
+    id: 'profile-toddler'
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-03-onboarding-profile
+- tapOn:
+    id: 'onb-finish'
+- extendedWaitUntil:
+    visible: 'Was puzzeln wir heute?'
+    timeout: 15000
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-04-home
+- tapOn:
+    id: 'tab-create'
+- extendedWaitUntil:
+    visible: 'Das Puzzle-Atelier'
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-05-tab-create
+- tapOn:
+    id: 'tab-awards'
+- extendedWaitUntil:
+    visible: 'Sterne sammeln'
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-06-tab-awards
+- tapOn:
+    id: 'tab-home'
+- tapOn:
+    id: 'open-parents'
+- extendedWaitUntil:
+    visible: 'Spielhilfe-Profil'
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-07-parents
+- scrollUntilVisible:
+    element:
+      id: 'parents-system-check'
+    direction: DOWN
+- tapOn:
+    id: 'parents-system-check'
+- extendedWaitUntil:
+    visible: 'Datenbank \(SQLite\)'
+    timeout: 15000
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-08-system-check
+# Persistence: relaunch WITHOUT clearing state → onboarding is skipped, profile kept
+- stopApp
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible: 'Was puzzeln wir heute?'
+    timeout: 60000
+- tapOn:
+    id: 'open-parents'
+- extendedWaitUntil:
+    visible: 'Spielhilfe-Profil'
+    timeout: 10000
+- assertVisible:
+    id: 'parents-profile-toddler'
+    selected: true
+- takeScreenshot: screenshots/shot-${PLATFORM}-09-after-relaunch-profile-kept
