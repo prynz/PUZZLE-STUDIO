@@ -60,9 +60,16 @@ jobs:
           curl -fsSL "https://get.maestro.mobile.dev" | bash
           echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
       - name: Run Maestro flow
+        env:
+          # The XCTest driver can take > 2 min to start on shared macOS runners.
+          MAESTRO_DRIVER_STARTUP_TIMEOUT: '300000'
         run: |
           mkdir -p screenshots
-          maestro --device "$SIM_UDID" test -e PLATFORM=ios apps/mobile/.maestro/phase1-screenshots.yaml --test-output-dir=maestro-output
+          for attempt in 1 2; do
+            maestro --device "$SIM_UDID" test -e PLATFORM=ios apps/mobile/.maestro/phase1-screenshots.yaml --test-output-dir=maestro-output && exit 0
+            echo "Maestro attempt $attempt failed – retrying once"
+          done
+          exit 1
       - name: Collect screenshots
         if: always()
         run: |
