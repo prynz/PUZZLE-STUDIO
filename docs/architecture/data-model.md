@@ -86,4 +86,4 @@ Achievement-Definitionen sind **Code** (`packages/game-progression`), nicht Date
 
 ## Settings-Keys (MVP)
 
-`onboarding.completed`, `play.defaultDifficulty`, `sound.enabled`, `sound.music`, `haptics.enabled`, `motion.reduced`, `parent.gate.lastPassedAt`.
+`onboarding.completed`, `play.profile` (`toddler` | `kid` | `pro`), `play.misplaceMode`, `play.defaultDifficulty`, `sound.enabled`, `sound.music`, `haptics.enabled`, `motion.reduced`, `parent.gate.lastPassedAt`.

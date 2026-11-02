@@ -18,7 +18,7 @@ Sekundäre Zielgruppe: **Eltern** – entscheiden über Installation; überzeugt
 
 ## Kernflows
 
-1. **Onboarding** (3 Screens, überspringbar): Willkommen → Versprechen → „Wie möchtest du puzzeln?“ (Schwierigkeitskarten).
+1. **Onboarding** (3 Screens, überspringbar): Willkommen → Versprechen → „Wer puzzelt?“ (Spielhilfe-Profil Kleinkind/Kind/Profi als Bildkarten, siehe [gameplay-concept.md](gameplay-concept.md) §2).
 2. **Erstellen:** Bildquelle (Kamera · Galerie · Beispielbilder) → Zuschnitt (Zoom, Verschieben, 90°-Drehen, Format) → Teile & Form → Vorschau → Erstellen.
 3. **Spielen:** Drag & Drop, Einrasten mit Feedback, Vorlage ein/aus, Fortschritt, Pause, automatisches Speichern, Abschlussfeier.
 4. **Sammeln:** Galerie aller Puzzles mit Status, Fortschritt, Datum; sortieren, filtern, erneut spielen, löschen.
