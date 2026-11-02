@@ -43,7 +43,7 @@ puzzle-studio/
 │   ├── app.config.ts · eas.json ✅ Varianten development/preview/production
 ├── packages/
 │   ├── ui/                      ✅ Tokens · Text · PrimaryButton · SecondaryButton · Surface · Screen · StatusPill
-│   ├── puzzle-engine/           ⏳ Phase 4 – reines TS
+│   ├── puzzle-engine/           ✅ Phase 4 – reines TS (Grid, Kanten, Hit-Test, Einrasten, Tipps, Häppchen, Spielstand)
 │   ├── image-processing/        ✅ reines TS: Zuschnitt/Drehung/Größen, Transform-Hash, Farbgruppen
 │   ├── game-progression/        ⏳ Phase 6 – reines TS
 │   └── shared/                  bei Bedarf
@@ -89,7 +89,7 @@ Pakete ohne UI dürfen weder `react-native` noch `expo-*` importieren – wird p
 
 - Ruhende Teile → **eine** gecachte `SkPicture` (neu aufgezeichnet nur bei Drag-Start/Drop).
 - Gezogenes Teil → live aus Reanimated Shared Values auf dem UI-Thread.
-- Hit-Test als Worklet auf dem UI-Thread (Bounding-Box + z-Order; in Phase 4 + Punkt-in-Pfad).
+- Hit-Test als Worklet auf dem UI-Thread: Engine-`hitTest` (Bucket-Gitter + Bounding-Box + Punkt-in-Umriss + z-Order), seit Phase 4 auch im 256-Teile-Test.
 - Offener Punkt für Phase 5: Picture-Neuaufzeichnung bei 256 Teilen auf echten Geräten messen; Alternative: Teile in Kacheln/Ebenen gruppieren.
 
 ### Gameplay-Datenfluss

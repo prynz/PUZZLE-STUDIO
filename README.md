@@ -4,8 +4,8 @@ Kindgerechte Puzzle-App für iOS und Android: aus eigenen Fotos werden Puzzles �
 
 ## Projektstand
 
-**Phase 3 – Image Workflow umgesetzt** (wartet auf Review): Puzzle-Atelier mit Kamera, Galerie und Beispielbildern, nicht-destruktiver Zuschnitt/Drehung, Speicherung (Original + abgeleitete Arbeitsversion, SQLite), Farbgruppen für die Sortier-Schalen. Phase 2: Pino als Komponente, Onboarding mit Spielhilfe-Profil, Home, Tab-Navigation. Phase 1: Expo-App (SDK 58, Expo Router) im pnpm-Monorepo, zentrales Designsystem (`packages/ui`), Systemcheck aller nativen Module, früher 256-Teile-Performance-Test, ESLint/Prettier/Vitest/Jest, GitHub-Actions-CI mit nativen Android- und iOS-Builds, EAS-Konfiguration.
-Aktueller Bericht: [docs/previews/milestone-reports/2026-11-02-milestone-03-image-workflow.md](docs/previews/milestone-reports/2026-11-02-milestone-03-image-workflow.md)
+**Phase 4 – Puzzle Engine umgesetzt** (wartet auf Review): reines TypeScript-Paket `packages/puzzle-engine` mit Raster (4–256 Teile), Puzzle-Kanten, Hit-Test, festem Einrasten, Ausweichen falsch gelegter Teile, Pino-Tipps, Häppchen-Modus, Spielhilfe-Profilen und Spielstand-Speicherung; der 256-Teile-Test nutzt jetzt die echte Engine. Phase 3: Puzzle-Atelier mit Kamera, Galerie und Beispielbildern, nicht-destruktiver Zuschnitt/Drehung, Speicherung (Original + abgeleitete Arbeitsversion, SQLite), Farbgruppen für die Sortier-Schalen. Phase 2: Pino als Komponente, Onboarding mit Spielhilfe-Profil, Home, Tab-Navigation. Phase 1: Expo-App (SDK 58, Expo Router) im pnpm-Monorepo, zentrales Designsystem (`packages/ui`), Systemcheck aller nativen Module, früher 256-Teile-Performance-Test, ESLint/Prettier/Vitest/Jest, GitHub-Actions-CI mit nativen Android- und iOS-Builds, EAS-Konfiguration.
+Aktueller Bericht: [docs/previews/milestone-reports/2026-11-02-milestone-04-puzzle-engine.md](docs/previews/milestone-reports/2026-11-02-milestone-04-puzzle-engine.md)
 
 **Web-Vorschau im Browser:** https://prynz.github.io/PUZZLE-STUDIO/ (wird bei jedem Push automatisch aktualisiert; SQLite/Dateispeicher sind im Web deaktiviert)
 

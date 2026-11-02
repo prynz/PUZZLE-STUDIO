@@ -1,6 +1,6 @@
 # Teststrategie
 
-Status: **Phase 1** – Werkzeuge eingerichtet, erste Tests aktiv.
+Status: **Phase 4** – Engine vollständig getestet (87 Tests, Abdeckung wird in `pnpm test` erzwungen).
 
 | Ebene             | Werkzeug                                                 | Umfang (Stand Phase 1)                                                                              | Wann              |
 | ----------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ----------------- |
@@ -27,7 +27,7 @@ pnpm --filter @puzzle-studio/mobile test -- --watch
 
 ## Pflicht-Tests der Engine (ab Phase 4)
 
-Geometrie, Kanten, Grid, Snapping, Bildkoordinaten, Hit-Test, Serialisierung/Wiederherstellung, Determinismus. Zielabdeckung ≥ 95 % (Zeilen) für `packages/puzzle-engine`.
+Geometrie, Kanten, Grid, Snapping, Bildkoordinaten, Hit-Test, Serialisierung/Wiederherstellung, Determinismus. Zielabdeckung ≥ 95 % (Zeilen) für `packages/puzzle-engine` – erzwungen über `vitest --coverage` (Schwellen: Zeilen/Funktionen/Anweisungen 95 %, Zweige 90 %; Stand: 100 % Zeilen). Abhängigkeit `@vitest/coverage-v8` (nur Entwicklung, nicht in der App).
 
 ## Performance-Budget & früher 256-Teile-Test
 

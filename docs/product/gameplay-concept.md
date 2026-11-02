@@ -1,6 +1,6 @@
 # Spieltisch-Konzept: Ablage, Sortieren, Tipps, Einrasten
 
-Status: **Konzept (aus PO-Feedback zu Phase 1)** – zur Freigabe. Umsetzung in Phase 4 (Engine-Modell) und Phase 5 (Gameplay-UI).
+Status: **Konzept freigegeben**; Engine-Modell in Phase 4 umgesetzt (`packages/puzzle-engine`), Gameplay-UI folgt in Phase 5.
 Mockups (**Konzept-Mockups**, keine App): [Spieltisch Kind/Profi](../design/concept/concept-mockup-gameplay-tray.png) · [Häppchen-Modus Kleinkind](../design/concept/concept-mockup-gameplay-toddler.png)
 
 ## Ausgangslage (PO-Feedback)
@@ -27,16 +27,16 @@ Hinweis: Der 256-Teile-Test ist ein **Leistungstest** (bewusst „Worst Case“:
 
 Wie viel Sortieren, Lesen und Benennen ein Kind bewältigt, hängt vom **Kind** ab, nicht von der Puzzle-Größe. Ein Dreijähriger soll auch ein 100- oder 256-Teile-Puzzle machen können – ohne selbst sortieren oder benennen zu müssen. Deshalb gibt es drei **Spielhilfe-Profile**, die die gesamte Bedienlogik steuern; die Teilezahl bestimmt nur noch, _wie viel_ Bild es gibt.
 
-|                       | **Kleinkind** (ca. 3–5)                                    | **Kind** (ca. 5–9)                       | **Profi** (ca. 9+, Eltern)                                       |
-| --------------------- | ---------------------------------------------------------- | ---------------------------------------- | ---------------------------------------------------------------- |
-| Große Puzzles         | **Häppchen-Modus** (s. u.)                                 | Ablage + Schalen                         | Ablage + Schalen + Zoom                                          |
-| Schalen               | keine sichtbaren Schalen – die App sortiert unsichtbar     | automatische Schalen mit Namensvorschlag | automatisch + umbenennen + umsortieren + bis zu 3 eigene Schalen |
-| Text                  | **keiner** nötig (Bilder, Farben, Pino, Töne)              | kurze Wörter                             | normal                                                           |
-| Falsch gelegt         | immer sanft zurück in die Ablage                           | Standard „zurück“, umschaltbar           | Standard „liegen lassen + ausweichen“, umschaltbar               |
-| Einrast-Toleranz      | sehr groß                                                  | groß                                     | normal                                                           |
-| Tipps                 | Pino bietet von selbst an (nach ~20 s) + großer Pino-Knopf | Tipp-Knopf, Angebot nach ~45 s           | nur auf Knopfdruck                                               |
-| Ablage-Teile          | wenige (3–4), sehr groß (≥ 96 dp)                          | 2 Reihen                                 | 2 Reihen, blätterbar                                             |
-| Langdruck/Umsortieren | deaktiviert (verhindert Fehlbedienung)                     | einfach                                  | voll                                                             |
+|                       | **Kleinkind** (ca. 3–5)                                    | **Kind** (ca. 5–9)                                 | **Profi** (ca. 9+, Eltern)                                       |
+| --------------------- | ---------------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------------------- |
+| Große Puzzles         | **Häppchen-Modus** (s. u.)                                 | Ablage + Schalen                                   | Ablage + Schalen + Zoom                                          |
+| Schalen               | keine sichtbaren Schalen – die App sortiert unsichtbar     | automatische Schalen mit Namensvorschlag           | automatisch + umbenennen + umsortieren + bis zu 3 eigene Schalen |
+| Text                  | **keiner** nötig (Bilder, Farben, Pino, Töne)              | kurze Wörter                                       | normal                                                           |
+| Falsch gelegt         | immer sanft zurück in die Ablage                           | Standard „liegen lassen + ausweichen“, umschaltbar | Standard „liegen lassen + ausweichen“, umschaltbar               |
+| Einrast-Toleranz      | sehr groß                                                  | groß                                               | normal                                                           |
+| Tipps                 | Pino bietet von selbst an (nach ~20 s) + großer Pino-Knopf | Tipp-Knopf, Angebot nach ~45 s                     | nur auf Knopfdruck                                               |
+| Ablage-Teile          | wenige (3–4), sehr groß (≥ 96 dp)                          | 2 Reihen                                           | 2 Reihen, blätterbar                                             |
+| Langdruck/Umsortieren | deaktiviert (verhindert Fehlbedienung)                     | einfach                                            | voll                                                             |
 
 - **Wer wählt das Profil?** Im Onboarding („Wer puzzelt?“ – drei Bildkarten mit Pino klein/mittel/groß, keine Altersangabe nötig) und jederzeit im Elternbereich. Eltern können es pro Puzzle überschreiben.
 - Profil und Teilezahl sind frei kombinierbar: Kleinkind + 256 Teile ist erlaubt und spielbar.
@@ -106,8 +106,9 @@ Der Leistungstest wird in Phase 5 auf genau diese Struktur umgestellt (Brett mit
 
 ## Entscheidungen
 
-| #   | Frage                 | Entscheidung                                                                                                |
-| --- | --------------------- | ----------------------------------------------------------------------------------------------------------- |
-| 1   | Falsch gelegtes Teil  | PO: Standard „liegen lassen + zum freien Platz in der Nähe gleiten“; Option „zurück in die Schale“          |
-| 2   | Namen der Schalen     | PO: Vorschlag (sprechend bei eindeutigen Motiven, sonst Farbname); umbenennbar; Reihenfolge frei sortierbar |
-| 3   | „Meine Schale“ im MVP | **offen** – Erklärung an PO gesendet                                                                        |
+| #   | Frage                   | Entscheidung                                                                                                                                                                                                                                 |
+| --- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Falsch gelegtes Teil    | PO: Standard „liegen lassen + zum freien Platz in der Nähe gleiten“; Option „zurück in die Schale“                                                                                                                                           |
+| 2   | Namen der Schalen       | PO: Vorschlag (sprechend bei eindeutigen Motiven, sonst Farbname); umbenennbar; Reihenfolge frei sortierbar                                                                                                                                  |
+| 3   | „Meine Schale“ im MVP   | PO: ja – ab 144 Teilen, nur Profil Kind/Profi, bis zu 3 eigene Schalen                                                                                                                                                                       |
+| 4   | Falsch gelegt je Profil | Umsetzung Phase 4: PO-Standard „liegen lassen + ausweichen“ für Kind und Profi; Kleinkind immer „zurück in die Ablage“ (einfachste Logik, PO-Vorgabe für kleine Kinder). Die ältere Tabellenzeile „Kind: Standard zurück“ wurde angeglichen. |
