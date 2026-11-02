@@ -59,8 +59,6 @@ Web-Screenshots entstanden vor der Silbentrennungs-Korrektur (Abschnitt 5).
 
 ### Android-Emulator (Pixel 6, API 34) – Maestro in GitHub Actions
 
-> Stand beim Schreiben: Android-Lauf mit der Korrektur aus Abschnitt 5 läuft noch; die Bilder werden vom CI-Lauf ergänzt und dieser Hinweis danach entfernt.
-
 | Atelier                                                            | Beispielbilder                                                     | Zuschnitt                                                       | Quadrat, gezoomt, gedreht                                                      | Gespeichert                                                                    |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------ | --------------------------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | ![](../screenshots/2026-11-02-milestone-03-android-05-atelier.png) | ![](../screenshots/2026-11-02-milestone-03-android-06-samples.png) | ![](../screenshots/2026-11-02-milestone-03-android-07-crop.png) | ![](../screenshots/2026-11-02-milestone-03-android-08-crop-square-rotated.png) | ![](../screenshots/2026-11-02-milestone-03-android-09-atelier-image-saved.png) |
