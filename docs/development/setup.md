@@ -61,7 +61,9 @@ cd apps/mobile
 eas build --profile development --platform ios
 ```
 
-**Web-Vorschau** (nur zur Review, kein Zielsystem; SQLite/Dateisystem sind dort bewusst deaktiviert):
+**Online-Vorschau ohne Installation:** https://prynz.github.io/PUZZLE-STUDIO/ – Workflow `pages.yml` veröffentlicht den Web-Build bei jedem Push (Voraussetzung: Settings → Pages → Source „GitHub Actions“; Basis-Pfad über `EXPO_BASE_URL`).
+
+**Web-Vorschau lokal** (nur zur Review, kein Zielsystem; SQLite/Dateisystem sind dort bewusst deaktiviert):
 
 ```bash
 cd apps/mobile
