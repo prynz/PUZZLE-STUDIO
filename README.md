@@ -4,8 +4,8 @@ Kindgerechte Puzzle-App für iOS und Android: aus eigenen Fotos werden Puzzles �
 
 ## Projektstand
 
-**Phase 1 – Foundation umgesetzt** (wartet auf Review): Expo-App (SDK 58, Expo Router) im pnpm-Monorepo, zentrales Designsystem (`packages/ui`), Systemcheck aller nativen Module, früher 256-Teile-Performance-Test, ESLint/Prettier/Vitest/Jest, GitHub-Actions-CI mit nativen Android- und iOS-Builds, EAS-Konfiguration.
-Aktueller Bericht: [docs/previews/milestone-reports/2026-11-01-milestone-01-foundation.md](docs/previews/milestone-reports/2026-11-01-milestone-01-foundation.md)
+**Phase 2 – Design & Navigation umgesetzt** (wartet auf Review): Pino als Komponente, Onboarding mit Spielhilfe-Profil, Home, Tab-Navigation. Davor Phase 1: Expo-App (SDK 58, Expo Router) im pnpm-Monorepo, zentrales Designsystem (`packages/ui`), Systemcheck aller nativen Module, früher 256-Teile-Performance-Test, ESLint/Prettier/Vitest/Jest, GitHub-Actions-CI mit nativen Android- und iOS-Builds, EAS-Konfiguration.
+Aktueller Bericht: [docs/previews/milestone-reports/2026-11-02-milestone-02-design-navigation.md](docs/previews/milestone-reports/2026-11-02-milestone-02-design-navigation.md)
 
 **Web-Vorschau im Browser:** https://prynz.github.io/PUZZLE-STUDIO/ (wird bei jedem Push automatisch aktualisiert; SQLite/Dateispeicher sind im Web deaktiviert)
 
