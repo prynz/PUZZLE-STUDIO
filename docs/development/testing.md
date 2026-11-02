@@ -46,7 +46,7 @@ Der **256-Teile-Test** (Start → „256-Teile-Test“) ist bereits in Phase 1 e
 
 | Gerät                                                               | OS         | Aufbau ms | Bilder/s Ruhe | Bilder/s Ziehen | min. Bilder/s |
 | ------------------------------------------------------------------- | ---------- | --------- | ------------- | --------------- | ------------- |
-| iOS-Simulator (CI, macOS) – _nicht repräsentativ_                   | iOS 26.5   | 13,8      | 60            | 60              | 60            |
+| iOS-Simulator (CI, macOS) – _nicht repräsentativ_                   | iOS 26.5   | 13,8–15,5 | 60            | 60              | 60            |
 | Android-Emulator Pixel 6 (CI, Software-GPU) – _nicht repräsentativ_ | Android 14 | 323       | 46            | 52              | 12–20         |
 | _ausstehend_                                                        |            |           |               |                 |               |
 
