@@ -50,7 +50,7 @@ export function BenchmarkRoute() {
       <Text variant="caption">{t('bench.intro')}</Text>
       <Surface style={styles.stats}>
         <Stat label={t('bench.pieces')} value={fmt(stats.pieces)} testID="bench-pieces" />
-        <Stat label={t('bench.build')} value={fmt(stats.buildMs, 1)} />
+        <Stat label={t('bench.build')} value={fmt(stats.buildMs)} />
         <Stat label={t('bench.hit')} value={fmt(stats.hitUs, 1)} testID="bench-hit" />
         <Stat label={t('bench.fps')} value={fmt(stats.fps)} testID="bench-fps" />
         <Stat label={`${t('bench.minFps')} ${t('bench.fps')}`} value={fmt(stats.minFps)} />
