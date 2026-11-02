@@ -74,7 +74,8 @@ PO-Vorgaben aus der Freigabe von Phase 1 (dauerhaft gültig):
 ## Befehle
 
 ```bash
-pnpm install
+pnpm install                     # nach JEDER package.json-Änderung – pnpm-lock.yaml mitcommitten
+pnpm install --frozen-lockfile   # so prüft CI; muss lokal grün sein
 pnpm typecheck
 pnpm lint
 pnpm format:check
