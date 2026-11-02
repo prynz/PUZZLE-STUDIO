@@ -44,9 +44,11 @@ Der **256-Teile-Test** (Start → „256-Teile-Test“) ist bereits in Phase 1 e
 3. 30 s lang Teile ziehen, Werte „Bilder/s“ und „min. Bilder/s“ notieren.
 4. Gerätemodell, OS-Version, RAM notieren.
 
-| Gerät        | OS  | Aufbau ms | Bilder/s Ruhe | Bilder/s Ziehen | min. Bilder/s |
-| ------------ | --- | --------- | ------------- | --------------- | ------------- |
-| _ausstehend_ |     |           |               |                 |               |
+| Gerät                                                               | OS         | Aufbau ms | Bilder/s Ruhe | Bilder/s Ziehen | min. Bilder/s |
+| ------------------------------------------------------------------- | ---------- | --------- | ------------- | --------------- | ------------- |
+| iOS-Simulator (CI, macOS) – _nicht repräsentativ_                   | iOS 26.5   | 13,8      | 60            | 60              | 60            |
+| Android-Emulator Pixel 6 (CI, Software-GPU) – _nicht repräsentativ_ | Android 14 | 323       | 46            | 52              | 12–20         |
+| _ausstehend_                                                        |            |           |               |                 |               |
 
 Emulator- und Browser-Werte sind **nicht** aussagekräftig (Software-Rendering) und werden nur als Funktionsnachweis genutzt.
 

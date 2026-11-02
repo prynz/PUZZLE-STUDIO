@@ -23,13 +23,13 @@
 
 ## 2. Umgesetzte PO-Vorgaben aus der Freigabe
 
-| Vorgabe                                     | Umsetzung                                                                                                                                                                                                                                               |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1. Originale nicht destruktiv überschreiben | Konzept in [data-model.md](../../architecture/data-model.md): bytegleiches Original (read-only), Zuschnitt/Drehung als **Parameter**, Engine nutzt nur abgeleitete, metadatenfreie Arbeitsversionen. Implementierung in Phase 3.                        |
-| 2. Engine-Performance früh mit 256 Teilen   | **256-Teile-Test** in der App (Skia, echte Puzzle-Konturen, Picture-Cache + Drag auf dem UI-Thread, fps-Messung). Simulator: 60 fps, Aufbau ~14 ms. **Messung auf echten Geräten steht aus** (Protokoll in [testing.md](../../development/testing.md)). |
-| 3. Kompatibilität zuerst prüfen             | Spike vor allem anderen: `expo install` SDK-58-Versionen → Metro-Bundles Android/iOS/Web → native Builds. Ergebnis und Entscheidungen in [setup.md §5](../../development/setup.md).                                                                     |
-| 4. Designsystem zentral                     | Alle Werte aus `packages/ui` (Tokens + Komponenten). **ESLint verbietet Roh-Farben** in `app/` und `features/`; Vitest prüft WCAG-Kontraste der Tokens.                                                                                                 |
-| 5. Android und iOS parallel                 | Jeder Push baut Android nativ und testet auf dem Emulator; iOS-Simulator-Build per Klick. Beide Plattformen sind in diesem Bericht dokumentiert.                                                                                                        |
+| Vorgabe                                     | Umsetzung                                                                                                                                                                                                                                                                                                                                          |
+| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1. Originale nicht destruktiv überschreiben | Konzept in [data-model.md](../../architecture/data-model.md): bytegleiches Original (read-only), Zuschnitt/Drehung als **Parameter**, Engine nutzt nur abgeleitete, metadatenfreie Arbeitsversionen. Implementierung in Phase 3.                                                                                                                   |
+| 2. Engine-Performance früh mit 256 Teilen   | **256-Teile-Test** in der App (Skia, echte Puzzle-Konturen, Picture-Cache + Drag auf dem UI-Thread, fps-Messung). iOS-Simulator: 60 fps (min. 60), Aufbau 13,8 ms · Android-Emulator (Software-GPU): 46–52 fps, min. 12–20 fps, Aufbau 323 ms. **Messung auf echten Geräten steht aus** (Protokoll in [testing.md](../../development/testing.md)). |
+| 3. Kompatibilität zuerst prüfen             | Spike vor allem anderen: `expo install` SDK-58-Versionen → Metro-Bundles Android/iOS/Web → native Builds. Ergebnis und Entscheidungen in [setup.md §5](../../development/setup.md).                                                                                                                                                                |
+| 4. Designsystem zentral                     | Alle Werte aus `packages/ui` (Tokens + Komponenten). **ESLint verbietet Roh-Farben** in `app/` und `features/`; Vitest prüft WCAG-Kontraste der Tokens.                                                                                                                                                                                            |
+| 5. Android und iOS parallel                 | Jeder Push baut Android nativ und testet auf dem Emulator; iOS-Simulator-Build per Klick. Beide Plattformen sind in diesem Bericht dokumentiert.                                                                                                                                                                                                   |
 
 ## 3. Was in der App funktioniert
 
@@ -42,11 +42,11 @@ Ergebnisse auf den Plattformen (Systemcheck):
 | Prüfung            | iOS 26.5 (Simulator) | Android 14 (Emulator) | Web (Chromium)            |
 | ------------------ | -------------------- | --------------------- | ------------------------- |
 | New Architecture   | ✅                   | ✅                    | –                         |
-| Schrift Nunito     | ✅ 4/4               | siehe Screenshot      | ✅ 4/4                    |
-| SQLite             | ✅ 3.53.3            | siehe Screenshot      | bewusst nicht unterstützt |
-| Dateispeicher      | ✅                   | siehe Screenshot      | bewusst nicht unterstützt |
-| Skia               | ✅                   | siehe Screenshot      | ✅ (CanvasKit)            |
-| Gesten & Animation | ✅ (Maestro-Swipe)   | siehe Screenshot      | ✅ (Playwright-Drag)      |
+| Schrift Nunito     | ✅ 4/4               | ✅ 4/4                | ✅ 4/4                    |
+| SQLite             | ✅ 3.53.3            | ✅ 3.53.3             | bewusst nicht unterstützt |
+| Dateispeicher      | ✅                   | ✅                    | bewusst nicht unterstützt |
+| Skia               | ✅                   | ✅                    | ✅ (CanvasKit)            |
+| Gesten & Animation | ✅ (Maestro-Swipe)   | ✅ (Maestro-Swipe)    | ✅ (Playwright-Drag)      |
 | Bildauswahl        | manuell (System-UI)  | manuell (System-UI)   | manuell                   |
 
 ## 4. Screenshots (echt)
@@ -78,16 +78,17 @@ Ergebnisse auf den Plattformen (Systemcheck):
 
 ## 6. Bekannte Punkte & Risiken
 
-| Punkt                                                | Bewertung / nächster Schritt                                                                                                                                         |
-| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 256-Teile-Leistung auf **echten Geräten** ungemessen | Simulator/Emulator nutzen kein echtes GPU-Profil. Bitte Preview-APK bzw. EAS-Build auf 1 Mittelklasse-Android + 1 iPhone messen (5-Minuten-Protokoll in testing.md). |
-| Picture-Neuaufzeichnung bei Drag-Start/Drop          | Im Web (Software-Rendering) sichtbare Ruckler beim Aufnehmen. Auf Geräten messen; Ausweichstrategie (Kachel-Pictures) ist dokumentiert.                              |
-| Erster App-Start auf dem CI-Emulator teils > 30 s    | Einmal aufgetreten (Software-Emulator). Timeout auf 90 s erhöht; kein App-Fehler (JS lief, keine Exceptions).                                                        |
-| EAS-Projekt nicht verknüpft                          | Benötigt Ihr Expo-Konto: `eas init` → `projectId`; danach `eas build --profile development`.                                                                         |
-| Bundle-ID `com.puzzlestudio.app`                     | Vor dem ersten Production-Build bestätigen (nicht mehr änderbar).                                                                                                    |
-| Repository ist **öffentlich**                        | Aktuell unkritisch (keine Secrets, keine Nutzerdaten). Vor Store-Release über Sichtbarkeit entscheiden; macOS-CI-Minuten sind nur bei öffentlichen Repos kostenlos.  |
-| Artefakt-Download in meiner Umgebung gesperrt        | Deshalb committen manuelle CI-Läufe Screenshots selbst (`commit_screenshots`). APKs laden Sie direkt in GitHub Actions herunter.                                     |
-| GitHub-Actions-Warnung „Node 20 deprecated“          | Nur Warnung; Actions-Versionen bei Gelegenheit anheben.                                                                                                              |
+| Punkt                                                        | Bewertung / nächster Schritt                                                                                                                                         |
+| ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Aufbauzeit 323 ms auf dem Android-Emulator (Budget < 300 ms) | Emulator ohne Hardware-Beschleunigung; auf echten Geräten messen. Falls bestätigt: Pfade in Phase 4 einmalig vorberechnen und cachen.                                |
+| 256-Teile-Leistung auf **echten Geräten** ungemessen         | Simulator/Emulator nutzen kein echtes GPU-Profil. Bitte Preview-APK bzw. EAS-Build auf 1 Mittelklasse-Android + 1 iPhone messen (5-Minuten-Protokoll in testing.md). |
+| Picture-Neuaufzeichnung bei Drag-Start/Drop                  | Im Web (Software-Rendering) sichtbare Ruckler beim Aufnehmen. Auf Geräten messen; Ausweichstrategie (Kachel-Pictures) ist dokumentiert.                              |
+| Erster App-Start auf dem CI-Emulator teils > 30 s            | Einmal aufgetreten (Software-Emulator). Timeout auf 90 s erhöht; kein App-Fehler (JS lief, keine Exceptions).                                                        |
+| EAS-Projekt nicht verknüpft                                  | Benötigt Ihr Expo-Konto: `eas init` → `projectId`; danach `eas build --profile development`.                                                                         |
+| Bundle-ID `com.puzzlestudio.app`                             | Vor dem ersten Production-Build bestätigen (nicht mehr änderbar).                                                                                                    |
+| Repository ist **öffentlich**                                | Aktuell unkritisch (keine Secrets, keine Nutzerdaten). Vor Store-Release über Sichtbarkeit entscheiden; macOS-CI-Minuten sind nur bei öffentlichen Repos kostenlos.  |
+| Artefakt-Download in meiner Umgebung gesperrt                | Deshalb committen manuelle CI-Läufe Screenshots selbst (`commit_screenshots`). APKs laden Sie direkt in GitHub Actions herunter.                                     |
+| GitHub-Actions-Warnung „Node 20 deprecated“                  | Nur Warnung; Actions-Versionen bei Gelegenheit anheben.                                                                                                              |
 
 ## 7. Was Sie jetzt tun können
 
