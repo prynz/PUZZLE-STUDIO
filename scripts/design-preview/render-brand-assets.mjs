@@ -76,14 +76,19 @@ const ASSETS = [
     transparent: true,
     html: () => box(1024, mascot({ emotion: 'greeting', size: 940 }), true),
   },
-  // Sample picture (own illustration) – used by the benchmark and later as a "Beispielbild"
-  {
-    file: '../samples/meadow-house.jpg',
+  // Sample pictures (own illustrations) – "Beispielbilder" in the creator and the benchmark image
+  ...[
+    ['meadow-house', 'meadowHouse'],
+    ['sea-boat', 'seaBoat'],
+    ['night-sky', 'nightSky'],
+    ['garden', 'garden'],
+  ].map(([file, name]) => ({
+    file: `../samples/${file}.jpg`,
     size: 1200,
     height: 900,
     transparent: false,
-    html: () => `<div id="a" style="width:1200px;height:900px">${scene('meadowHouse', 1200, 900)}</div>`,
-  },
+    html: () => `<div id="a" style="width:1200px;height:900px">${scene(name, 1200, 900)}</div>`,
+  })),
   {
     file: 'favicon.png',
     size: 48,

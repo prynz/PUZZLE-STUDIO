@@ -1,6 +1,6 @@
 # Datenmodell (Entwurf)
 
-Status: **Entwurf** (aktualisiert Phase 1: nicht-destruktiver Bild-Workflow) – wird mit Phase 3/5 als SQLite-Migration `001_initial.sql` umgesetzt und hier aktualisiert.
+Status: **Teilweise umgesetzt (Phase 3)**: Tabellen `schema_migration`, `setting` (Migration 1) und `image` (Migration 2, siehe `apps/mobile/storage/migrations.ts`) sind live. Die Tabelle `image` speichert Zuschnitt/Drehung sowie die Dateinamen von Arbeitsversion und Thumbnail direkt (je Bild eine aktuelle Arbeitsversion); `puzzle`, `puzzle_state`, Erfolge folgen in Phase 4–6. In der DB stehen nur **Dateinamen**, keine absoluten Pfade (iOS-Containerpfade ändern sich bei Updates).
 
 ## Speicherorte – nicht-destruktiver Bild-Workflow
 

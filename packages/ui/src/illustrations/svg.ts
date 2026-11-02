@@ -96,6 +96,12 @@ export const icon = {
     `<svg width="20" height="20" viewBox="0 0 20 20"><path d="M4 6 H16 M6 10 H14 M8 14 H12" fill="none" ${stroke(P.navy)}/></svg>`,
   check: (c: string = P.white): string =>
     `<svg width="16" height="16" viewBox="0 0 16 16"><path d="M3.5 8.5 L6.5 11.5 L12.5 5" fill="none" ${stroke(c)} stroke-width="2.8"/></svg>`,
+  trash: (): string =>
+    `<svg width="22" height="22" viewBox="0 0 22 22"><path d="M5 7 H17 L16 18 Q16 19.5 14.5 19.5 H7.5 Q6 19.5 6 18Z" fill="${P.peach100}" ${stroke(P.navy)} stroke-width="2"/><path d="M4 7 H18 M9 4.5 H13" fill="none" ${stroke(P.navy)} stroke-width="2"/><path d="M9.5 10.5 V16 M12.5 10.5 V16" ${stroke(P.navy)} stroke-width="1.8"/></svg>`,
+  minus: (): string =>
+    `<svg width="22" height="22" viewBox="0 0 22 22"><path d="M5 11 H17" ${stroke(P.navy)} stroke-width="3"/></svg>`,
+  plus: (): string =>
+    `<svg width="22" height="22" viewBox="0 0 22 22"><path d="M5 11 H17 M11 5 V17" ${stroke(P.navy)} stroke-width="3"/></svg>`,
   rotate: (): string =>
     `<svg width="24" height="24" viewBox="0 0 24 24"><path d="M18 9 A7 7 0 1 0 19 14" fill="none" ${stroke(P.navy)}/><path d="M18 4 V9 H13" fill="none" ${stroke(P.navy)}/></svg>`,
   /** Illustrated tiles for the creator source picker. */

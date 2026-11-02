@@ -14,6 +14,7 @@ import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { ImagesProvider } from '@/store/images';
 import { SettingsProvider } from '@/store/settings';
 
 // Keep the native splash until fonts are ready (prevents a flash of fallback text).
@@ -43,14 +44,16 @@ export default function RootLayout() {
     <GestureHandlerRootView style={styles.root}>
       <SafeAreaProvider>
         <SettingsProvider>
-          <StatusBar style="dark" />
-          <Stack
-            screenOptions={{
-              headerShown: false,
-              contentStyle: { backgroundColor: color.background.primary },
-              animation: 'fade',
-            }}
-          />
+          <ImagesProvider>
+            <StatusBar style="dark" />
+            <Stack
+              screenOptions={{
+                headerShown: false,
+                contentStyle: { backgroundColor: color.background.primary },
+                animation: 'fade',
+              }}
+            />
+          </ImagesProvider>
         </SettingsProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>

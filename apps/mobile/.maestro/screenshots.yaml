@@ -36,17 +36,44 @@ appId: com.puzzlestudio.app.preview
 - tapOn:
     id: 'tab-create'
 - extendedWaitUntil:
-    visible: 'Das Puzzle-Atelier'
+    visible: 'Puzzle-Atelier'
     timeout: 10000
 - waitForAnimationToEnd
-- takeScreenshot: screenshots/shot-${PLATFORM}-05-tab-create
+- takeScreenshot: screenshots/shot-${PLATFORM}-05-atelier
 - tapOn:
-    id: 'tab-awards'
+    id: 'src-samples'
 - extendedWaitUntil:
-    visible: 'Sterne sammeln'
+    visible: 'Segelboot'
     timeout: 10000
 - waitForAnimationToEnd
-- takeScreenshot: screenshots/shot-${PLATFORM}-06-tab-awards
+- takeScreenshot: screenshots/shot-${PLATFORM}-06-samples
+- tapOn:
+    id: 'sample-sea-boat'
+- extendedWaitUntil:
+    visible: 'Bild zurechtrücken'
+    timeout: 15000
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-07-crop
+- tapOn:
+    id: 'aspect-square'
+- tapOn:
+    id: 'crop-zoom-in'
+- swipe:
+    from:
+      id: 'crop-frame'
+    direction: LEFT
+    duration: 600
+- tapOn:
+    id: 'crop-rotate'
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-08-crop-square-rotated
+- tapOn:
+    id: 'crop-confirm'
+- extendedWaitUntil:
+    visible: 'Meine Bilder · 1'
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-09-atelier-image-saved
 - tapOn:
     id: 'tab-home'
 - tapOn:
@@ -55,7 +82,7 @@ appId: com.puzzlestudio.app.preview
     visible: 'Spielhilfe-Profil'
     timeout: 10000
 - waitForAnimationToEnd
-- takeScreenshot: screenshots/shot-${PLATFORM}-07-parents
+- takeScreenshot: screenshots/shot-${PLATFORM}-10-parents
 - scrollUntilVisible:
     element:
       id: 'parents-system-check'
@@ -66,8 +93,8 @@ appId: com.puzzlestudio.app.preview
     visible: 'Datenbank \(SQLite\)'
     timeout: 15000
 - waitForAnimationToEnd
-- takeScreenshot: screenshots/shot-${PLATFORM}-08-system-check
-# Persistence: relaunch WITHOUT clearing state → onboarding is skipped, profile kept
+- takeScreenshot: screenshots/shot-${PLATFORM}-11-system-check
+# Persistence: relaunch WITHOUT clearing state → onboarding skipped, profile and image kept
 - stopApp
 - launchApp:
     clearState: false
@@ -83,4 +110,14 @@ appId: com.puzzlestudio.app.preview
 - assertVisible:
     id: 'parents-profile-toddler'
     selected: true
-- takeScreenshot: screenshots/shot-${PLATFORM}-09-after-relaunch-profile-kept
+- takeScreenshot: screenshots/shot-${PLATFORM}-12-after-relaunch-profile-kept
+- tapOn: 'Zurück'
+- tapOn:
+    id: 'tab-create'
+- extendedWaitUntil:
+    visible: 'Meine Bilder · 1'
+    timeout: 15000
+- assertVisible:
+    id: 'my-image'
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-13-after-relaunch-image-kept

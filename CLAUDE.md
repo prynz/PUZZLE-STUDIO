@@ -5,7 +5,7 @@ Produkt: [PROJECT_BRIEF.md](PROJECT_BRIEF.md) · Architektur: [docs/architecture
 
 ## Aktueller Stand
 
-Phase 2 (Design & Navigation) umgesetzt, **wartet auf Review**. Phase 3 erst nach Freigabe des Product Owners (siehe [docs/product/roadmap.md](docs/product/roadmap.md)). Maskottchen und Styles sind **noch nicht final** – Änderungen nur zentral (Tokens, `packages/ui/src/mascot`, `packages/ui/src/illustrations`).
+Phase 3 (Image Workflow) umgesetzt, **wartet auf Review**. Phase 4 erst nach Freigabe des Product Owners (siehe [docs/product/roadmap.md](docs/product/roadmap.md)). Maskottchen und Styles sind **noch nicht final** – Änderungen nur zentral (Tokens, `packages/ui/src/mascot`, `packages/ui/src/illustrations`).
 
 PO-Vorgaben aus der Freigabe von Phase 1 (dauerhaft gültig):
 

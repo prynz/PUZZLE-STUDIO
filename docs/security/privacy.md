@@ -1,6 +1,6 @@
 # Datenschutz & Kindersicherheit
 
-Status: **Konzept, Stand Phase 1** (Berechtigungen und SDK-Liste sind umgesetzt bzw. aktuell) – wird mit jeder Phase fortgeschrieben. Dies ist keine Rechtsberatung; vor Veröffentlichung sind DSGVO (inkl. Art. 8), Apple App Store Kids Category (Guideline 1.3, 5.1.4) und Google Play Families Policy fachlich/rechtlich zu prüfen.
+Status: **Konzept, Stand Phase 3** (Berechtigungen und SDK-Liste sind umgesetzt bzw. aktuell) – wird mit jeder Phase fortgeschrieben. Dies ist keine Rechtsberatung; vor Veröffentlichung sind DSGVO (inkl. Art. 8), Apple App Store Kids Category (Guideline 1.3, 5.1.4) und Google Play Families Policy fachlich/rechtlich zu prüfen.
 
 ## Grundsätze (verbindlich)
 
@@ -31,7 +31,10 @@ Umsetzung (Phase 1): `expo-image-picker` mit `photosPermission: false` und `micr
 - **Original bleibt unverändert** (nicht-destruktiv, siehe [data-model.md](../architecture/data-model.md)). Es liegt ausschließlich in der App-Sandbox, wird nie hochgeladen, exportiert oder geloggt. Es kann – wie vom Gerät geliefert – EXIF-/GPS-Metadaten enthalten; diese werden nie ausgelesen oder angezeigt.
 - Alle **Arbeitsversionen und Thumbnails** werden neu encodiert: EXIF-Orientierung wird angewendet, **EXIF/GPS-Metadaten werden verworfen**. Nur Arbeitsversionen werden von Engine und UI verwendet.
 - Optionaler späterer Export (Post-MVP) nutzt ausschließlich metadatenfreie Arbeitsversionen.
-- Interne Dateinamen sind UUIDs; Originaldateinamen werden nicht gespeichert.
+- Interne Dateinamen sind zufällige IDs; Originaldateinamen werden **nie gelesen oder gespeichert** – die Dateiendung kommt ausschließlich aus dem MIME-Typ (umgesetzt in `services/imageSources.ts`, getestet).
+- Kamera-Berechtigung wird erst beim Tippen auf „Foto aufnehmen“ angefragt; Ablehnung wird freundlich erklärt (kein stilles Scheitern).
+- Beispielbilder sind eigene Illustrationen, in der App gebündelt (offline, keine Fremdinhalte).
+- Web-Vorschau: Bilder bleiben nur im Speicher des Browser-Tabs (kein Dateisystem, kein Upload).
 - **Logging-Regel:** Keine Bildinhalte, Pfade mit Nutzerbezug, EXIF-Daten oder Dateinamen in Logs. Logger-Wrapper erlaubt nur IDs und Fehlercodes.
 
 ## Löschen
@@ -48,7 +51,7 @@ Einzelnes Puzzle (inkl. ungenutztem Bild) · alle Puzzles · „Alle lokalen Dat
 
 Zufällige Rechenaufgabe in Worten bzw. „Halte die Taste 3 Sekunden gedrückt und tippe auf die Zahl …“, ohne visuelle Hinweise für Leseanfänger. **Die Schranke ersetzt keine rechtlich erforderliche Einwilligung.**
 
-## SDK-Liste (Stand Phase 1, `apps/mobile/package.json`)
+## SDK-Liste (Stand Phase 3, `apps/mobile/package.json`)
 
 | Paket                                                                                                              | Zweck                                                                       | Netzwerk / Daten nach außen    |
 | ------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------- | ------------------------------ |
@@ -56,7 +59,7 @@ Zufällige Rechenaufgabe in Worten bzw. „Halte die Taste 3 Sekunden gedrückt 
 | `expo-dev-client`                                                                                                  | Nur Development-Build (Verbindung zum lokalen Metro-Server des Entwicklers) | nur im Dev-Build, lokal        |
 | `expo-font`, `@expo-google-fonts/nunito`                                                                           | Schrift, **in der App gebündelt**                                           | nein (kein Abruf zur Laufzeit) |
 | `expo-image`, `expo-linear-gradient`, `react-native-svg`                                                           | Darstellung                                                                 | nein                           |
-| `expo-image-picker`, `expo-image-manipulator`, `expo-file-system`                                                  | Bildauswahl, -verarbeitung, Ablage                                          | nein                           |
+| `expo-image-picker`, `expo-image-manipulator`, `expo-file-system`, `expo-asset`                                    | Bildauswahl, -verarbeitung, Ablage, gebündelte Beispielbilder               | nein                           |
 | `expo-sqlite`                                                                                                      | Lokale Datenbank                                                            | nein                           |
 | `@shopify/react-native-skia`, `react-native-reanimated`, `react-native-worklets`, `react-native-gesture-handler`   | Puzzle-Rendering, Animation, Gesten                                         | nein                           |
 | `react-native-safe-area-context`, `react-native-screens`, `react-native-web`, `react-dom`                          | Layout / Web-Vorschau                                                       | nein                           |

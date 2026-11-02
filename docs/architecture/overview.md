@@ -32,17 +32,19 @@ puzzle-studio/
 │   ├── app/                     Expo-Router-Routen (dünn: nur Re-Exports der Feature-Screens)
 │   ├── features/<feature>/      Screens, Hooks, feature-lokale Komponenten
 │   │   ✅ foundation · system-check · benchmark (Dev-Werkzeug, 256-Teile-Test)
-│   │   ⏳ onboarding · home · creator · puzzle · collection · achievements · parent
+│   │   ✅ onboarding · home · creator (Atelier, Beispielbilder, Zuschnitt) · parents (Vorschau)
+│   │   ⏳ puzzle · collection · achievements
 │   ├── services/                Plattform-Adapter (✅ skiaLoader / .web)
 │   ├── i18n/                    ✅ typisierte Texte (de)
 │   ├── assets/                  ✅ brand/ (Interims-Icon, Splash), samples/ (eigene Beispielbilder)
 │   ├── .maestro/                ✅ E2E-/Screenshot-Flows
-│   ├── storage/ · store/        ⏳ Phase 3/5 (SQLite-Repositories, Zustand)
+│   ├── storage/                 ✅ SQLite-Migrationen, Settings, Bilder (nativ: Dateien + DB; Web: Speicher)
+│   ├── store/                   ✅ React-Kontexte (Settings, Bilder)
 │   ├── app.config.ts · eas.json ✅ Varianten development/preview/production
 ├── packages/
 │   ├── ui/                      ✅ Tokens · Text · PrimaryButton · SecondaryButton · Surface · Screen · StatusPill
 │   ├── puzzle-engine/           ⏳ Phase 4 – reines TS
-│   ├── image-processing/        ⏳ Phase 3 – reines TS
+│   ├── image-processing/        ✅ reines TS: Zuschnitt/Drehung/Größen, Transform-Hash, Farbgruppen
 │   ├── game-progression/        ⏳ Phase 6 – reines TS
 │   └── shared/                  bei Bedarf
 ├── scripts/design-preview/      ✅ Mockup-, Icon- und Beispielbild-Renderer

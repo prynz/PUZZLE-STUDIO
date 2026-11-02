@@ -51,9 +51,14 @@ export default defineConfig([
     files: ['packages/ui/src/**/*.tsx'],
     rules: { 'no-restricted-syntax': ['error', NO_LAYOUT_ANIMATION] },
   },
-  // Tokens are platform-agnostic: no React / RN / Expo imports.
+  // Pure modules (tokens, mascot, illustrations, image-processing): no React / RN / Expo imports.
   {
-    files: ['packages/ui/src/tokens.ts'],
+    files: [
+      'packages/ui/src/tokens.ts',
+      'packages/ui/src/mascot/**/*.ts',
+      'packages/ui/src/illustrations/**/*.ts',
+      'packages/image-processing/src/**/*.ts',
+    ],
     rules: {
       'no-restricted-imports': ['error', { patterns: ['react', 'react-native', 'react-native-*', 'expo', 'expo-*'] }],
     },

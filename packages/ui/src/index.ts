@@ -21,3 +21,8 @@ export * from './components/EmptyState.tsx';
 export * from './components/SpeechBubble.tsx';
 export * from './components/FeatureCard.tsx';
 export * from './components/Appear.tsx';
+export * from './components/Chip.tsx';
+export * from './components/ActionTile.tsx';
+export * from './components/ImageTile.tsx';
+export * from './components/ConfirmDialog.tsx';
+export * from './components/LoadingState.tsx';
