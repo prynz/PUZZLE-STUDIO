@@ -19,6 +19,8 @@ interface PuzzleStateV1 {
   }>;
   z: number[]; // z-Order der losen Teile (Piece-IDs)
   trayOrder: number[]; // Reihenfolge in der Ablage
+  baskets: Array<{ id: string; label: string; order: number }>; // vom Kind umbenannt/umsortiert
+  misplaceMode: 'nudge' | 'return'; // falsch gelegt: zum freien Platz gleiten | zurück in die Schale
   moves: number;
   referenceVisible: boolean;
 }

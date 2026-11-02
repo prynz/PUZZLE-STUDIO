@@ -43,7 +43,7 @@ interface PieceShape {
 - Teil rastet ein, wenn Abstand zur Zielposition < `snapTolerance` (Standard 18 % der Zellbreite; „Easy“ bis 35 %).
 - Optional: Nachbar-Snapping (Gruppen) für größere Puzzles.
 - Eingerastete Teile sind **fest (locked)**: nicht mehr greifbar, nicht im Hit-Test, werden in die Brett-Ebene eingebacken (PO-Vorgabe, siehe [gameplay-concept.md](../product/gameplay-concept.md)).
-- Toleranz je Hilfe-Stufe; Fehlplatzierung: zurück in die Schale (leicht) bzw. lose liegen lassen (klassisch).
+- Toleranz je Hilfe-Stufe. Fehlplatzierung: `nudge` → `findFreeSpot(piece, state)` sucht spiralförmig den nächsten Platz ohne Überlappung (Bounding-Box-Test gegen eingerastete und lose Teile) bzw. `return` → zurück in die Schale.
 
 ## Klassifizierung & Tipps
 

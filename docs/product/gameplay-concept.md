@@ -36,7 +36,9 @@ Hinweis: Der 256-Teile-Test ist ein **Leistungstest** (bewusst „Worst Case“:
 
 - **Alle** – alle losen Teile.
 - **Ränder / Ecken** – aus der Geometrie (Teil hat gerade Kante / zwei gerade Kanten). Kinder lernen „erst den Rahmen“.
-- **Farbschalen** – automatisch: Durchschnittsfarbe jedes Teils aus der Arbeitsversion des Bildes, gruppiert in 3–5 Farbgruppen (k-means, deterministisch). Name und Farbe der Schale aus der Gruppenfarbe („Himmel“-Blau, „Wiese“-Grün … bzw. neutral „Blau“, „Grün“, wenn kein Name passt). Schalen tragen **Farbe + Symbol + Text** (nicht nur Farbe → farbenblind-tauglich).
+- **Farbschalen** – automatisch: Durchschnittsfarbe jedes Teils aus der Arbeitsversion des Bildes, gruppiert in 3–5 Farbgruppen (deterministisches Clustering). Schalen tragen **Farbe + Symbol + Text** (farbenblind-tauglich).
+- **Benennung (PO-Entscheidung):** Bei eindeutigen Motiven schlägt die App sprechende Namen vor („Himmel“, „Wiese“), sonst Farbnamen („Blau“, „Grün“). Jede Schale kann **umbenannt** werden (Stift-Symbol, kurze Eingabe, Vorlesen-freundlich).
+- **Eigene Reihenfolge (PO-Entscheidung):** Schalen lassen sich per Langdruck + Ziehen **umsortieren**, damit jedes Kind sein eigenes Sortier-Erlebnis gestaltet. Namen und Reihenfolge werden pro Puzzle im Spielstand gespeichert.
 - **Meine Schale** (ab 144 Teilen) – Kind zieht Teile selbst hinein (eigenes Sortieren).
 - Ablage-Reihenfolge innerhalb einer Schale: gemischt (Spielspaß), optional „nach Farbe sortiert“ (Hilfe-Stufe).
 
@@ -51,9 +53,10 @@ Hinweis: Der 256-Teile-Test ist ein **Leistungstest** (bewusst „Worst Case“:
 
 - Wird ein Teil **nahe genug an seinem Zielplatz** losgelassen (Toleranz je Stufe, z. B. 35 % der Teilbreite „leicht“, 18 % „klassisch“), gleitet es mit einer Feder-Animation exakt hinein: kurzer Glanz/Stern, leiser Klick-Ton, leichte Haptik.
 - Danach ist es **fest (locked)**: nicht mehr greifbar, aus dem Hit-Test entfernt, wird in die ruhige Brett-Ebene „eingebacken“ (das spart zugleich Rechenleistung – siehe unten).
-- **Falscher Platz:**
-  - leicht/einfach: Teil schwebt sanft in seine Schale zurück (kein „Fehler“-Signal).
-  - klassisch/anspruchsvoll: Teil bleibt lose auf dem Brett liegen und kann weiter verschoben werden (wird nie über eingerastete Teile gelegt).
+- **Falscher Platz (PO-Entscheidung):** Einstellung „Falsch gelegte Teile“ mit zwei Varianten:
+  - **„Liegen lassen“ (Standard):** Das Teil bleibt lose auf dem Brett, gleitet aber sanft zum **nächsten freien Platz in der Nähe** – es überlappt weder eingerastete noch andere lose Teile. Die Suche nach dem freien Platz ist Engine-Logik (`findFreeSpot`, deterministisch, getestet).
+  - **„Zurück in die Schale“:** Das Teil schwebt automatisch in seine Schale zurück (kein „Fehler“-Signal).
+  - Voreinstellung je Schwierigkeit (leichte Stufen: „Zurück in die Schale“), änderbar vor dem Spiel und im Elternbereich.
 - Eingerastete Teile können nur über „Puzzle neu starten“ (mit Rückfrage) gelöst werden.
 - Später (Post-MVP, „Profi“): lose Teile, die untereinander passen, verbinden sich zu Gruppen.
 
@@ -72,8 +75,10 @@ Hinweis: Der 256-Teile-Test ist ein **Leistungstest** (bewusst „Worst Case“:
 
 Der Leistungstest wird in Phase 5 auf genau diese Struktur umgestellt (Brett mit eingerasteten Teilen + Ablage + gezogenes Teil), damit wir die **echte** Spielsituation messen. Die aktuelle „alles auf einmal“-Variante bleibt als Extremtest erhalten.
 
-## Offene Entscheidungen für den PO
+## Entscheidungen
 
-1. Fehlplatzierung im Modus „klassisch“: lose auf dem Brett liegen lassen (Vorschlag) oder immer zurück in die Schale?
-2. Farbschalen mit sprechenden Namen („Himmel“, „Wiese“) – nur wenn eindeutig erkennbar, sonst Farbnamen (Vorschlag) – oder immer Farbnamen?
-3. „Meine Schale“ schon im MVP oder erst später (Vorschlag: MVP ab 144 Teilen)?
+| #   | Frage                 | Entscheidung                                                                                                |
+| --- | --------------------- | ----------------------------------------------------------------------------------------------------------- |
+| 1   | Falsch gelegtes Teil  | PO: Standard „liegen lassen + zum freien Platz in der Nähe gleiten“; Option „zurück in die Schale“          |
+| 2   | Namen der Schalen     | PO: Vorschlag (sprechend bei eindeutigen Motiven, sonst Farbname); umbenennbar; Reihenfolge frei sortierbar |
+| 3   | „Meine Schale“ im MVP | **offen** – Erklärung an PO gesendet                                                                        |
