@@ -13,16 +13,20 @@ interface PuzzleStateV1 {
     id: number;
     x: number;
     y: number; // normalisiert 0..1 relativ zum Spielfeld (geräteunabhängig)
-    placed: boolean;
+    state: 'tray' | 'loose' | 'locked'; // locked = eingerastet, unveränderlich
+    basket?: 'mine'; // vom Kind in „Meine Schale“ gelegt
     group?: number; // für Nachbar-Snapping
   }>;
-  z: number[]; // z-Order (Piece-IDs)
+  z: number[]; // z-Order der losen Teile (Piece-IDs)
+  trayOrder: number[]; // Reihenfolge in der Ablage
   moves: number;
   referenceVisible: boolean;
 }
 ```
 
 ## Regeln
+
+- `locked` ist endgültig: Laden erzwingt bei `locked` die exakte Zielposition (Positionswerte werden ignoriert); nur „Puzzle neu starten“ setzt zurück.
 
 - `engineVersion` im Puzzle-Datensatz: Ändert sich der Kanten-Algorithmus, bleibt die alte Version für bestehende Puzzles erhalten (Geometrie identisch beim Wiederherstellen).
 - `v` im State: Migrationsfunktionen `migrateState(vN → vN+1)`, getestet.

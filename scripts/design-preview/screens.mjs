@@ -10,8 +10,8 @@ import { scene, sceneGroup } from './scenes.mjs';
 
 export const SCREEN = { width: 390, height: 844 };
 
-const grad = (g) => `linear-gradient(${g.angle}deg, ${g.colors.join(', ')})`;
-const sh = (s) => `0 ${s.offsetY}px ${s.blur}px rgba(56,51,79,${s.opacity})`;
+export const grad = (g) => `linear-gradient(${g.angle}deg, ${g.colors.join(', ')})`;
+export const sh = (s) => `0 ${s.offsetY}px ${s.blur}px rgba(56,51,79,${s.opacity})`;
 const type = (t) =>
   `font-size:${t.fontSize}px;line-height:${t.lineHeight}px;font-weight:${t.fontWeight};letter-spacing:${t.letterSpacing}px;`;
 
@@ -62,7 +62,7 @@ body{font-family:Nunito,sans-serif;color:${color.text.primary};-webkit-font-smoo
 `;
 }
 
-const statusBar = () => `<div class="status"><span>9:41</span><span class="icons">
+export const statusBar = () => `<div class="status"><span>9:41</span><span class="icons">
   <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="${P.navy}"/><rect x="5" y="5" width="3" height="7" rx="1" fill="${P.navy}"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="${P.navy}"/><rect x="15" y="0" width="3" height="12" rx="1" fill="${P.navy}"/></svg>
   <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 L5.5 8.6 A3.6 3.6 0 0 1 10.5 8.6Z M2.8 5.8 A7.6 7.6 0 0 1 13.2 5.8 L11.6 7.6 A5.2 5.2 0 0 0 4.4 7.6Z M0 3 A11.6 11.6 0 0 1 16 3 L14.4 4.8 A9.2 9.2 0 0 0 1.6 4.8Z" fill="${P.navy}"/></svg>
   <svg width="26" height="12" viewBox="0 0 26 12"><rect x="0.5" y="0.5" width="22" height="11" rx="3.5" fill="none" stroke="${P.navy}" opacity=".5"/><rect x="2" y="2" width="17" height="8" rx="2" fill="${P.navy}"/><rect x="24" y="4" width="2" height="4" rx="1" fill="${P.navy}" opacity=".5"/></svg>

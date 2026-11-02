@@ -42,7 +42,14 @@ interface PieceShape {
 
 - Teil rastet ein, wenn Abstand zur Zielposition < `snapTolerance` (Standard 18 % der Zellbreite; „Easy“ bis 35 %).
 - Optional: Nachbar-Snapping (Gruppen) für größere Puzzles.
-- Eingerastete Teile sind fixiert (MVP) und wandern in der z-Order nach unten.
+- Eingerastete Teile sind **fest (locked)**: nicht mehr greifbar, nicht im Hit-Test, werden in die Brett-Ebene eingebacken (PO-Vorgabe, siehe [gameplay-concept.md](../product/gameplay-concept.md)).
+- Toleranz je Hilfe-Stufe; Fehlplatzierung: zurück in die Schale (leicht) bzw. lose liegen lassen (klassisch).
+
+## Klassifizierung & Tipps
+
+- `classifyEdges(piece)` → `corner` | `edge` | `inner` (aus geraden Randkanten) – Basis der Schalen „Ränder“/„Ecken“.
+- `suggestPiece(state)` → ein loses Teil, bevorzugt mit eingerastetem Nachbarn; deterministisch testbar.
+- Farbgruppen kommen aus `image-processing` (`pieceColorGroups`), nicht aus der Geometrie.
 
 ## Tests (Pflicht)
 

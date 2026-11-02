@@ -15,6 +15,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { palette as P } from '../../packages/ui/src/tokens.ts';
 import { cloud, flower, leaf, star, twinkle } from './decor.mjs';
 import { EMOTIONS, mascot } from './mascot.mjs';
+import { gameplayTray } from './gameplay-tray.mjs';
 import { SCREEN, SCREENS, css } from './screens.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -148,6 +149,7 @@ async function main() {
   for (const s of SCREENS) {
     await shot(`concept-mockup-${s.id}`, page(s.render()), SCREEN, '.screen');
   }
+  await shot('concept-mockup-gameplay-tray', page(gameplayTray()), SCREEN, '.screen');
   await shot('concept-mockup-overview', page(board()), { width: 2300, height: 1260 }, 'body > div');
   await shot('concept-mascot-sheet', page(mascotSheet()), { width: 1120, height: 900 }, 'body > div');
   await shot('concept-design-tokens', page(tokenSheet()), { width: 1120, height: 900 }, 'body > div');
