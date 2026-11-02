@@ -95,7 +95,12 @@ appId: com.puzzlestudio.app.preview
 - waitForAnimationToEnd
 - takeScreenshot: screenshots/shot-${PLATFORM}-11-system-check
 # 256-piece test – now built from the real puzzle engine (Phase 4)
-- tapOn: 'Zurück'
+- scrollUntilVisible:
+    element:
+      id: 'check-back'
+    direction: DOWN
+- tapOn:
+    id: 'check-back'
 - scrollUntilVisible:
     element:
       id: 'parents-benchmark'

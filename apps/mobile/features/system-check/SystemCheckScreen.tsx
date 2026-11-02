@@ -78,7 +78,7 @@ export function SystemCheckScreen() {
         </CheckRow>
       </View>
 
-      <SecondaryButton label={t('check.back')} onPress={() => router.back()} style={styles.back} />
+      <SecondaryButton testID="check-back" label={t('check.back')} onPress={() => router.back()} style={styles.back} />
     </Screen>
   );
 }
