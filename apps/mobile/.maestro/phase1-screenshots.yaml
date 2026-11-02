@@ -6,7 +6,7 @@ appId: com.puzzlestudio.app.preview
     clearState: true
 - extendedWaitUntil:
     visible: 'Hallo, ich bin Pino!'
-    timeout: 30000
+    timeout: 90000
 - takeScreenshot: screenshots/phase1-${PLATFORM}-01-start
 - tapOn:
     id: 'start-system-check'
