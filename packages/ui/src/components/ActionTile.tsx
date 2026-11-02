@@ -15,7 +15,13 @@ export interface ActionTileProps {
   testID?: string;
 }
 
-/** Square illustrated action (camera, gallery, samples). */
+const SOFT_HYPHEN = /\u00AD/g;
+
+/**
+ * Square illustrated action (camera, gallery, samples).
+ * Long German compounds should carry a soft hyphen (\u00AD) in the i18n string so narrow
+ * tiles break them as "Beispiel-bilder" instead of mid-syllable.
+ */
 export function ActionTile({ label, illustration, onPress, tone = 'sky', disabled = false, testID }: ActionTileProps) {
   const scale = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.get() }] }));
@@ -24,7 +30,7 @@ export function ActionTile({ label, illustration, onPress, tone = 'sky', disable
       <Pressable
         testID={testID}
         accessibilityRole="button"
-        accessibilityLabel={label}
+        accessibilityLabel={label.replace(SOFT_HYPHEN, '')}
         accessibilityState={{ disabled }}
         disabled={disabled}
         onPress={onPress}
@@ -33,7 +39,7 @@ export function ActionTile({ label, illustration, onPress, tone = 'sky', disable
         style={[styles.tile, { backgroundColor: color.surface[tone] }, shadowStyle(shadow.card)]}
       >
         <View style={styles.art}>{illustration}</View>
-        <Text variant="label" align="center">
+        <Text variant="label" align="center" android_hyphenationFrequency="normal">
           {label}
         </Text>
       </Pressable>

@@ -44,7 +44,7 @@ export const de = {
   'creator.intro': 'Wähle ein Bild für dein Puzzle.',
   'creator.camera': 'Foto aufnehmen',
   'creator.library': 'Aus der Galerie',
-  'creator.samples': 'Beispielbilder',
+  'creator.samples': 'Beispiel\u00ADbilder',
   'creator.myImages': 'Meine Bilder',
   'creator.empty': 'Noch keine Bilder. Such dir oben eines aus!',
   'creator.next': 'Bald kannst du aus deinen Bildern Puzzles machen – Pino übt schon.',
