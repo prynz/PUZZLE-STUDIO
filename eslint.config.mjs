@@ -5,6 +5,13 @@ import prettier from 'eslint-config-prettier/flat';
 
 const RAW_COLOR = String.raw`/^(#[0-9a-fA-F]{3,8}|rgba?\(.*\)|hsla?\(.*\)|white|black)$/`;
 
+// Reanimated layout animations can stay invisible when system animations are
+// disabled (found on Android CI). Use <Appear> from @puzzle-studio/ui instead.
+const NO_LAYOUT_ANIMATION = {
+  selector: 'JSXAttribute[name.name=/^(entering|exiting)$/]',
+  message: 'Keine Reanimated-Layout-Animationen (entering/exiting) – <Appear> aus @puzzle-studio/ui verwenden.',
+};
+
 export default defineConfig([
   expoConfig,
   prettier,
@@ -36,8 +43,13 @@ export default defineConfig([
           selector: `Literal[value=${RAW_COLOR}]`,
           message: 'Keine Roh-Farben in Screens – Tokens aus @puzzle-studio/ui verwenden.',
         },
+        NO_LAYOUT_ANIMATION,
       ],
     },
+  },
+  {
+    files: ['packages/ui/src/**/*.tsx'],
+    rules: { 'no-restricted-syntax': ['error', NO_LAYOUT_ANIMATION] },
   },
   // Tokens are platform-agnostic: no React / RN / Expo imports.
   {

@@ -1,4 +1,5 @@
 import {
+  Appear,
   Mascot,
   PrimaryButton,
   ProgressDots,
@@ -11,7 +12,6 @@ import {
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Animated, { FadeIn } from 'react-native-reanimated';
 
 import { t } from '@/i18n';
 import { DEFAULT_PROFILE, useSettings, type PlayProfile } from '@/store/settings';
@@ -47,7 +47,7 @@ export function OnboardingScreen() {
           </View>
         }
       >
-        <Animated.View entering={FadeIn.duration(360)} style={styles.fill}>
+        <Appear style={styles.fill}>
           <SecondaryButton
             testID="onb-skip"
             size="compact"
@@ -64,7 +64,7 @@ export function OnboardingScreen() {
           <View style={styles.mascot}>
             <Mascot emotion="greeting" size={250} animated />
           </View>
-        </Animated.View>
+        </Appear>
       </Screen>
     );
   }
@@ -86,7 +86,7 @@ export function OnboardingScreen() {
           </View>
         }
       >
-        <Animated.View entering={FadeIn.duration(360)} style={styles.fill}>
+        <Appear style={styles.fill}>
           <SecondaryButton
             size="compact"
             label={t('onb.skip')}
@@ -102,7 +102,7 @@ export function OnboardingScreen() {
           <Text variant="bodyLarge" align="center" style={styles.body}>
             {t('onb.promise.body')}
           </Text>
-        </Animated.View>
+        </Appear>
       </Screen>
     );
   }
@@ -123,7 +123,7 @@ export function OnboardingScreen() {
         </View>
       }
     >
-      <Animated.View entering={FadeIn.duration(360)} style={styles.profileWrap}>
+      <Appear style={styles.profileWrap}>
         <Text variant="title1" align="center" accessibilityRole="header" style={styles.title}>
           {t('onb.profile.title')}
         </Text>
@@ -150,7 +150,7 @@ export function OnboardingScreen() {
             />
           ))}
         </View>
-      </Animated.View>
+      </Appear>
     </Screen>
   );
 }

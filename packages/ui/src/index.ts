@@ -20,3 +20,4 @@ export * from './components/BottomNavigation.tsx';
 export * from './components/EmptyState.tsx';
 export * from './components/SpeechBubble.tsx';
 export * from './components/FeatureCard.tsx';
+export * from './components/Appear.tsx';
