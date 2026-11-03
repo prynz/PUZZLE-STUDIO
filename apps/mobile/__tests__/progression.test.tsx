@@ -172,7 +172,10 @@ describe('Erfolge', () => {
     await waitFor(() => expect(screen.getByText('Du hast 2 Sterne gesammelt!')).toBeTruthy());
     expect(screen.getByLabelText('Erstes Puzzle. Belohnung: Rahmen „Sonne“')).toBeTruthy();
     expect(screen.getByLabelText('Zehn Puzzles. Puzzle zehn Bilder fertig.')).toBeTruthy();
+    expect(screen.getByText('3 von 10 Meilensteinen geschafft')).toBeTruthy();
+    await fireEvent.press(screen.getByTestId('awards-stickers'));
     expect(screen.getByLabelText('Sticker „Stern“')).toBeTruthy();
+    await fireEvent.press(screen.getByTestId('awards-rewards'));
     expect(screen.queryByTestId('reward-background_sky')).toBeNull(); // still locked
     await fireEvent.press(screen.getByTestId('reward-background_meadow'));
     expect(screen.getByTestId('reward-background_meadow').props.accessibilityState).toMatchObject({ selected: true });

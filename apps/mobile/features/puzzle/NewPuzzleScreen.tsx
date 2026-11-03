@@ -1,6 +1,10 @@
 import { ENGINE_VERSION, PIECE_PRESETS, chooseGrid, type PieceShapeStyle } from '@puzzle-studio/puzzle-engine';
 import {
+  Appear,
   Chip,
+  Section,
+  layout,
+  staggerDelay,
   EmptyState,
   ImageTile,
   PrimaryButton,
@@ -91,90 +95,101 @@ export function NewPuzzleScreen() {
   };
 
   return (
-    <Screen scroll background="dream" contentStyle={styles.content}>
+    <Screen
+      scroll
+      background="dream"
+      contentStyle={styles.content}
+      footer={<PrimaryButton testID="puzzle-start" label={t('newPuzzle.start')} onPress={start} disabled={busy} />}
+    >
       <View style={styles.header}>
         <SecondaryButton size="compact" label={t('newPuzzle.back')} onPress={() => router.back()} />
         <Text variant="title2" accessibilityRole="header">
           {t('newPuzzle.title')}
         </Text>
       </View>
-      <View style={styles.preview}>
-        <ImageTile
-          source={{ uri: image.thumbUri }}
-          aspect={image.work.width / image.work.height}
-          accessibilityLabel={t('creator.imageLabel')}
-        />
-      </View>
-
-      {started.length > 0 ? (
-        <View style={styles.group}>
-          <Text variant="title3">{t('newPuzzle.started')}</Text>
-          {started.map((p) => {
-            const total = p.definition.rows * p.definition.cols;
-            const done = p.status === 'completed';
-            return (
-              <SecondaryButton
-                key={p.id}
-                testID="puzzle-continue"
-                label={
-                  done ? t('newPuzzle.again', { total }) : t('newPuzzle.continue', { placed: p.placedCount, total })
-                }
-                onPress={async () => {
-                  if (done) await reset(p.id);
-                  router.replace({ pathname: '/puzzle/[id]', params: { id: p.id } });
-                }}
+      <Appear variant="rise">
+        <Section tone="sky">
+          <View style={styles.top}>
+            <View style={styles.preview}>
+              <ImageTile
+                source={{ uri: image.thumbUri }}
+                aspect={image.work.width / image.work.height}
+                accessibilityLabel={t('creator.imageLabel')}
               />
-            );
-          })}
-        </View>
-      ) : null}
+            </View>
+            <View style={styles.started}>
+              {started.length > 0 ? <Text variant="label">{t('newPuzzle.started')}</Text> : null}
+              {started.map((p) => {
+                const total = p.definition.rows * p.definition.cols;
+                const done = p.status === 'completed';
+                return (
+                  <SecondaryButton
+                    key={p.id}
+                    size="compact"
+                    testID="puzzle-continue"
+                    label={
+                      done ? t('newPuzzle.again', { total }) : t('newPuzzle.continue', { placed: p.placedCount, total })
+                    }
+                    onPress={async () => {
+                      if (done) await reset(p.id);
+                      router.replace({ pathname: '/puzzle/[id]', params: { id: p.id } });
+                    }}
+                  />
+                );
+              })}
+              <Text variant="label">{t('newPuzzle.shape')}</Text>
+              <View style={styles.chips}>
+                {(['classic', 'square'] as const).map((s) => (
+                  <Chip
+                    key={s}
+                    testID={`shape-${s}`}
+                    label={t(`newPuzzle.${s}`)}
+                    selected={shape === s}
+                    onPress={() => setShape(s)}
+                  />
+                ))}
+              </View>
+              <Text variant="caption">
+                {t('newPuzzle.helper', { name: t(`profile.${profile}.title` as MessageKey) })}
+              </Text>
+            </View>
+          </View>
+        </Section>
+      </Appear>
 
-      <View style={styles.group}>
-        <Text variant="title3">{t('newPuzzle.pieces')}</Text>
-        <View style={styles.chips}>
-          {options.map((g) => {
-            const n = g.rows * g.cols;
-            return (
-              <Chip
-                key={n}
-                testID={`pieces-${n}`}
-                label={t('newPuzzle.count', { n })}
-                selected={grid.rows * grid.cols === n}
-                onPress={() => setPick(n)}
-              />
-            );
-          })}
-        </View>
-      </View>
-      <View style={styles.group}>
-        <Text variant="title3">{t('newPuzzle.shape')}</Text>
-        <View style={styles.chips}>
-          {(['classic', 'square'] as const).map((s) => (
-            <Chip
-              key={s}
-              testID={`shape-${s}`}
-              label={t(`newPuzzle.${s}`)}
-              selected={shape === s}
-              onPress={() => setShape(s)}
-            />
-          ))}
-        </View>
-      </View>
-      <Text variant="caption">{t('newPuzzle.helper', { name: t(`profile.${profile}.title` as MessageKey) })}</Text>
+      <Appear variant="rise" delay={staggerDelay(1)}>
+        <Section title={t('newPuzzle.pieces')}>
+          <View style={styles.chips}>
+            {options.map((g) => {
+              const n = g.rows * g.cols;
+              return (
+                <Chip
+                  key={n}
+                  testID={`pieces-${n}`}
+                  label={t('newPuzzle.count', { n })}
+                  selected={grid.rows * grid.cols === n}
+                  onPress={() => setPick(n)}
+                />
+              );
+            })}
+          </View>
+        </Section>
+      </Appear>
+
       {failed ? (
         <Surface tone="peach" accessibilityLiveRegion="polite">
           <Text variant="body">{t('newPuzzle.failed')}</Text>
         </Surface>
       ) : null}
-      <PrimaryButton testID="puzzle-start" label={t('newPuzzle.start')} onPress={start} disabled={busy} />
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  content: { gap: spacing.md, paddingBottom: spacing.xl },
+  content: { gap: layout.sectionGap },
   header: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
-  preview: { width: '60%', alignSelf: 'center' },
-  group: { gap: spacing.sm },
+  top: { flexDirection: 'row', gap: spacing.md, alignItems: 'center' },
+  preview: { width: '42%' },
+  started: { flex: 1, gap: spacing.xs },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
 });

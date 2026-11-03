@@ -1,4 +1,4 @@
-import { Icon, IconButton, ImageTile, Screen, Text, spacing } from '@puzzle-studio/ui';
+import { Appear, Icon, IconButton, ImageTile, Screen, Text, spacing, staggerDelay } from '@puzzle-studio/ui';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -34,20 +34,20 @@ export function SamplesScreen() {
       </View>
       {failed ? <Text variant="body">{t('creator.failed')}</Text> : null}
       <View style={styles.grid}>
-        {SAMPLES.map((s) => (
-          <Pressable
-            key={s.id}
-            testID={`sample-${s.id}`}
-            accessibilityRole="button"
-            accessibilityLabel={t(s.labelKey)}
-            onPress={() => choose(s.module)}
-            style={styles.cell}
-          >
-            <ImageTile source={s.module} aspect={4 / 3} accessibilityLabel={t(s.labelKey)} />
-            <Text variant="label" align="center" style={styles.label}>
-              {t(s.labelKey)}
-            </Text>
-          </Pressable>
+        {SAMPLES.map((s, index) => (
+          <Appear key={s.id} variant="pop" delay={staggerDelay(index, 70)} style={styles.cell}>
+            <Pressable
+              testID={`sample-${s.id}`}
+              accessibilityRole="button"
+              accessibilityLabel={t(s.labelKey)}
+              onPress={() => choose(s.module)}
+            >
+              <ImageTile source={s.module} aspect={4 / 3} accessibilityLabel={t(s.labelKey)} />
+              <Text variant="label" align="center" style={styles.label}>
+                {t(s.labelKey)}
+              </Text>
+            </Pressable>
+          </Appear>
         ))}
       </View>
     </Screen>

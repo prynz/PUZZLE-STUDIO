@@ -1,6 +1,10 @@
 import { validChoice } from '@puzzle-studio/game-progression';
 import {
+  Appear,
   BOTTOM_NAV_HEIGHT,
+  Section,
+  layout,
+  staggerDelay,
   Chip,
   EmptyState,
   PrimaryButton,
@@ -59,36 +63,43 @@ export function CollectionScreen() {
       <Text variant="title1" accessibilityRole="header">
         {t('collection.title')}
       </Text>
-      <View style={styles.chips}>
-        {FILTERS.map((f) => (
-          <Chip
-            key={f}
-            testID={`filter-${f}`}
-            label={t(`collection.${f}`)}
-            selected={filter === f}
-            onPress={() => setFilter(f)}
-          />
-        ))}
-      </View>
-      <View style={styles.chips}>
-        {SORTS.map((s) => (
-          <Chip
-            key={s}
-            testID={`sort-${s}`}
-            label={t(`collection.${s}`)}
-            selected={sort === s}
-            onPress={() => setSort(s)}
-          />
-        ))}
-      </View>
+      <Section tone="lavender">
+        <View style={styles.chips}>
+          {FILTERS.map((f) => (
+            <Chip
+              key={f}
+              testID={`filter-${f}`}
+              label={t(`collection.${f}`)}
+              selected={filter === f}
+              onPress={() => setFilter(f)}
+            />
+          ))}
+        </View>
+        <View style={styles.chips}>
+          {SORTS.map((s) => (
+            <Chip
+              key={s}
+              testID={`sort-${s}`}
+              label={t(`collection.${s}`)}
+              selected={sort === s}
+              onPress={() => setSort(s)}
+            />
+          ))}
+        </View>
+      </Section>
       {items.length === 0 ? (
         <Surface tone="pink">
           <Text variant="body">{t('collection.filterEmpty')}</Text>
         </Surface>
       ) : (
         <View style={styles.grid}>
-          {items.map((i) => (
-            <View key={i.puzzle.id} style={styles.cell}>
+          {items.map((i, index) => (
+            <Appear
+              key={`${filter}-${sort}-${i.puzzle.id}`}
+              variant="pop"
+              delay={staggerDelay(index)}
+              style={styles.cell}
+            >
               <PuzzleCard
                 testID="collection-card"
                 thumbUri={i.image.thumbUri}
@@ -104,7 +115,7 @@ export function CollectionScreen() {
                 }
                 onPress={() => setOpen(i)}
               />
-            </View>
+            </Appear>
           ))}
         </View>
       )}
@@ -114,7 +125,7 @@ export function CollectionScreen() {
 }
 
 const styles = StyleSheet.create({
-  content: { gap: spacing.md },
+  content: { gap: layout.sectionGap },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
   cell: { width: '48%' },

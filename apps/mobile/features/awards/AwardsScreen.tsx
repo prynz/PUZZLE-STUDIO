@@ -1,14 +1,21 @@
 import { ACHIEVEMENTS, unlockedRewards, validChoice } from '@puzzle-studio/game-progression';
 import {
   AchievementCard,
+  Appear,
   BOTTOM_NAV_HEIGHT,
   Mascot,
   RewardBadge,
   Screen,
+  Section,
+  SegmentedControl,
+  Sparkles,
   SpeechBubble,
   Text,
+  layout,
   spacing,
+  staggerDelay,
 } from '@puzzle-studio/ui';
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { starsText, t, type MessageKey } from '@/i18n';
@@ -17,82 +24,114 @@ import { useSettings } from '@/store/settings';
 
 import { RewardPicker } from './RewardPicker';
 
-/** Tab "Erfolge": stars, friendly milestones, rewards to apply and the sticker album. */
+type Area = 'milestones' | 'rewards' | 'stickers';
+const AREAS: Area[] = ['milestones', 'rewards', 'stickers'];
+
+/**
+ * Tab "Erfolge": stars, then three areas to switch between (instead of one very long page):
+ * milestones (2-column tiles), rewards to apply, sticker album.
+ */
 export function AwardsScreen() {
   const { stats, unlocked } = useProgress();
   const { settings, setReward } = useSettings();
+  const [area, setArea] = useState<Area>('milestones');
   const stickers = unlockedRewards(unlocked, 'sticker');
+  const reached = ACHIEVEMENTS.filter((a) => unlocked.has(a.id)).length;
+  const segments = AREAS.map((key) => ({ key, label: t(`awards.${key}` as MessageKey) }));
+  const mascot = <Mascot emotion={stats.stars > 0 ? 'success' : 'encourage'} size={84} accessibilityLabel={null} />;
+
   return (
     <Screen scroll decor="meadow" bottomInset={BOTTOM_NAV_HEIGHT} contentStyle={styles.content}>
-      <Text variant="title1" accessibilityRole="header">
-        {t('awards.title')}
-      </Text>
-      <View style={styles.hero}>
-        <Mascot emotion={stats.stars > 0 ? 'success' : 'encourage'} size={96} accessibilityLabel={null} />
+      <Appear variant="rise" style={styles.hero}>
+        {stats.stars > 0 ? <Sparkles>{mascot}</Sparkles> : mascot}
         <SpeechBubble>
           <Text variant="title3" testID="awards-stars">
             {stats.stars > 0 ? t('awards.stars', { stars: starsText(stats.stars) }) : t('awards.starsNone')}
           </Text>
+          <Text variant="label" tone="secondary">
+            {t('awards.progress', { n: reached, total: ACHIEVEMENTS.length })}
+          </Text>
         </SpeechBubble>
-      </View>
+      </Appear>
 
-      <Text variant="title3" accessibilityRole="header">
-        {t('awards.milestones')}
-      </Text>
-      {ACHIEVEMENTS.map((a) => {
-        const on = unlocked.has(a.id);
-        return (
-          <AchievementCard
-            key={a.id}
-            testID={`ach-${a.id}`}
-            title={t(`ach.${a.id}` as MessageKey)}
-            description={
-              on
-                ? t('awards.reward', { reward: t(`reward.${a.reward.id}` as MessageKey) })
-                : t(`ach.${a.id}.how` as MessageKey)
-            }
-            rewardId={a.reward.id}
-            unlocked={on}
-          />
-        );
-      })}
+      <SegmentedControl segments={segments} value={area} onChange={setArea} testIDPrefix="awards" />
 
-      <RewardPicker
-        kind="background"
-        title={t('awards.backgrounds')}
-        unlocked={unlocked}
-        value={validChoice(settings.boardBackground, unlocked, 'background')}
-        onChange={(id) => setReward('boardBackground', id)}
-      />
-      <RewardPicker
-        kind="frame"
-        title={t('awards.frames')}
-        unlocked={unlocked}
-        value={validChoice(settings.cardFrame, unlocked, 'frame')}
-        onChange={(id) => setReward('cardFrame', id)}
-      />
-
-      <Text variant="title3" accessibilityRole="header">
-        {t('awards.stickers')}
-      </Text>
-      {stickers.length === 0 ? (
-        <Text variant="body">{t('awards.stickersEmpty')}</Text>
-      ) : (
-        <View style={styles.album}>
-          {stickers.map((s) => (
-            <View key={s.id} style={styles.sticker} accessible accessibilityLabel={t(`reward.${s.id}` as MessageKey)}>
-              <RewardBadge id={s.id} size={88} />
-            </View>
-          ))}
+      {area === 'milestones' ? (
+        <View style={styles.grid}>
+          {ACHIEVEMENTS.map((a, index) => {
+            const on = unlocked.has(a.id);
+            return (
+              <Appear key={a.id} variant="pop" delay={staggerDelay(index)} style={styles.cell}>
+                <AchievementCard
+                  layout="tile"
+                  testID={`ach-${a.id}`}
+                  title={t(`ach.${a.id}` as MessageKey)}
+                  description={
+                    on
+                      ? t('awards.reward', { reward: t(`reward.${a.reward.id}` as MessageKey) })
+                      : t(`ach.${a.id}.how` as MessageKey)
+                  }
+                  rewardId={a.reward.id}
+                  unlocked={on}
+                />
+              </Appear>
+            );
+          })}
         </View>
-      )}
+      ) : null}
+
+      {area === 'rewards' ? (
+        <>
+          <Appear variant="rise">
+            <Section tone="mint">
+              <RewardPicker
+                kind="background"
+                title={t('awards.backgrounds')}
+                unlocked={unlocked}
+                value={validChoice(settings.boardBackground, unlocked, 'background')}
+                onChange={(id) => setReward('boardBackground', id)}
+              />
+            </Section>
+          </Appear>
+          <Appear variant="rise" delay={staggerDelay(1)}>
+            <Section tone="yellow">
+              <RewardPicker
+                kind="frame"
+                title={t('awards.frames')}
+                unlocked={unlocked}
+                value={validChoice(settings.cardFrame, unlocked, 'frame')}
+                onChange={(id) => setReward('cardFrame', id)}
+              />
+            </Section>
+          </Appear>
+        </>
+      ) : null}
+
+      {area === 'stickers' ? (
+        <Section title={t('awards.stickers')} tone="pink">
+          {stickers.length === 0 ? (
+            <Text variant="body">{t('awards.stickersEmpty')}</Text>
+          ) : (
+            <View style={styles.album}>
+              {stickers.map((s, index) => (
+                <Appear key={s.id} variant="pop" delay={staggerDelay(index, 90)}>
+                  <View accessible accessibilityLabel={t(`reward.${s.id}` as MessageKey)}>
+                    <RewardBadge id={s.id} size={88} />
+                  </View>
+                </Appear>
+              ))}
+            </View>
+          )}
+        </Section>
+      ) : null}
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  content: { gap: spacing.md },
-  hero: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  content: { gap: layout.sectionGap },
+  hero: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
+  cell: { width: '48%' },
   album: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md },
-  sticker: { alignItems: 'center' },
 });

@@ -1,4 +1,15 @@
-import { Icon, IconButton, Screen, SecondaryButton, SelectionCard, Surface, Text, spacing } from '@puzzle-studio/ui';
+import {
+  Icon,
+  IconButton,
+  Screen,
+  SecondaryButton,
+  Section,
+  SelectionCard,
+  Surface,
+  Text,
+  layout,
+  spacing,
+} from '@puzzle-studio/ui';
 import { useRouter } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
@@ -24,35 +35,30 @@ export function ParentsScreen() {
         <Text variant="body">{t('parents.preview')}</Text>
       </Surface>
 
-      <Text variant="title3" accessibilityRole="header" style={styles.section}>
-        {t('parents.profile')}
-      </Text>
-      <Text variant="body">{t('parents.profileHint')}</Text>
-      <View style={styles.cards} accessibilityRole="radiogroup">
-        {PLAY_PROFILES.map((p) => (
-          <SelectionCard
-            key={p}
-            testID={`parents-profile-${p}`}
-            title={t(`profile.${p}.title` as const)}
-            subtitle={t(`profile.${p}.sub` as const)}
-            selected={settings.profile === p}
-            onPress={() => setProfile(p)}
-          />
-        ))}
-      </View>
+      <Section title={t('parents.profile')} tone="lavender">
+        <Text variant="body">{t('parents.profileHint')}</Text>
+        <View style={styles.cards} accessibilityRole="radiogroup">
+          {PLAY_PROFILES.map((p) => (
+            <SelectionCard
+              key={p}
+              testID={`parents-profile-${p}`}
+              title={t(`profile.${p}.title` as const)}
+              subtitle={t(`profile.${p}.sub` as const)}
+              selected={settings.profile === p}
+              onPress={() => setProfile(p)}
+            />
+          ))}
+        </View>
+        <SecondaryButton
+          label={t('parents.onboarding')}
+          onPress={async () => {
+            await resetOnboarding();
+            router.replace('/onboarding');
+          }}
+        />
+      </Section>
 
-      <SecondaryButton
-        label={t('parents.onboarding')}
-        onPress={async () => {
-          await resetOnboarding();
-          router.replace('/onboarding');
-        }}
-      />
-
-      <Text variant="title3" accessibilityRole="header" style={styles.section}>
-        {t('parents.tools')}
-      </Text>
-      <View style={styles.tools}>
+      <Section title={t('parents.tools')}>
         <SecondaryButton
           testID="parents-system-check"
           label={t('parents.systemCheck')}
@@ -63,15 +69,13 @@ export function ParentsScreen() {
           label={t('parents.benchmark')}
           onPress={() => router.push('/dev/stress')}
         />
-      </View>
+      </Section>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  content: { gap: spacing.md },
+  content: { gap: layout.sectionGap },
   header: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
-  section: { marginTop: spacing.md },
   cards: { gap: spacing.sm },
-  tools: { gap: spacing.sm },
 });

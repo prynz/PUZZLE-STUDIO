@@ -65,6 +65,8 @@ export function useGame(stored: StoredPuzzle, puzzle: Puzzle, save: (progress: S
   const [selected, setSelected] = useState<number | null>(null);
   const [hint, setHint] = useState<number | null>(null);
   const [groups, setGroups] = useState<ColorGroup[] | null>(null);
+  /** Last piece that snapped in (for the sparkle) – seq changes on every snap. */
+  const [snap, setSnap] = useState<{ id: number; seq: number } | null>(null);
 
   // ---- toddler bites ------------------------------------------------------------------
   const bites = useMemo(() => (rules.bites ? planBites(puzzle) : null), [rules.bites, puzzle]);
@@ -91,6 +93,7 @@ export function useGame(stored: StoredPuzzle, puzzle: Puzzle, save: (progress: S
       const r = dropPiece(puzzle, latest.current, id, x, y, { tolerance: rules.snapTolerance, area });
       latest.current = r.state;
       setState(() => r.state);
+      if (r.outcome === 'locked') setSnap((p) => ({ id, seq: (p?.seq ?? 0) + 1 }));
       setSelected(null);
       setHint((h) => (h === id ? null : h));
       return { id, outcome: r.outcome, x: r.x, y: r.y };
@@ -170,6 +173,7 @@ export function useGame(stored: StoredPuzzle, puzzle: Puzzle, save: (progress: S
 
   return {
     profile: stored.profile,
+    snap,
     rules,
     state,
     restoreFailed,

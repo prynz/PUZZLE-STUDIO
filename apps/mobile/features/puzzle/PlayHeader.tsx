@@ -1,4 +1,4 @@
-import { Icon, IconButton, ProgressBar, Text, spacing } from '@puzzle-studio/ui';
+import { Appear, Icon, IconButton, ProgressBar, Text, spacing } from '@puzzle-studio/ui';
 import { StyleSheet, View } from 'react-native';
 
 import { t } from '@/i18n';
@@ -24,14 +24,17 @@ export function PlayHeader({ game, total, onBack, onRestart }: PlayHeaderProps) 
             accessibilityLabel={t('play.progress', { placed: game.placed, total })}
           />
         ) : (
-          <Text
-            variant="title3"
-            numberOfLines={1}
-            testID="play-progress"
-            accessibilityLabel={t('play.progress', { placed: game.placed, total })}
-          >
-            {t('play.progressShort', { placed: game.placed, total })}
-          </Text>
+          // the counter pops gently each time a piece snaps in
+          <Appear key={game.placed} variant={game.placed > 0 ? 'pop' : 'fade'}>
+            <Text
+              variant="title3"
+              numberOfLines={1}
+              testID="play-progress"
+              accessibilityLabel={t('play.progress', { placed: game.placed, total })}
+            >
+              {t('play.progressShort', { placed: game.placed, total })}
+            </Text>
+          </Appear>
         )}
       </View>
       <IconButton

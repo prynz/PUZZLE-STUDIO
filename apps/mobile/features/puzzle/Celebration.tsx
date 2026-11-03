@@ -1,8 +1,11 @@
 import {
+  Appear,
+  Mascot,
   PrimaryButton,
   RewardBadge,
   SecondaryButton,
   Sheet,
+  Sparkles,
   StarRow,
   Text,
   dialogStyles,
@@ -21,13 +24,23 @@ export interface CelebrationProps {
   onAtelier: () => void;
 }
 
-/** Finished puzzle: Pino celebrates – stars for the size, new milestones, no timer, no score pressure. */
+const STAR_DELAY = 250;
+const STAR_STEP = 260;
+
+/**
+ * Finished puzzle: Pino celebrates with twinkling stars, the earned stars pop in one after
+ * another, then new milestones – calm, no timer, no score pressure. Static with Reduced Motion.
+ */
 export function Celebration({ visible, total, result, onAgain, onAtelier }: CelebrationProps) {
   return (
     <Sheet
       visible={visible}
       title={t('play.doneTitle')}
-      emotion="success"
+      hero={
+        <Sparkles>
+          <Mascot emotion="success" size={96} animated accessibilityLabel={null} />
+        </Sparkles>
+      }
       onRequestClose={onAtelier}
       testID="puzzle-done"
     >
@@ -35,15 +48,28 @@ export function Celebration({ visible, total, result, onAgain, onAtelier }: Cele
         {t('play.doneBody', { total })}
       </Text>
       {result ? (
-        <StarRow stars={result.stars} size={34} accessibilityLabel={t('play.doneStars', { stars: result.stars })} />
+        <StarRow
+          stars={result.stars}
+          size={38}
+          animated
+          delay={STAR_DELAY}
+          accessibilityLabel={t('play.doneStars', { stars: result.stars })}
+        />
       ) : null}
-      {result?.unlocked.map((a) => (
-        <View key={a.id} style={styles.unlock} testID={`unlocked-${a.id}`}>
-          <RewardBadge id={a.reward.id} size={48} />
-          <Text variant="label" style={styles.unlockText}>
-            {t('play.doneNew', { name: t(`ach.${a.id}` as MessageKey) })}
-          </Text>
-        </View>
+      {result?.unlocked.map((a, i) => (
+        <Appear
+          key={a.id}
+          variant="pop"
+          delay={STAR_DELAY + result.stars * STAR_STEP + 150 + i * 160}
+          style={styles.unlock}
+        >
+          <View style={styles.row} testID={`unlocked-${a.id}`}>
+            <RewardBadge id={a.reward.id} size={48} />
+            <Text variant="label" style={styles.unlockText}>
+              {t('play.doneNew', { name: t(`ach.${a.id}` as MessageKey) })}
+            </Text>
+          </View>
+        </Appear>
       ))}
       <View style={dialogStyles.actions}>
         <PrimaryButton testID="done-atelier" label={t('play.doneAtelier')} onPress={onAtelier} />
@@ -54,6 +80,7 @@ export function Celebration({ visible, total, result, onAgain, onAtelier }: Cele
 }
 
 const styles = StyleSheet.create({
-  unlock: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, alignSelf: 'stretch' },
+  unlock: { alignSelf: 'stretch' },
+  row: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   unlockText: { flex: 1 },
 });

@@ -1,5 +1,9 @@
 import {
   ActionTile,
+  Appear,
+  Section,
+  layout,
+  staggerDelay,
   BOTTOM_NAV_HEIGHT,
   ConfirmDialog,
   Icon,
@@ -47,70 +51,73 @@ export function CreateScreen() {
       <Text variant="title1" accessibilityRole="header">
         {t('creator.title')}
       </Text>
-      <Text variant="body">{t('creator.intro')}</Text>
 
-      <View style={styles.sources}>
-        <ActionTile
-          testID="src-camera"
-          tone="sky"
-          label={t('creator.camera')}
-          illustration={<Icon name="camera" />}
-          onPress={() => handle(takePhoto)}
-        />
-        <ActionTile
-          testID="src-library"
-          tone="peach"
-          label={t('creator.library')}
-          illustration={<Icon name="gallery" />}
-          onPress={() => handle(pickFromLibrary)}
-        />
-        <ActionTile
-          testID="src-samples"
-          tone="lavender"
-          label={t('creator.samples')}
-          illustration={<Icon name="sample" />}
-          onPress={() => router.push('/creator/samples')}
-        />
-      </View>
+      <Appear variant="rise">
+        <Section title={t('creator.intro')} tone="sky">
+          <View style={styles.sources}>
+            <ActionTile
+              testID="src-camera"
+              tone="sky"
+              label={t('creator.camera')}
+              illustration={<Icon name="camera" />}
+              onPress={() => handle(takePhoto)}
+            />
+            <ActionTile
+              testID="src-library"
+              tone="peach"
+              label={t('creator.library')}
+              illustration={<Icon name="gallery" />}
+              onPress={() => handle(pickFromLibrary)}
+            />
+            <ActionTile
+              testID="src-samples"
+              tone="lavender"
+              label={t('creator.samples')}
+              illustration={<Icon name="sample" />}
+              onPress={() => router.push('/creator/samples')}
+            />
+          </View>
+          {notice ? (
+            <Surface tone="peach" accessibilityLiveRegion="polite">
+              <Text variant="body">{t(notice)}</Text>
+            </Surface>
+          ) : null}
+        </Section>
+      </Appear>
 
-      {notice ? (
-        <Surface tone="peach" accessibilityLiveRegion="polite">
-          <Text variant="body">{t(notice)}</Text>
-        </Surface>
-      ) : null}
-
-      <Text variant="title3" accessibilityRole="header" style={styles.section}>
-        {t('creator.myImages')} {images.length > 0 ? `· ${images.length}` : ''}
-      </Text>
-      {images.length === 0 ? (
-        <Surface tone="pink">
-          <Text variant="body">{t('creator.empty')}</Text>
-        </Surface>
-      ) : (
-        <View style={styles.grid} testID="my-images">
-          {images.map((img) => (
-            <View key={img.id} style={styles.cell}>
-              <ImageTile
-                testID="my-image"
-                source={{ uri: img.thumbUri }}
-                aspect={img.work.width / img.work.height}
-                accessibilityLabel={t('creator.imageLabel')}
-                onPress={() => router.push({ pathname: '/puzzle/new', params: { imageId: img.id } })}
-                action={
-                  <IconButton
-                    size={48}
-                    accessibilityLabel={t('creator.delete')}
-                    icon={<Icon name="trash" />}
-                    onPress={() => setToDelete(img.id)}
-                  />
-                }
-              />
-            </View>
-          ))}
-        </View>
-      )}
-      <Text variant="caption">{t('creator.next')}</Text>
-      {Platform.OS === 'web' ? <Text variant="caption">{t('creator.webNote')}</Text> : null}
+      <Appear variant="rise" delay={staggerDelay(1)}>
+        <Section title={`${t('creator.myImages')}${images.length > 0 ? ` · ${images.length}` : ''}`}>
+          {images.length === 0 ? (
+            <Text variant="body">{t('creator.empty')}</Text>
+          ) : (
+            <>
+              <Text variant="caption">{t('creator.next')}</Text>
+              <View style={styles.grid} testID="my-images">
+                {images.map((img, index) => (
+                  <Appear key={img.id} variant="pop" delay={staggerDelay(2 + index)} style={styles.cell}>
+                    <ImageTile
+                      testID="my-image"
+                      source={{ uri: img.thumbUri }}
+                      aspect={img.work.width / img.work.height}
+                      accessibilityLabel={t('creator.imageLabel')}
+                      onPress={() => router.push({ pathname: '/puzzle/new', params: { imageId: img.id } })}
+                      action={
+                        <IconButton
+                          size={48}
+                          accessibilityLabel={t('creator.delete')}
+                          icon={<Icon name="trash" />}
+                          onPress={() => setToDelete(img.id)}
+                        />
+                      }
+                    />
+                  </Appear>
+                ))}
+              </View>
+            </>
+          )}
+          {Platform.OS === 'web' ? <Text variant="caption">{t('creator.webNote')}</Text> : null}
+        </Section>
+      </Appear>
 
       <ConfirmDialog
         visible={toDelete !== null}
@@ -132,9 +139,8 @@ export function CreateScreen() {
 }
 
 const styles = StyleSheet.create({
-  content: { gap: spacing.md },
-  sources: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.xs },
-  section: { marginTop: spacing.sm },
+  content: { gap: layout.sectionGap },
+  sources: { flexDirection: 'row', gap: spacing.sm },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
   cell: { width: '48%' },
 });

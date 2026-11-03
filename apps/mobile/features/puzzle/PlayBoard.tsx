@@ -1,5 +1,5 @@
 import type { Puzzle, Rect } from '@puzzle-studio/puzzle-engine';
-import { Icon, IconButton, Text, spacing } from '@puzzle-studio/ui';
+import { Burst, Icon, IconButton, Text, spacing } from '@puzzle-studio/ui';
 import { Suspense, lazy, useCallback, useMemo, useState, type ReactNode } from 'react';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import { useReducedMotion } from 'react-native-reanimated';
@@ -97,6 +97,11 @@ export function PlayBoard({ puzzle, imageUri, game, zoom, setZoom, onReady, over
     [layout, game.source, page],
   );
   const hintCell = game.hint === null ? null : puzzle.pieces[game.hint]?.cell;
+  const snapCell = game.snap ? puzzle.pieces[game.snap.id]?.cell : undefined;
+  const snapBox =
+    view && snapCell
+      ? { ...toScreen(view, snapCell.x, snapCell.y), w: snapCell.w * view.scale, h: snapCell.h * view.scale }
+      : null;
   const hintBox =
     view && hintCell
       ? { ...toScreen(view, hintCell.x, hintCell.y), w: hintCell.w * view.scale, h: hintCell.h * view.scale }
@@ -135,6 +140,14 @@ export function PlayBoard({ puzzle, imageUri, game, zoom, setZoom, onReady, over
                 />
               );
             })}
+            {snapBox && game.snap ? (
+              <Burst
+                seq={game.snap.seq}
+                x={snapBox.x + snapBox.w / 2}
+                y={snapBox.y + snapBox.h / 2}
+                size={Math.min(snapBox.w, snapBox.h)}
+              />
+            ) : null}
             {hintBox ? (
               <View
                 testID="hint-target"
