@@ -98,6 +98,10 @@ export const icon = {
     `<svg width="16" height="16" viewBox="0 0 16 16"><path d="M3.5 8.5 L6.5 11.5 L12.5 5" fill="none" ${stroke(c)} stroke-width="2.8"/></svg>`,
   trash: (): string =>
     `<svg width="22" height="22" viewBox="0 0 22 22"><path d="M5 7 H17 L16 18 Q16 19.5 14.5 19.5 H7.5 Q6 19.5 6 18Z" fill="${P.peach100}" ${stroke(P.navy)} stroke-width="2"/><path d="M4 7 H18 M9 4.5 H13" fill="none" ${stroke(P.navy)} stroke-width="2"/><path d="M9.5 10.5 V16 M12.5 10.5 V16" ${stroke(P.navy)} stroke-width="1.8"/></svg>`,
+  hint: (): string =>
+    `<svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 3 A6.5 6.5 0 0 1 16 14.6 V17 H8 V14.6 A6.5 6.5 0 0 1 12 3Z" fill="${P.yellow}" ${stroke(P.navy)} stroke-width="2"/><path d="M9 20.5 H15" ${stroke(P.navy)} stroke-width="2"/></svg>`,
+  forward: (): string =>
+    `<svg width="22" height="22" viewBox="0 0 22 22"><path d="M9 5 L15 11 L9 17" fill="none" ${stroke(P.navy)}/></svg>`,
   minus: (): string =>
     `<svg width="22" height="22" viewBox="0 0 22 22"><path d="M5 11 H17" ${stroke(P.navy)} stroke-width="3"/></svg>`,
   plus: (): string =>

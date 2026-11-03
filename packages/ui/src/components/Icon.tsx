@@ -4,7 +4,20 @@ import { icon } from '../illustrations/svg.ts';
 
 export type NavIconName = 'home' | 'create' | 'collection' | 'awards';
 export type GlyphIconName =
-  'back' | 'pause' | 'eye' | 'lock' | 'sort' | 'rotate' | 'trash' | 'minus' | 'plus' | 'camera' | 'gallery' | 'sample';
+  | 'back'
+  | 'forward'
+  | 'pause'
+  | 'eye'
+  | 'lock'
+  | 'sort'
+  | 'rotate'
+  | 'trash'
+  | 'minus'
+  | 'plus'
+  | 'hint'
+  | 'camera'
+  | 'gallery'
+  | 'sample';
 
 export type IconProps =
   { name: NavIconName; active?: boolean; size?: number } | { name: GlyphIconName; active?: never; size?: number };

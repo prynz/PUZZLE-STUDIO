@@ -1,11 +1,10 @@
-import { Modal, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import type { MascotEmotion } from '../mascot/pino.ts';
-import { shadowStyle } from '../styles/helpers.ts';
-import { color, radius, shadow, spacing } from '../tokens.ts';
-import { Mascot } from './Mascot.tsx';
+import { spacing } from '../tokens.ts';
 import { PrimaryButton } from './PrimaryButton.tsx';
 import { SecondaryButton } from './SecondaryButton.tsx';
+import { Sheet } from './Sheet.tsx';
 import { Text } from './Text.tsx';
 
 export interface ConfirmDialogProps {
@@ -31,40 +30,25 @@ export function ConfirmDialog({
   emotion = 'thinking',
 }: ConfirmDialogProps) {
   return (
-    <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
-      <View style={styles.scrim}>
-        <View style={[styles.sheet, shadowStyle(shadow.raised)]} accessibilityViewIsModal>
-          <Mascot emotion={emotion} size={96} accessibilityLabel={null} />
-          <Text variant="title2" align="center" accessibilityRole="header">
-            {title}
-          </Text>
-          <Text variant="body" align="center">
-            {message}
-          </Text>
-          <View style={styles.actions}>
-            <PrimaryButton
-              testID="confirm-yes"
-              variant="primary"
-              label={confirmLabel}
-              onPress={onConfirm}
-              showChevron={false}
-            />
-            <SecondaryButton testID="confirm-no" label={cancelLabel} onPress={onCancel} />
-          </View>
-        </View>
+    <Sheet visible={visible} title={title} onRequestClose={onCancel} emotion={emotion}>
+      <Text variant="body" align="center">
+        {message}
+      </Text>
+      <View style={styles.actions}>
+        <PrimaryButton
+          testID="confirm-yes"
+          variant="primary"
+          label={confirmLabel}
+          onPress={onConfirm}
+          showChevron={false}
+        />
+        <SecondaryButton testID="confirm-no" label={cancelLabel} onPress={onCancel} />
       </View>
-    </Modal>
+    </Sheet>
   );
 }
 
-const styles = StyleSheet.create({
-  scrim: { flex: 1, backgroundColor: color.scrim, justifyContent: 'center', padding: spacing.xl },
-  sheet: {
-    backgroundColor: color.background.primary,
-    borderRadius: radius.sheet,
-    padding: spacing.xl,
-    alignItems: 'center',
-    gap: spacing.sm,
-  },
+export const dialogStyles = StyleSheet.create({
   actions: { alignSelf: 'stretch', gap: spacing.sm, marginTop: spacing.md },
 });
+const styles = dialogStyles;
