@@ -36,6 +36,7 @@ Tonstufen `*100` = Kartenflächen, `*600` = gedrückt/Icons, `purple700` = klein
 - Navy auf allen Hintergründen: ≥ 9 : 1 ✅
 - Weiß auf `purple` (3,2 : 1) nur für **fette Labels ≥ 19 px** (Large Text). Kleinere Texte auf Lila → `purple700` bzw. Navy.
 - Navy auf Gelb-Button: 9,3 : 1 ✅
+- **Schalter** (`color.control.*`, WCAG 1.4.11 Nicht-Text-Kontrast ≥ 3 : 1, Phase 8): An = gefüllte Spur `purple600` mit weißem Knopf (≥ 4,1 : 1 auf allen Kartenflächen), Aus = umrandete Spur mit dunklem Knopf `greyPurple` (≥ 4,9 : 1). Der Zustand ist zusätzlich an der Knopfposition erkennbar – nie nur an der Farbe. Getestet in `packages/ui/test/tokens.test.ts`.
 
 ## 3. Verläufe
 

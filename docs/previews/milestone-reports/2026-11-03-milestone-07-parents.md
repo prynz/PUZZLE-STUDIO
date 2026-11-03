@@ -1,6 +1,6 @@
 # Milestone 07 – Elternbereich (Phase 7)
 
-**Datum:** 2026-11-03 · **Phase:** 7 · **Status:** umgesetzt, **wartet auf Review durch den PO**
+**Datum:** 2026-11-03 · **Phase:** 7 · **Status:** umgesetzt, **vom PO freigegeben** (2026-11-03, mit Entscheidung „Cloud-Sicherung auch auf dem iPhone aus, kein Export“)
 
 > Alle Screenshots stammen aus der **laufenden App** (Android-Emulator und iOS-Simulator via GitHub Actions/Maestro, Web via Chromium).
 
