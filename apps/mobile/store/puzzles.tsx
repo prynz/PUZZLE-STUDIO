@@ -10,6 +10,8 @@ interface PuzzlesContextValue {
   create: (input: NewPuzzle) => Promise<StoredPuzzle>;
   save: (id: string, progress: SaveProgress) => Promise<void>;
   reset: (id: string) => Promise<void>;
+  /** Deletes one puzzle (the picture stays in the atelier, earned stars stay too). */
+  remove: (id: string) => Promise<void>;
   /** Called after an image was deleted (SQLite cascades; memory store and UI state follow here). */
   forgetImage: (imageId: string) => Promise<void>;
 }
@@ -49,6 +51,13 @@ export function PuzzlesProvider({ children, store }: { children: ReactNode; stor
     [backend, upsert],
   );
   const reset = useCallback(async (id: string) => upsert(await backend.reset(id)), [backend, upsert]);
+  const remove = useCallback(
+    async (id: string) => {
+      await backend.remove(id);
+      setPuzzles((prev) => prev.filter((p) => p.id !== id));
+    },
+    [backend],
+  );
   const forgetImage = useCallback(
     async (imageId: string) => {
       const gone = puzzles.filter((p) => p.imageId === imageId);
@@ -59,8 +68,8 @@ export function PuzzlesProvider({ children, store }: { children: ReactNode; stor
   );
 
   const value = useMemo(
-    () => ({ ready, error, puzzles, create, save, reset, forgetImage }),
-    [ready, error, puzzles, create, save, reset, forgetImage],
+    () => ({ ready, error, puzzles, create, save, reset, remove, forgetImage }),
+    [ready, error, puzzles, create, save, reset, remove, forgetImage],
   );
   return <PuzzlesContext.Provider value={value}>{children}</PuzzlesContext.Provider>;
 }

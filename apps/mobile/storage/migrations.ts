@@ -63,4 +63,22 @@ export const MIGRATIONS: readonly { version: number; sql: string }[] = [
             updated_at INTEGER NOT NULL
           );`,
   },
+  {
+    // Phase 6: append-only log of finished puzzles (stars and achievements are derived from it,
+    // so "Nochmal puzzeln" never takes anything away) and permanent achievement unlocks.
+    // No foreign key on purpose: deleting a puzzle keeps what the child has earned.
+    version: 4,
+    sql: `CREATE TABLE IF NOT EXISTS completion (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            puzzle_id TEXT NOT NULL,
+            pieces INTEGER NOT NULL,
+            shape TEXT NOT NULL CHECK (shape IN ('classic', 'square')),
+            source_kind TEXT NOT NULL CHECK (source_kind IN ('camera', 'library', 'sample')),
+            completed_at INTEGER NOT NULL
+          );
+          CREATE TABLE IF NOT EXISTS achievement_unlock (
+            achievement_id TEXT PRIMARY KEY NOT NULL,
+            unlocked_at INTEGER NOT NULL
+          );`,
+  },
 ];
