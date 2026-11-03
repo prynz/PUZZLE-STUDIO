@@ -2,6 +2,7 @@ import { BottomNavigation } from '@puzzle-studio/ui';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import { HomeScreen } from '@/features/home/HomeScreen';
+import { AppProviders } from '@/testing/AppProviders';
 
 const mockPush = jest.fn();
 jest.mock('expo-router', () => ({ useRouter: () => ({ push: mockPush, replace: jest.fn(), back: jest.fn() }) }));
@@ -10,7 +11,11 @@ describe('Home', () => {
   beforeEach(() => mockPush.mockClear());
 
   it('greets the child and leads to the creator and the parents area', async () => {
-    await render(<HomeScreen />);
+    await render(
+      <AppProviders>
+        <HomeScreen />
+      </AppProviders>,
+    );
     expect(screen.getByText('Was puzzeln wir heute?')).toBeTruthy();
     await fireEvent.press(screen.getByTestId('home-create'));
     await fireEvent.press(screen.getByLabelText('Elternbereich'));
@@ -18,7 +23,11 @@ describe('Home', () => {
   });
 
   it('shows Pino with an accessible label', async () => {
-    await render(<HomeScreen />);
+    await render(
+      <AppProviders>
+        <HomeScreen />
+      </AppProviders>,
+    );
     expect(screen.getByLabelText('Pino – Fröhlich')).toBeTruthy();
   });
 });

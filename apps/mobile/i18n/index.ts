@@ -8,3 +8,8 @@ export function t(key: MessageKey, params?: Record<string, string | number>): st
 }
 
 export type { MessageKey };
+
+/** "1 Stern" / "3 Sterne" – the only plural the app needs so far. */
+export function starsText(n: number): string {
+  return t(n === 1 ? 'stars.one' : 'stars.other', { n });
+}

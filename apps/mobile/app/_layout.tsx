@@ -15,6 +15,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { ImagesProvider } from '@/store/images';
+import { ProgressProvider } from '@/store/progress';
 import { PuzzlesProvider } from '@/store/puzzles';
 import { SettingsProvider } from '@/store/settings';
 
@@ -47,14 +48,16 @@ export default function RootLayout() {
         <SettingsProvider>
           <ImagesProvider>
             <PuzzlesProvider>
-              <StatusBar style="dark" />
-              <Stack
-                screenOptions={{
-                  headerShown: false,
-                  contentStyle: { backgroundColor: color.background.primary },
-                  animation: 'fade',
-                }}
-              />
+              <ProgressProvider>
+                <StatusBar style="dark" />
+                <Stack
+                  screenOptions={{
+                    headerShown: false,
+                    contentStyle: { backgroundColor: color.background.primary },
+                    animation: 'fade',
+                  }}
+                />
+              </ProgressProvider>
             </PuzzlesProvider>
           </ImagesProvider>
         </SettingsProvider>

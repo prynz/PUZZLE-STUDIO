@@ -127,6 +127,24 @@ appId: com.puzzlestudio.app.preview
 - extendedWaitUntil:
     visible: 'Meine Bilder · 1'
     timeout: 15000
+# Phase 6: the finished puzzle appears in the collection, the milestone in the awards
+- tapOn:
+    id: 'tab-collection'
+- extendedWaitUntil:
+    visible:
+      id: 'collection-card'
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-14-collection
+- tapOn:
+    id: 'tab-awards'
+- extendedWaitUntil:
+    visible: 'Meine Erfolge'
+    timeout: 10000
+- assertVisible:
+    id: 'ach-first_puzzle'
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-15-awards
 - tapOn:
     id: 'tab-home'
 - tapOn:
@@ -135,7 +153,7 @@ appId: com.puzzlestudio.app.preview
     visible: 'Spielhilfe-Profil'
     timeout: 10000
 - waitForAnimationToEnd
-- takeScreenshot: screenshots/shot-${PLATFORM}-14-parents
+- takeScreenshot: screenshots/shot-${PLATFORM}-16-parents
 - scrollUntilVisible:
     element:
       id: 'parents-system-check'
@@ -146,7 +164,7 @@ appId: com.puzzlestudio.app.preview
     visible: 'Datenbank \(SQLite\)'
     timeout: 15000
 - waitForAnimationToEnd
-- takeScreenshot: screenshots/shot-${PLATFORM}-15-system-check
+- takeScreenshot: screenshots/shot-${PLATFORM}-17-system-check
 # 256-piece test – now built from the real puzzle engine (Phase 4)
 - scrollUntilVisible:
     element:
@@ -168,7 +186,7 @@ appId: com.puzzlestudio.app.preview
     timeout: 30000
 - waitForAnimationToEnd:
     timeout: 5000
-- takeScreenshot: screenshots/shot-${PLATFORM}-16-benchmark-256
+- takeScreenshot: screenshots/shot-${PLATFORM}-18-benchmark-256
 # Persistence: relaunch WITHOUT clearing state → onboarding skipped, profile and image kept
 - stopApp
 - launchApp:
@@ -185,7 +203,7 @@ appId: com.puzzlestudio.app.preview
 - assertVisible:
     id: 'parents-profile-toddler'
     selected: true
-- takeScreenshot: screenshots/shot-${PLATFORM}-17-after-relaunch-profile-kept
+- takeScreenshot: screenshots/shot-${PLATFORM}-19-after-relaunch-profile-kept
 - tapOn: 'Zurück'
 - tapOn:
     id: 'tab-create'
@@ -195,4 +213,4 @@ appId: com.puzzlestudio.app.preview
 - assertVisible:
     id: 'my-image'
 - waitForAnimationToEnd
-- takeScreenshot: screenshots/shot-${PLATFORM}-18-after-relaunch-image-kept
+- takeScreenshot: screenshots/shot-${PLATFORM}-20-after-relaunch-image-kept

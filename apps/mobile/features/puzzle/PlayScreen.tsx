@@ -1,5 +1,7 @@
+import { validChoice } from '@puzzle-studio/game-progression';
 import { generatePuzzle } from '@puzzle-studio/puzzle-engine';
 import {
+  BACKGROUND_LOOKS,
   ConfirmDialog,
   EmptyState,
   LoadingState,
@@ -17,12 +19,15 @@ import { StyleSheet, View } from 'react-native';
 
 import { t } from '@/i18n';
 import { useImages } from '@/store/images';
+import { useProgress } from '@/store/progress';
 import { usePuzzles } from '@/store/puzzles';
+import { useSettings } from '@/store/settings';
 import type { SaveProgress, StoredPuzzle } from '@/storage/puzzles/types';
 import type { StoredImage } from '@/storage/images/types';
 
 import { BasketRow } from './BasketRow';
 import { Celebration } from './Celebration';
+import { useCompletion } from './useCompletion';
 import { PlayBoard } from './PlayBoard';
 import { PlayHeader } from './PlayHeader';
 import { useGame } from './game/useGame';
@@ -57,6 +62,11 @@ function Game({ stored, image }: { stored: StoredPuzzle; image: StoredImage }) {
   const puzzle = useMemo(() => generatePuzzle(stored.definition), [stored.definition]);
   const persist = useCallback((p: SaveProgress) => save(stored.id, p), [save, stored.id]);
   const game = useGame(stored, puzzle, persist);
+  const completion = useCompletion(stored, image, game.complete);
+  const { settings } = useSettings();
+  const { unlocked } = useProgress();
+  const background = validChoice(settings.boardBackground, unlocked, 'background');
+  const decor = background ? BACKGROUND_LOOKS[background] : undefined;
   const [zoom, setZoom] = useState(0);
   const [ready, setReady] = useState(false);
   const [confirmRestart, setConfirmRestart] = useState(false);
@@ -78,12 +88,13 @@ function Game({ stored, image }: { stored: StoredPuzzle; image: StoredImage }) {
 
   const restart = () => {
     setConfirmRestart(false);
+    completion.clear();
     game.restart();
     reset(stored.id).catch(() => undefined); // the next move saves again anyway
   };
 
   return (
-    <Screen background="table" gutter={false} contentStyle={styles.content}>
+    <Screen background="table" gutter={false} contentStyle={styles.content} {...(decor ? { decor } : {})}>
       <PlayHeader
         game={game}
         total={puzzle.pieces.length}
@@ -133,6 +144,7 @@ function Game({ stored, image }: { stored: StoredPuzzle; image: StoredImage }) {
       <Celebration
         visible={game.complete}
         total={puzzle.pieces.length}
+        result={completion.result}
         onAgain={restart}
         onAtelier={() => router.dismissTo('/create')}
       />
