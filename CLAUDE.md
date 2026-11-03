@@ -5,7 +5,7 @@ Produkt: [PROJECT_BRIEF.md](PROJECT_BRIEF.md) · Architektur: [docs/architecture
 
 ## Aktueller Stand
 
-Phase 5 (Gameplay) umgesetzt, **wartet auf Review**. Phase 6 erst nach Freigabe des Product Owners (siehe [docs/product/roadmap.md](docs/product/roadmap.md)). Maskottchen und Styles sind **noch nicht final** – Änderungen nur zentral (Tokens, `packages/ui/src/mascot`, `packages/ui/src/illustrations`).
+Phase 6 (Sammlung & Progression) umgesetzt, **wartet auf Review**. Phase 7 erst nach Freigabe des Product Owners (siehe [docs/product/roadmap.md](docs/product/roadmap.md)). Maskottchen und Styles sind **noch nicht final** – Änderungen nur zentral (Tokens, `packages/ui/src/mascot`, `packages/ui/src/illustrations`).
 
 PO-Vorgaben aus der Freigabe von Phase 1 (dauerhaft gültig):
 

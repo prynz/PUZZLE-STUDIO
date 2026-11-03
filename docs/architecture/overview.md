@@ -34,7 +34,7 @@ puzzle-studio/
 │   │   ✅ foundation · system-check · benchmark (Dev-Werkzeug, 256-Teile-Test)
 │   │   ✅ onboarding · home · creator (Atelier, Beispielbilder, Zuschnitt) · parents (Vorschau)
 │   │   ✅ puzzle (Neues Puzzle, Spieltisch: Skia-Brett, Ablage, Schalen, Tipps, Häppchen, Speichern)
-│   │   ⏳ collection · achievements
+│   │   ✅ collection (Sammlung) · awards (Erfolge, Belohnungen)
 │   ├── services/                Plattform-Adapter (✅ skiaLoader / .web)
 │   ├── i18n/                    ✅ typisierte Texte (de)
 │   ├── assets/                  ✅ brand/ (Interims-Icon, Splash), samples/ (eigene Beispielbilder)
@@ -46,7 +46,7 @@ puzzle-studio/
 │   ├── ui/                      ✅ Tokens · Text · PrimaryButton · SecondaryButton · Surface · Screen · StatusPill
 │   ├── puzzle-engine/           ✅ Phase 4 – reines TS (Grid, Kanten, Hit-Test, Einrasten, Tipps, Häppchen, Spielstand)
 │   ├── image-processing/        ✅ reines TS: Zuschnitt/Drehung/Größen, Transform-Hash, Farbgruppen
-│   ├── game-progression/        ⏳ Phase 6 – reines TS
+│   ├── game-progression/        ✅ Phase 6 – reines TS (Sterne, Meilensteine, Belohnungen)
 │   └── shared/                  bei Bedarf
 ├── scripts/design-preview/      ✅ Mockup-, Icon- und Beispielbild-Renderer
 ├── .github/workflows/           ✅ ci.yml · android.yml · ios.yml
