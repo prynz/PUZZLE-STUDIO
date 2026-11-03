@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-import Animated, { useAnimatedStyle, useReducedMotion, useSharedValue, withSpring } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { shadowStyle } from '../styles/helpers.ts';
@@ -8,6 +8,7 @@ import { usePressBounce } from '../motion/usePressBounce.ts';
 import { color, palette, radius, shadow, spacing, spring } from '../tokens.ts';
 import { Icon, type NavIconName } from './Icon.tsx';
 import { Text } from './Text.tsx';
+import { useReduceMotion } from '../motion/MotionProvider.tsx';
 
 export interface BottomNavItem {
   key: string;
@@ -35,7 +36,7 @@ function TabItem({
 }) {
   const bounce = usePressBounce();
   const lift = useSharedValue(active ? 1 : 0);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReduceMotion();
   useEffect(() => {
     lift.set(reduceMotion ? (active ? 1 : 0) : withSpring(active ? 1 : 0, spring.bouncy));
   }, [active, lift, reduceMotion]);

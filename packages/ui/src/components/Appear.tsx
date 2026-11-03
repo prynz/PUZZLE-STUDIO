@@ -1,15 +1,9 @@
 import { useEffect, type ReactNode } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  useReducedMotion,
-  useSharedValue,
-  withDelay,
-  withSpring,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withDelay, withSpring, withTiming } from 'react-native-reanimated';
 
 import { duration, spring } from '../tokens.ts';
+import { useReduceMotion } from '../motion/MotionProvider.tsx';
 
 export interface AppearProps {
   children: ReactNode;
@@ -32,7 +26,7 @@ export const staggerDelay = (index: number, step = 45, max = 360) => Math.min(in
  * Here, Reduced Motion shows content immediately and fully.
  */
 export function Appear({ children, style, variant = 'fade', delay = 0 }: AppearProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReduceMotion();
   const progress = useSharedValue(reduceMotion ? 1 : 0);
 
   useEffect(() => {

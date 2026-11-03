@@ -4,7 +4,6 @@ import Animated, {
   Easing,
   cancelAnimation,
   useAnimatedStyle,
-  useReducedMotion,
   useSharedValue,
   withRepeat,
   withTiming,
@@ -12,6 +11,7 @@ import Animated, {
 import { SvgXml } from 'react-native-svg';
 
 import { MASCOT_EMOTIONS, pinoSvg, type MascotEmotion } from '../mascot/pino.ts';
+import { useReduceMotion } from '../motion/MotionProvider.tsx';
 
 export interface MascotProps {
   emotion?: MascotEmotion;
@@ -37,7 +37,7 @@ export function Mascot({
   const reactId = useId();
   const idPrefix = `pino${reactId.replace(/[^a-zA-Z0-9]/g, '')}`;
   const xml = useMemo(() => pinoSvg(emotion, idPrefix), [emotion, idPrefix]);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReduceMotion();
   const bob = useSharedValue(0);
 
   useEffect(() => {

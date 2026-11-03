@@ -2,7 +2,6 @@ import { useEffect, type ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
-  useReducedMotion,
   useSharedValue,
   withDelay,
   withRepeat,
@@ -13,6 +12,7 @@ import Animated, {
 import { SvgXml } from 'react-native-svg';
 
 import { starIcon } from '../illustrations/rewards.ts';
+import { useReduceMotion } from '../motion/MotionProvider.tsx';
 
 /** Positions around the child (fractions of the box) and their twinkle offsets. */
 const SPOTS = [
@@ -57,7 +57,7 @@ function useTwinkle(delay: number, reduceMotion: boolean) {
 
 /** A few softly twinkling stars around something special (celebration, unlocked milestone). Decorative. */
 export function Sparkles({ children }: { children: ReactNode }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReduceMotion();
   const t0 = useTwinkle(SPOTS[0].d, reduceMotion);
   const t1 = useTwinkle(SPOTS[1].d, reduceMotion);
   const t2 = useTwinkle(SPOTS[2].d, reduceMotion);

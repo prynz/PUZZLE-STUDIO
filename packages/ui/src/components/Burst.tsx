@@ -3,13 +3,13 @@ import { StyleSheet, View } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
-  useReducedMotion,
   useSharedValue,
   withTiming,
   type SharedValue,
 } from 'react-native-reanimated';
 
 import { palette, radius } from '../tokens.ts';
+import { useReduceMotion } from '../motion/MotionProvider.tsx';
 
 const COUNT = 8;
 const DURATION = 650;
@@ -54,7 +54,7 @@ export interface BurstProps {
  * not shown at all with Reduced Motion.
  */
 export function Burst({ x, y, size, seq }: BurstProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReduceMotion();
   const p = useSharedValue(1);
   useEffect(() => {
     if (reduceMotion) return;

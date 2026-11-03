@@ -40,3 +40,6 @@ export * from './components/Sparkles.tsx';
 export * from './motion/usePressBounce.ts';
 export * from './components/SegmentedControl.tsx';
 export * from './components/Burst.tsx';
+export * from './motion/MotionProvider.tsx';
+export * from './components/NumberPad.tsx';
+export * from './components/ToggleRow.tsx';
