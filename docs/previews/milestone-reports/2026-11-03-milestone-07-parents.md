@@ -33,7 +33,11 @@ Im Web zeigt „Speicher für Bilder“ „nur im Browser“ – die Web-Vorscha
 
 ### Android-Emulator und iOS-Simulator – Maestro
 
-> **Stand:** Android- und iOS-Lauf mit dem Elternbereich sind gestartet; die Bilder werden hier eingetragen, sobald die Läufe fertig sind.
+> **Stand:** Android-Emulator ✅ (Lauf 41705280175, alle 23 Bilder). iOS-Simulator: Die App wurde gebaut und installiert (Lauf 41705284731), aber Maestros iOS-Testtreiber startete auf dem GitHub-Rechner nicht rechtzeitig („iOS driver not ready in time“) – ein Problem der Testumgebung, kein App-Fehler. Ein neuer iOS-Lauf ist gestartet; die Bilder werden nachgereicht.
+
+| Eltern-Schranke                                                        | Reiter „Spiel“ (Kleinkind)                                              | Reiter „Daten“ (echter Speicher)                                        | Reiter „Info“                                                           | Nach Neustart: Profil erhalten                                                         |
+| ---------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| ![](../screenshots/2026-11-03-milestone-07-android-16-parent-gate.png) | ![](../screenshots/2026-11-03-milestone-07-android-17-parents-play.png) | ![](../screenshots/2026-11-03-milestone-07-android-18-parents-data.png) | ![](../screenshots/2026-11-03-milestone-07-android-19-parents-info.png) | ![](../screenshots/2026-11-03-milestone-07-android-22-after-relaunch-profile-kept.png) |
 
 Der Test öffnet die Schranke wie ein Erwachsener (liest die Zahlwörter, tippt die Ziffern), prüft im Reiter „Daten“ die Bildanzahl, öffnet „Info“ und von dort Systemcheck und 256-Teile-Test. Nach dem Neustart der App muss die Schranke erneut gelöst werden; das Profil ist erhalten.
 
