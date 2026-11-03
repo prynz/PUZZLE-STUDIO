@@ -263,8 +263,9 @@ export const de = {
   'parents.privacy.originals': 'Ihre Fotos werden nie verändert; die App arbeitet mit einer eigenen Kopie.',
   'parents.backup.title': 'Sicherung',
   'parents.backup.body':
-    'Die App lädt nichts in eine Cloud. Auf Android ist die automatische Google-Sicherung für diese App ausgeschaltet. Auf dem iPhone gehören die Daten zur Geräte-Sicherung (iCloud oder Computer), die Sie in den iPhone-Einstellungen steuern.',
-  'parents.backup.later': 'Beim Gerätewechsel ziehen Puzzles und Sterne auf Android deshalb nicht automatisch mit um.',
+    'Die App lädt nichts in eine Cloud. Bilder und Spielstände sind auch von der automatischen Geräte-Sicherung ausgeschlossen – auf dem iPhone (iCloud und Computer) wie auf Android (Google).',
+  'parents.backup.later':
+    'Beim Wechsel auf ein neues Gerät ziehen Bilder, Puzzles und Sterne deshalb nicht mit um. Beim Löschen der App sind sie weg.',
   'parents.tools': 'Werkzeuge',
   'parents.systemCheck': 'Systemcheck',
   'parents.benchmark': '256-Teile-Test',
@@ -286,6 +287,11 @@ export const de = {
   'check.gesture': 'Gesten & Animation',
   'check.gestureHint': 'Zieh das Puzzleteil – es federt zurück.',
   'check.gestureDone': 'Gezogen!',
+  'check.backup': 'Cloud-Sicherung',
+  'check.backupIos': 'Bilder und Spielstände sind von der iCloud-/Computer-Sicherung ausgeschlossen',
+  'check.backupAndroid': 'Automatische Google-Sicherung für diese App ausgeschaltet',
+  'check.backupWeb': 'Im Browser wird nichts dauerhaft gespeichert',
+  'check.backupFailed': 'Ausschluss von der Sicherung hat nicht geklappt',
   'check.picker': 'Bildauswahl & Bildverarbeitung',
   'check.pickerButton': 'Bild auswählen',
   'check.pickerHint': 'Das Bild wird nur verkleinert angezeigt und nicht gespeichert.',

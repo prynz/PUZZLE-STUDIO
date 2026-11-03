@@ -14,6 +14,7 @@ import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { keepDataOutOfBackups } from '@/services/backupExclusion';
 import { ImagesProvider } from '@/store/images';
 import { ProgressProvider } from '@/store/progress';
 import { PuzzlesProvider } from '@/store/puzzles';
@@ -32,6 +33,13 @@ export default function RootLayout() {
     Nunito_800ExtraBold,
     Nunito_900Black,
   });
+
+  // Once per start (idempotent): no automatic cloud backup of photos and play data.
+  useEffect(() => {
+    keepDataOutOfBackups()
+      .then((state) => state === 'failed' && console.warn('[backup] exclusion failed'))
+      .catch(() => undefined);
+  }, []);
 
   useEffect(() => {
     if (fontsLoaded || fontError) {

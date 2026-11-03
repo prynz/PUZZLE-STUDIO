@@ -40,4 +40,7 @@ describe('app.config', () => {
     expect(opts['photosPermission']).toBe(false);
     expect(opts['microphonePermission']).toBe(false);
   });
+  it('keeps photos and play data out of the automatic Google backup', () => {
+    expect(load().android?.allowBackup).toBe(false);
+  });
 });

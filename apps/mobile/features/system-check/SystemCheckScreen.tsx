@@ -6,6 +6,7 @@ import { StyleSheet, View } from 'react-native';
 import { t } from '@/i18n/index';
 import { loadSkia } from '@/services/skiaLoader';
 
+import { probeBackup } from './backupProbe';
 import { CheckRow } from './CheckRow';
 import { DragProbe } from './DragProbe';
 import { PickerProbe } from './PickerProbe';
@@ -25,6 +26,7 @@ export function SystemCheckScreen() {
   const router = useRouter();
   const [sqlite, setSqlite] = useState<ProbeResult>(pending);
   const [fs, setFs] = useState<ProbeResult>(pending);
+  const [backup, setBackup] = useState<ProbeResult>(pending);
   const [skia, setSkia] = useState<Status>('pending');
   const [dragged, setDragged] = useState(false);
   const [picker, setPicker] = useState<ProbeResult>(pending);
@@ -35,6 +37,7 @@ export function SystemCheckScreen() {
     let alive = true;
     probeSqlite().then((r) => alive && setSqlite(r));
     probeFileSystem().then((r) => alive && setFs(r));
+    probeBackup().then((r) => alive && setBackup(r));
     return () => {
       alive = false;
     };
@@ -60,6 +63,7 @@ export function SystemCheckScreen() {
         <CheckRow testID="check-fonts" title={t('check.fonts')} status={fonts.status} detail={fonts.detail} />
         <CheckRow testID="check-sqlite" title={t('check.sqlite')} status={sqlite.status} detail={sqlite.detail} />
         <CheckRow testID="check-fs" title={t('check.fs')} status={fs.status} detail={fs.detail} />
+        <CheckRow testID="check-backup" title={t('check.backup')} status={backup.status} detail={backup.detail} />
         <CheckRow testID="check-skia" title={t('check.skia')} status={skia}>
           <Suspense fallback={null}>
             <SkiaProbe onReady={onSkiaReady} />

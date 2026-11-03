@@ -71,6 +71,10 @@ jobs:
           if grep -E 'RECORD_AUDIO|READ_MEDIA_IMAGES|READ_MEDIA_VIDEO|ACCESS_FINE_LOCATION|ACCESS_COARSE_LOCATION' permissions.txt; then
             echo "::error::Privacy-sensitive permission found in merged manifest"; exit 1
           fi
+          # Privacy decision (docs/security/privacy.md): no automatic Google backup of photos/play data
+          if ! grep -q 'android:allowBackup="false"' "$MANIFEST"; then
+            echo "::error::android:allowBackup must be false"; exit 1
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: puzzle-studio-${{ matrix.variant }}-apk

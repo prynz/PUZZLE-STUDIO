@@ -187,6 +187,14 @@ appId: com.puzzlestudio.app.preview
 - extendedWaitUntil:
     visible: 'Datenbank \(SQLite\)'
     timeout: 15000
+# privacy: iOS excludes the data folder from iCloud/computer backups, Android has allowBackup=false
+- scrollUntilVisible:
+    element:
+      id: 'check-backup'
+    direction: DOWN
+- extendedWaitUntil:
+    visible: '.*(von der iCloud-/Computer-Sicherung ausgeschlossen|Google-Sicherung für diese App ausgeschaltet).*'
+    timeout: 15000
 - waitForAnimationToEnd
 - takeScreenshot: screenshots/shot-${PLATFORM}-20-system-check
 # 256-piece test – now built from the real puzzle engine (Phase 4)
