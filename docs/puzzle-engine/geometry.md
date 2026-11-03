@@ -11,7 +11,7 @@ Eingabe: gewünschte Teilezahl `n` (Preset 4…256) oder `rows × cols`, Bildsei
 3. Ergebnis zeigt die tatsächliche Teilezahl an (z. B. 16 gewünscht, Querformat 4:3 → 4 × 4 = 16; 16:9 → 3 × 5 = 15 oder 3 × 6 = 18 → der passendere Wert wird angezeigt).
 4. Manuelle Eingabe: 2 ≤ rows, cols ≤ 16.
 
-Umsetzung `chooseGrid(n, a)`: Bewertung = `4 · |r·c − n| / n + |ln(Teil-Seitenverhältnis)|` über alle 2…16 × 2…16; bei Gleichstand gewinnt der erste Kandidat (deterministisch). Presets: `PIECE_PRESETS` = 4, 9, 16, 25, 36, 49, 64, 100, 144, 196, 256. Getestet für alle Presets × 4:3, 1:1, 3:4, 16:9, 9:16 (Abweichung ≤ 25 %, Teile nie extrem schmal).
+Umsetzung `chooseGrid(n, a)`: Zuerst gewinnt die **exakte Teilezahl**, solange die Teile höchstens 1 : 1,45 vom Quadrat abweichen (Kinder wählen „64 Teile“ und bekommen 64). Sonst Bewertung = `4 · |r·c − n| / n + |ln(Teil-Seitenverhältnis)|` über alle 2…16 × 2…16; bei Gleichstand gewinnt der erste Kandidat (deterministisch). Presets: `PIECE_PRESETS` = 4, 9, 16, 25, 36, 49, 64, 100, 144, 196, 256. Getestet für alle Presets × 4:3, 1:1, 3:4, 16:9, 9:16 (Abweichung ≤ 25 %, Teile nie extrem schmal).
 
 ## Kanten
 

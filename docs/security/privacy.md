@@ -1,6 +1,6 @@
 # Datenschutz & Kindersicherheit
 
-Status: **Konzept, Stand Phase 3** (Berechtigungen und SDK-Liste sind umgesetzt bzw. aktuell) – wird mit jeder Phase fortgeschrieben. Dies ist keine Rechtsberatung; vor Veröffentlichung sind DSGVO (inkl. Art. 8), Apple App Store Kids Category (Guideline 1.3, 5.1.4) und Google Play Families Policy fachlich/rechtlich zu prüfen.
+Status: **Konzept, Stand Phase 5** (Berechtigungen und SDK-Liste sind umgesetzt bzw. aktuell) – wird mit jeder Phase fortgeschrieben. Dies ist keine Rechtsberatung; vor Veröffentlichung sind DSGVO (inkl. Art. 8), Apple App Store Kids Category (Guideline 1.3, 5.1.4) und Google Play Families Policy fachlich/rechtlich zu prüfen.
 
 ## Grundsätze (verbindlich)
 
@@ -36,6 +36,7 @@ Umsetzung (Phase 1): `expo-image-picker` mit `photosPermission: false` und `micr
 - Beispielbilder sind eigene Illustrationen, in der App gebündelt (offline, keine Fremdinhalte).
 - Web-Vorschau: Bilder bleiben nur im Speicher des Browser-Tabs (kein Dateisystem, kein Upload).
 - **Logging-Regel:** Keine Bildinhalte, Pfade mit Nutzerbezug, EXIF-Daten oder Dateinamen in Logs. Logger-Wrapper erlaubt nur IDs und Fehlercodes.
+- **Farbschalen (Phase 5):** Die Durchschnittsfarbe je Puzzleteil wird lokal aus einer winzigen Kopie der Arbeitsversion berechnet (Skia, im Speicher) und nur als Spielhilfe verwendet – nicht gespeichert, nicht übertragen. Der Spielstand in SQLite enthält nur Positionen, Zustände und Schalen-Namen.
 
 ## Löschen
 
@@ -51,7 +52,7 @@ Einzelnes Puzzle (inkl. ungenutztem Bild) · alle Puzzles · „Alle lokalen Dat
 
 Zufällige Rechenaufgabe in Worten bzw. „Halte die Taste 3 Sekunden gedrückt und tippe auf die Zahl …“, ohne visuelle Hinweise für Leseanfänger. **Die Schranke ersetzt keine rechtlich erforderliche Einwilligung.**
 
-## SDK-Liste (Stand Phase 3, `apps/mobile/package.json`)
+## SDK-Liste (Stand Phase 5, `apps/mobile/package.json` – Phase 4/5 ohne neue App-Abhängigkeiten)
 
 | Paket                                                                                                              | Zweck                                                                       | Netzwerk / Daten nach außen    |
 | ------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------- | ------------------------------ |

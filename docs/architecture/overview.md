@@ -33,7 +33,8 @@ puzzle-studio/
 │   ├── features/<feature>/      Screens, Hooks, feature-lokale Komponenten
 │   │   ✅ foundation · system-check · benchmark (Dev-Werkzeug, 256-Teile-Test)
 │   │   ✅ onboarding · home · creator (Atelier, Beispielbilder, Zuschnitt) · parents (Vorschau)
-│   │   ⏳ puzzle · collection · achievements
+│   │   ✅ puzzle (Neues Puzzle, Spieltisch: Skia-Brett, Ablage, Schalen, Tipps, Häppchen, Speichern)
+│   │   ⏳ collection · achievements
 │   ├── services/                Plattform-Adapter (✅ skiaLoader / .web)
 │   ├── i18n/                    ✅ typisierte Texte (de)
 │   ├── assets/                  ✅ brand/ (Interims-Icon, Splash), samples/ (eigene Beispielbilder)

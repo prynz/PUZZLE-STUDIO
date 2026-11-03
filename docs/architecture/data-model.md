@@ -1,6 +1,6 @@
 # Datenmodell (Entwurf)
 
-Status: **Teilweise umgesetzt (Phase 3)**: Tabellen `schema_migration`, `setting` (Migration 1) und `image` (Migration 2, siehe `apps/mobile/storage/migrations.ts`) sind live. Die Tabelle `image` speichert Zuschnitt/Drehung sowie die Dateinamen von Arbeitsversion und Thumbnail direkt (je Bild eine aktuelle Arbeitsversion); `puzzle`, `puzzle_state`, Erfolge folgen in Phase 4–6. In der DB stehen nur **Dateinamen**, keine absoluten Pfade (iOS-Containerpfade ändern sich bei Updates).
+Status: **Teilweise umgesetzt (Phase 5)**: Tabellen `schema_migration`, `setting` (Migration 1), `image` (Migration 2) sowie `puzzle` und `puzzle_state` (Migration 3, siehe `apps/mobile/storage/migrations.ts`) sind live; Erfolge folgen in Phase 6. Die Tabelle `image` speichert Zuschnitt/Drehung sowie die Dateinamen von Arbeitsversion und Thumbnail direkt (je Bild eine aktuelle Arbeitsversion) – deshalb verweist `puzzle` nur auf `image_id` statt Zuschnitt und Arbeitsdatei zu wiederholen. `puzzle` speichert zusätzlich `width`/`height` der Arbeitsversion (Teil der Engine-Definition) und das Spielhilfe-`profile`; `title` und `best_moves` sind noch nicht angelegt (Phase 6). Löschen eines Bildes löscht seine Puzzles per `ON DELETE CASCADE` (`PRAGMA foreign_keys = ON`). In der DB stehen nur **Dateinamen**, keine absoluten Pfade (iOS-Containerpfade ändern sich bei Updates).
 
 ## Speicherorte – nicht-destruktiver Bild-Workflow
 

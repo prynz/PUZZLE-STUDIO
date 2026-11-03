@@ -1,6 +1,6 @@
 # Spieltisch-Konzept: Ablage, Sortieren, Tipps, Einrasten
 
-Status: **Konzept freigegeben**; Engine-Modell in Phase 4 umgesetzt (`packages/puzzle-engine`), Gameplay-UI folgt in Phase 5.
+Status: **Konzept freigegeben**; Engine-Modell in Phase 4 umgesetzt (`packages/puzzle-engine`), Spieltisch in Phase 5 (`apps/mobile/features/puzzle`) – siehe „Umsetzung Phase 5“ am Ende.
 Mockups (**Konzept-Mockups**, keine App): [Spieltisch Kind/Profi](../design/concept/concept-mockup-gameplay-tray.png) · [Häppchen-Modus Kleinkind](../design/concept/concept-mockup-gameplay-toddler.png)
 
 ## Ausgangslage (PO-Feedback)
@@ -112,3 +112,19 @@ Der Leistungstest wird in Phase 5 auf genau diese Struktur umgestellt (Brett mit
 | 2   | Namen der Schalen       | PO: Vorschlag (sprechend bei eindeutigen Motiven, sonst Farbname); umbenennbar; Reihenfolge frei sortierbar                                                                                                                                  |
 | 3   | „Meine Schale“ im MVP   | PO: ja – ab 144 Teilen, nur Profil Kind/Profi, bis zu 3 eigene Schalen                                                                                                                                                                       |
 | 4   | Falsch gelegt je Profil | Umsetzung Phase 4: PO-Standard „liegen lassen + ausweichen“ für Kind und Profi; Kleinkind immer „zurück in die Ablage“ (einfachste Logik, PO-Vorgabe für kleine Kinder). Die ältere Tabellenzeile „Kind: Standard zurück“ wurde angeglichen. |
+
+## Umsetzung Phase 5 – Stand und bewusste Abweichungen
+
+| Thema                        | Umsetzung                                                                                                                                                                                                        |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Reihenfolge auf dem Handy    | Brett → Ablage → Schalen. Ziehen von der Ablage aufs Brett braucht **eine** zusammenhängende Spielfläche; die Schalen liegen deshalb unter der Ablage statt dazwischen.                                          |
+| Kleine Puzzles (4–16)        | Auch hier eine Ablage-Reihe statt Teile rund ums Brett – auf Hochformat-Handys ist neben dem Brett kein Platz.                                                                                                   |
+| Kleinkind-Ablage             | So viele große Teile (≥ 96 dp), wie nebeneinander passen – auf schmalen Handys 3, sonst 4. Nie blättern. Fortschritt als Balken ohne Zahlen.                                                                     |
+| Tippen statt Ziehen          | Teil antippen, dann auf das Brett tippen – es landet dort (dieselben Regeln wie beim Ziehen). Hilft kleinen Händen und Screenreadern; Pinos Tipp wählt das passende Teil gleich aus.                             |
+| Falsch gelegt                | Standard je Profil (Kind/Profi: ausweichen, Kleinkind: zurück). Der Schalter im Elternbereich folgt mit Phase 7.                                                                                                 |
+| Schalen umbenennen/sortieren | Langdruck auf eine Schale → Name ändern, „Nach links“/„Nach rechts“ (statt Ziehen – barriereärmer). „Meine Schale“: Teil antippen, dann die Schale antippen.                                                     |
+| Farbschalen                  | Durchschnittsfarbe je Teil wird **auf dem Gerät** aus der Arbeitsversion gemessen (winzige Kopie, nichts verlässt die App) und mit `pieceColorGroups` gruppiert. Motiv-Häppchen („das Segelboot“) bleiben offen. |
+| Zoom                         | Kind/Profi ab 64 Teilen: −/+ (3 Stufen), verschieben mit einem Finger auf freier Brettfläche. Kleinkind: automatischer Zoom aufs Häppchen.                                                                       |
+| Rendering                    | Brett, Vorlage, eingerastete und lose Teile sowie die Ablage als **ein** Bild (neu aufgezeichnet nur nach einem Zug); das gezogene Teil live darüber. Das Brett wird oberhalb der Ablage beschnitten.            |
+| Speichern                    | 500 ms nach jedem Zug und sofort beim Wechsel in den Hintergrund; beschädigter Spielstand → frisch gemischt mit freundlichem Hinweis.                                                                            |
+| Noch offen                   | Töne/Haptik beim Einrasten, Langdruck-Vorschau eines Teils, „nach Farbe sortiert“ in der Ablage, 256-Teile-Test in der echten Spielsituation (Brett + Ablage).                                                   |

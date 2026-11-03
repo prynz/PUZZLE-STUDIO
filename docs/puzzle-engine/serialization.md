@@ -1,6 +1,6 @@
 # Puzzle Engine – Serialisierung (Spezifikation)
 
-Status: **umgesetzt (Phase 4)** – `serializeState` / `parseState` / `migrateState` in `packages/puzzle-engine/src/serialize.ts`. Speichern in SQLite folgt mit dem Spielbrett (Phase 5).
+Status: **umgesetzt (Phase 4)** – `serializeState` / `parseState` / `migrateState` in `packages/puzzle-engine/src/serialize.ts`. Seit Phase 5 speichert die App den Spielstand in `puzzle_state` (`features/puzzle/game/useAutosave.ts`).
 
 ## Grundsatz
 
