@@ -162,13 +162,12 @@ appId: com.puzzlestudio.app.preview
 - takeScreenshot: screenshots/shot-${PLATFORM}-17-parents-play
 - tapOn:
     id: 'parents-data'
+# counts sit at the top; "Alles löschen" may be below the fold on small screens
 - extendedWaitUntil:
     visible:
-      id: 'data-wipe'
+      id: 'data-images'
+      text: '1'
     timeout: 10000
-- assertVisible:
-    id: 'data-images'
-    text: '1'
 - waitForAnimationToEnd
 - takeScreenshot: screenshots/shot-${PLATFORM}-18-parents-data
 - tapOn:
