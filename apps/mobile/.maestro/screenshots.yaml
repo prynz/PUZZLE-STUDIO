@@ -139,7 +139,8 @@ appId: com.puzzlestudio.app.preview
 - tapOn:
     id: 'tab-awards'
 - extendedWaitUntil:
-    visible: 'Meine Erfolge'
+    visible:
+      id: 'awards-stars'
     timeout: 10000
 - assertVisible:
     id: 'ach-first_puzzle'
