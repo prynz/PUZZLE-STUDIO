@@ -36,7 +36,6 @@ Details und Liste aller Meilensteine: [progression.md](../../product/progression
 
 | Plattform | Geschafft!                                                             | Sammlung                                                              | Erfolge                                                           |
 | --------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| iOS       | ![](../screenshots/2026-11-03-milestone-06-ios-13-puzzle-done.png)     | ![](../screenshots/2026-11-03-milestone-06-ios-14-collection.png)     | ![](../screenshots/2026-11-03-milestone-06-ios-15-awards.png)     |
 | Android   | ![](../screenshots/2026-11-03-milestone-06-android-13-puzzle-done.png) | ![](../screenshots/2026-11-03-milestone-06-android-14-collection.png) | ![](../screenshots/2026-11-03-milestone-06-android-15-awards.png) |
 
 Der Test löst wie in Phase 5 ein 4-Teile-Puzzle mit Pino-Tipps, prüft danach, dass es in der Sammlung liegt und der Meilenstein „Erstes Puzzle“ freigeschaltet ist, und läuft dann weiter durch Elternbereich, Systemcheck, 256-Teile-Test und den Neustart der App.
