@@ -135,14 +135,16 @@ export function PlayCanvas(props: PlayCanvasProps) {
       <Canvas style={{ width: layout.width, height: layout.height }} accessibilityLabel={props.accessibilityLabel}>
         {picture ? <Picture picture={picture} /> : null}
         {hintPath ? (
-          <Group transform={boardTransform}>
-            <Path
-              path={hintPath}
-              style="stroke"
-              strokeWidth={5 / view.scale}
-              color={palette.yellow700}
-              opacity={pulse}
-            />
+          <Group clip={{ x: 0, y: 0, width: layout.width, height: layout.tray.y }}>
+            <Group transform={boardTransform}>
+              <Path
+                path={hintPath}
+                style="stroke"
+                strokeWidth={5 / view.scale}
+                color={palette.yellow700}
+                opacity={pulse}
+              />
+            </Group>
           </Group>
         ) : null}
         {image && draggedPath ? (

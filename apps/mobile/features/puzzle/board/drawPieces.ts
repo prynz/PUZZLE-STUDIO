@@ -92,6 +92,8 @@ export function recordScene(i: SceneInput) {
   return createPicture(
     (canvas) => {
       canvas.save();
+      // the board layer never reaches into the tray (zoom / toddler bites)
+      canvas.clipRect(rect(0, 0, layout.width, layout.tray.y), ClipOp.Intersect, true);
       canvas.translate(view.x, view.y);
       canvas.scale(view.scale, view.scale);
       canvas.drawRRect(rrect(rect(0, 0, W, H), 12 * hair, 12 * hair), boardPaint);

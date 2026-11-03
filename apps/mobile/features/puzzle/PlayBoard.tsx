@@ -49,7 +49,13 @@ export function PlayBoard({ puzzle, imageUri, game, zoom, setZoom, onReady, over
     () => ({ x: 0, y: 0, w: puzzle.definition.width, h: puzzle.definition.height }),
     [puzzle],
   );
-  const base = useMemo(() => (layout ? fitView(layout.board, boardRect) : null), [layout, boardRect]);
+  const canZoom = !game.bites && game.profile !== 'toddler' && puzzle.pieces.length >= 64;
+  // with zoom controls the board keeps a free strip at the bottom for them
+  const fitArea = useMemo(
+    () => (layout ? (canZoom ? { ...layout.board, h: layout.board.h - 60 } : layout.board) : null),
+    [layout, canZoom],
+  );
+  const base = useMemo(() => (fitArea ? fitView(fitArea, boardRect) : null), [fitArea, boardRect]);
   const playArea = useMemo(() => {
     if (!layout || !base) return boardRect;
     const b = layout.board;
@@ -82,7 +88,6 @@ export function PlayBoard({ puzzle, imageUri, game, zoom, setZoom, onReady, over
     [zoomBase, layout, view, boardRect, zoom],
   );
 
-  const canZoom = !game.bites && game.profile !== 'toddler' && puzzle.pieces.length >= 64;
   // toddlers never page: they see as many big pieces as fit next to each other (max. 4)
   const pages =
     layout && game.rules.trayMaxVisible === null ? Math.max(1, Math.ceil(game.source.length / layout.perPage)) : 1;
@@ -145,18 +150,18 @@ export function PlayBoard({ puzzle, imageUri, game, zoom, setZoom, onReady, over
               </View>
             ) : null}
             {canZoom ? (
-              <View style={[styles.zoom, { top: layout.board.y + layout.board.h - 112 }]}>
-                <IconButton
-                  testID="zoom-in"
-                  accessibilityLabel={t('play.zoomIn')}
-                  icon={<Icon name="plus" />}
-                  onPress={() => setZoom(Math.min(ZOOM_LEVELS.length - 1, zoom + 1))}
-                />
+              <View style={[styles.zoom, { top: layout.board.y + layout.board.h - 52 }]}>
                 <IconButton
                   testID="zoom-out"
                   accessibilityLabel={t('play.zoomOut')}
                   icon={<Icon name="minus" />}
                   onPress={() => setZoom(Math.max(0, zoom - 1))}
+                />
+                <IconButton
+                  testID="zoom-in"
+                  accessibilityLabel={t('play.zoomIn')}
+                  icon={<Icon name="plus" />}
+                  onPress={() => setZoom(Math.min(ZOOM_LEVELS.length - 1, zoom + 1))}
                 />
               </View>
             ) : null}
@@ -196,7 +201,7 @@ const styles = StyleSheet.create({
   area: { flex: 1 },
   marker: { position: 'absolute' },
   overlay: { position: 'absolute', left: 0, right: 0, top: 0 },
-  zoom: { position: 'absolute', right: spacing.md, gap: spacing.sm },
+  zoom: { position: 'absolute', right: spacing.md, flexDirection: 'row', gap: spacing.sm },
   empty: { position: 'absolute', left: 0, right: 0, alignItems: 'center', justifyContent: 'center' },
   pager: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.md },
 });

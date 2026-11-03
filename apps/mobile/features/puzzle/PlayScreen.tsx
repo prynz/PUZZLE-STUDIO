@@ -83,7 +83,7 @@ function Game({ stored, image }: { stored: StoredPuzzle; image: StoredImage }) {
   };
 
   return (
-    <Screen background="table" contentStyle={styles.content}>
+    <Screen background="table" gutter={false} contentStyle={styles.content}>
       <PlayHeader
         game={game}
         total={puzzle.pieces.length}
@@ -141,7 +141,7 @@ function Game({ stored, image }: { stored: StoredPuzzle; image: StoredImage }) {
 }
 
 const styles = StyleSheet.create({
-  content: { flex: 1, gap: spacing.xs, paddingBottom: spacing.md, paddingHorizontal: 0 },
+  content: { flex: 1, gap: spacing.xs, paddingBottom: spacing.md },
   notice: { marginHorizontal: spacing.md },
   pino: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs, paddingHorizontal: spacing.md },
   loading: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' },

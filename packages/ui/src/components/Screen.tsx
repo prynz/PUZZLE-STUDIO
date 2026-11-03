@@ -25,6 +25,8 @@ export interface ScreenProps {
   decor?: BackgroundPreset;
   /** Extra bottom padding for content, e.g. above a floating tab bar. */
   bottomInset?: number;
+  /** Side gutter (default on). Off for edge-to-edge play surfaces – safe-area insets stay. */
+  gutter?: boolean;
 }
 
 /**
@@ -39,12 +41,13 @@ export function Screen({
   footer,
   decor,
   bottomInset = 0,
+  gutter = true,
 }: ScreenProps) {
   const insets = useSafeAreaInsets();
   const padding = {
     paddingTop: insets.top + spacing.md,
-    paddingLeft: insets.left + spacing.xl,
-    paddingRight: insets.right + spacing.xl,
+    paddingLeft: insets.left + (gutter ? spacing.xl : 0),
+    paddingRight: insets.right + (gutter ? spacing.xl : 0),
   };
   return (
     <LinearGradient colors={backgrounds[background].colors} style={styles.root}>
