@@ -110,6 +110,12 @@ export const color = {
     green: palette.green100,
     pink: palette.pink,
   },
+  /** On/off controls (switches): state colors meet WCAG 1.4.11 (≥ 3:1) on every surface. */
+  control: {
+    on: palette.purple600,
+    off: palette.greyPurple,
+    knobOn: palette.white,
+  },
   border: {
     subtle: 'rgba(56, 51, 79, 0.08)',
     card: 'rgba(255, 255, 255, 0.9)',

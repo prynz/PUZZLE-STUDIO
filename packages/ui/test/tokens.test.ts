@@ -44,6 +44,15 @@ describe('color tokens', () => {
     expect(contrast(color.brand.purpleStrong, color.background.primary)).toBeGreaterThanOrEqual(4.5);
   });
 
+  it('switch states meet WCAG 1.4.11 (3:1) on every card surface', () => {
+    const cards = [color.background.raised, color.background.primary, ...Object.values(color.surface)];
+    for (const bg of cards) {
+      expect(contrast(color.control.on, bg)).toBeGreaterThanOrEqual(3);
+      expect(contrast(color.control.off, bg)).toBeGreaterThanOrEqual(3);
+    }
+    expect(contrast(color.control.knobOn, color.control.on)).toBeGreaterThanOrEqual(3);
+  });
+
   it('palette contains only #RRGGBB values', () => {
     for (const v of Object.values(palette)) expect(v).toMatch(/^#[0-9A-F]{6}$/);
   });

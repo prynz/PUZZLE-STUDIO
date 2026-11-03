@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 import { useReduceMotion } from '../motion/MotionProvider.tsx';
-import { palette, radius, spacing, spring, touch } from '../tokens.ts';
+import { color, radius, spacing, spring, touch } from '../tokens.ts';
 import { Text } from './Text.tsx';
 
 export interface ToggleRowProps {
@@ -42,7 +42,7 @@ export function ToggleRow({ label, description, value, onChange, disabled = fals
         ) : null}
       </View>
       <View style={[styles.track, value ? styles.on : null]}>
-        <Animated.View style={[styles.knob, knob]} />
+        <Animated.View style={[styles.knob, value ? styles.knobOn : null, knob]} />
       </View>
     </Pressable>
   );
@@ -51,8 +51,18 @@ export function ToggleRow({ label, description, value, onChange, disabled = fals
 const styles = StyleSheet.create({
   row: { minHeight: touch.child, flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   text: { flex: 1, gap: 2 },
-  track: { width: 56, height: 32, borderRadius: radius.pill, backgroundColor: palette.greyPurple300, padding: 4 },
-  on: { backgroundColor: palette.mint600 },
-  knob: { width: 24, height: 24, borderRadius: radius.pill, backgroundColor: palette.white },
+  // off: outlined track + dark knob, on: filled track + white knob (≥ 3:1 both ways, not color alone)
+  track: {
+    width: 56,
+    height: 32,
+    borderRadius: radius.pill,
+    borderWidth: 2,
+    borderColor: color.control.off,
+    padding: 2,
+    justifyContent: 'center',
+  },
+  on: { backgroundColor: color.control.on, borderColor: color.control.on },
+  knob: { width: 24, height: 24, borderRadius: radius.pill, backgroundColor: color.control.off },
+  knobOn: { backgroundColor: color.control.knobOn },
   disabled: { opacity: 0.5 },
 });
