@@ -41,6 +41,22 @@ Details und Liste aller Meilensteine: [progression.md](../../product/progression
 
 Der Test löst wie in Phase 5 ein 4-Teile-Puzzle mit Pino-Tipps, prüft danach, dass es in der Sammlung liegt und der Meilenstein „Erstes Puzzle“ freigeschaltet ist, und läuft dann weiter durch Elternbereich, Systemcheck, 256-Teile-Test und den Neustart der App.
 
+## 2b. Überarbeitung nach PO-Feedback: klarere Gliederung, weniger Scrollen, mehr Bewegung
+
+**Gliederung:** Jeder Screen besteht jetzt aus klar getrennten Abschnitten (eigene Karte mit Titel, mehr Abstand). Start, Atelier und „Neues Puzzle“ passen ohne Scrollen auf ein Handy; bei „Neues Puzzle“ bleibt „Los geht’s!“ immer unten sichtbar. Die Erfolge wechseln zwischen **Meilensteine · Schätze · Sticker**, statt eine lange Seite zu sein; Meilensteine stehen als 2-spaltige Kacheln. Chips sind auch auf weißen Karten gut sichtbar.
+
+**Bewegung (dezent, bei „Bewegung reduzieren“ aus):** Inhalte steigen beim Öffnen sanft auf und poppen nacheinander herein · Karten, Chips, Schalen und Tabs federn beim Antippen · das aktive Tab-Symbol hüpft leicht · in der Feier funkeln Sterne um Pino, die verdienten Sterne poppen einzeln auf, danach die neuen Meilensteine · beim Einrasten eines Teils gibt es einen kleinen goldenen Funken und der Zähler hüpft.
+
+| Start                                                             | Atelier                                                        | Neues Puzzle                                                      | Beispielbilder                                                 |
+| ----------------------------------------------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------- | -------------------------------------------------------------- |
+| ![](../screenshots/2026-11-03-milestone-06-web-10-home-empty.png) | ![](../screenshots/2026-11-03-milestone-06-web-12-atelier.png) | ![](../screenshots/2026-11-03-milestone-06-web-13-new-puzzle.png) | ![](../screenshots/2026-11-03-milestone-06-web-11-samples.png) |
+
+| Erfolge: Sticker                                                       | Elternbereich                                                  |
+| ---------------------------------------------------------------------- | -------------------------------------------------------------- |
+| ![](../screenshots/2026-11-03-milestone-06-web-14-awards-stickers.png) | ![](../screenshots/2026-11-03-milestone-06-web-15-parents.png) |
+
+Die Screenshots in Abschnitt 2 zeigen ebenfalls schon den überarbeiteten Stand (Feier als Momentaufnahme nach der Animation).
+
 ## 3. Qualität
 
 | Prüfung                               | Ergebnis                                                                                                                                                                                                                                       |

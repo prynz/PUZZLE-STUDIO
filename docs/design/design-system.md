@@ -71,6 +71,7 @@ Regeln: keine Gewichte < 600, keine Großbuchstaben-Fließtexte, Dynamic Type bi
 - **Radien:** `sm 12` (Thumbnails klein) · `md 18` (Bilder in Karten) · `lg 24` (Karten) · `xl 32` (Navigation, Sheets) · `sheet 36` · `pill` (Buttons, Chips).
 - **Touch:** `touch.min 48` · `touch.child 56` · `touch.cta 64`.
 - **Icons:** `20 / 28 / 36 / 48`, Illustrationen `72`.
+- **Gliederung (PO-Feedback nach Phase 6):** Screens bestehen aus klar getrennten **Abschnitten** (`<Section>`: eigene Karte, Titelzeile, `radius.xl`, optional zarter Farbton). Abstand zwischen Abschnitten `layout.sectionGap 20`, innerhalb `layout.itemGap 12`. Lange Seiten werden in umschaltbare Bereiche geteilt (`<SegmentedControl>`), Hauptaktionen bleiben unten sichtbar (`Screen footer`). Ziel: Start, Atelier und „Neues Puzzle“ ohne Scrollen auf einem Handy.
 
 ## 6. Schatten
 
@@ -87,6 +88,18 @@ Navy-getönt, max. zwei Ebenen pro Screen: `shadow.card` (Karten), `shadow.raise
 | `spring.press`       | —                  | Button-Scale auf `pressScale 0.96`     |
 | `spring.snap`        | —                  | Teil rastet ein (+ leichtes Overshoot) |
 | `easing.playful`     | `0.34,1.56,0.64,1` | „Boop“-Effekte                         |
+
+**Bewegte Elemente (dezent, zum Pastell-Stil passend):**
+
+| Baustein                                            | Wirkung                                                                         |
+| --------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `<Appear variant="rise"/"pop">` + `staggerDelay(i)` | Inhalte steigen sanft auf bzw. poppen nacheinander herein (max. 360 ms Versatz) |
+| `usePressBounce()`                                  | Karten, Chips, Schalen, Tabs federn beim Antippen                               |
+| aktiver Tab                                         | Symbol hüpft leicht nach oben                                                   |
+| `<StarRow animated>`                                | Sterne der Feier poppen einzeln auf                                             |
+| `<Sparkles>`                                        | einige funkelnde Sterne um Pino (Feier, Erfolge)                                |
+| `<Burst>`                                           | kurzer goldener Punkte-Funken, wenn ein Teil einrastet                          |
+| Fortschritt im Spiel                                | Zähler „12/36“ hüpft bei jedem eingerasteten Teil                               |
 
 **Reduced Motion:** Systemeinstellung (`AccessibilityInfo.isReduceMotionEnabled`) + eigener Schalter im Elternbereich → Feder-Animationen werden zu kurzen Fades, Maskottchen-Idle und Partikel entfallen. Keine Dauer-Animationen im Hintergrund.
 
