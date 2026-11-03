@@ -32,7 +32,7 @@ Details und Liste aller Meilensteine: [progression.md](../../product/progression
 
 ### iOS-Simulator und Android-Emulator – Maestro
 
-> Stand beim Schreiben: Die Geräte-Läufe laufen noch; die Bilder werden vom CI-Lauf ergänzt und dieser Hinweis danach entfernt.
+> **Stand:** Android-Emulator ✅ (Lauf 41678634490, alle 20 Bilder, nach der Design-Überarbeitung). iOS-Simulator: noch offen – GitHub konnte wegen Kapazitätsengpässen bei macOS-Rechnern (arm64) mehrfach keinen Rechner zuweisen („The job was not acquired by Runner … capacity constraints“); kein App-Fehler. Die iOS-Bilder werden nachgereicht, sobald ein Lauf durchkommt. Der letzte erfolgreiche iOS-Lauf (Phase 5) zeigt denselben Spielablauf.
 
 | Plattform | Geschafft!                                                             | Sammlung                                                              | Erfolge                                                           |
 | --------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------- |
