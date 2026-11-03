@@ -1,5 +1,8 @@
 import { useState, type ReactNode } from 'react';
 import { Image, Pressable, StyleSheet, View, type ImageSourcePropType, type LayoutChangeEvent } from 'react-native';
+import Animated from 'react-native-reanimated';
+
+import { usePressBounce } from '../motion/usePressBounce.ts';
 
 import { shadowStyle } from '../styles/helpers.ts';
 import { color, radius, shadow, spacing } from '../tokens.ts';
@@ -22,6 +25,7 @@ export interface ImageTileProps {
  */
 export function ImageTile({ source, aspect, accessibilityLabel, action, onPress, testID }: ImageTileProps) {
   const [width, setWidth] = useState(0);
+  const bounce = usePressBounce();
   const onLayout = (e: LayoutChangeEvent) => setWidth(Math.round(e.nativeEvent.layout.width));
   const picture = (
     <View style={[styles.imageBox, { height: width > 0 ? width / aspect : undefined }]} onLayout={onLayout}>
@@ -37,16 +41,22 @@ export function ImageTile({ source, aspect, accessibilityLabel, action, onPress,
     </View>
   );
   return (
-    <View style={[styles.card, shadowStyle(shadow.card)]} testID={onPress ? undefined : testID}>
+    <Animated.View style={[styles.card, shadowStyle(shadow.card), bounce.style]} testID={onPress ? undefined : testID}>
       {onPress ? (
-        <Pressable testID={testID} accessibilityRole="button" accessibilityLabel={accessibilityLabel} onPress={onPress}>
+        <Pressable
+          testID={testID}
+          accessibilityRole="button"
+          accessibilityLabel={accessibilityLabel}
+          onPress={onPress}
+          {...bounce.handlers}
+        >
           {picture}
         </Pressable>
       ) : (
         picture
       )}
       {action ? <View style={styles.action}>{action}</View> : null}
-    </View>
+    </Animated.View>
   );
 }
 

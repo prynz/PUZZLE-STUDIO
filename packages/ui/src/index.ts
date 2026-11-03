@@ -35,3 +35,8 @@ export * from './components/StarRow.tsx';
 export * from './components/RewardBadge.tsx';
 export * from './components/AchievementCard.tsx';
 export * from './components/PuzzleCard.tsx';
+export * from './components/Section.tsx';
+export * from './components/Sparkles.tsx';
+export * from './motion/usePressBounce.ts';
+export * from './components/SegmentedControl.tsx';
+export * from './components/Burst.tsx';

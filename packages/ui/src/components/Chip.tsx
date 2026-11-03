@@ -1,4 +1,7 @@
 import { Pressable, StyleSheet } from 'react-native';
+import Animated from 'react-native-reanimated';
+
+import { usePressBounce } from '../motion/usePressBounce.ts';
 
 import { color, palette, radius, spacing, touch } from '../tokens.ts';
 import { Text } from './Text.tsx';
@@ -12,19 +15,23 @@ export interface ChipProps {
 
 /** Small toggle pill (filters, formats). Min. 48 dp high. */
 export function Chip({ label, selected, onPress, testID }: ChipProps) {
+  const bounce = usePressBounce();
   return (
-    <Pressable
-      testID={testID}
-      accessibilityRole="radio"
-      accessibilityState={{ selected, checked: selected }}
-      accessibilityLabel={label}
-      onPress={onPress}
-      style={[styles.chip, selected ? styles.on : null]}
-    >
-      <Text variant="label" style={{ color: selected ? color.brand.purpleStrong : color.text.primary }}>
-        {label}
-      </Text>
-    </Pressable>
+    <Animated.View style={bounce.style}>
+      <Pressable
+        {...bounce.handlers}
+        testID={testID}
+        accessibilityRole="radio"
+        accessibilityState={{ selected, checked: selected }}
+        accessibilityLabel={label}
+        onPress={onPress}
+        style={[styles.chip, selected ? styles.on : null]}
+      >
+        <Text variant="label" style={{ color: selected ? color.brand.purpleStrong : color.text.primary }}>
+          {label}
+        </Text>
+      </Pressable>
+    </Animated.View>
   );
 }
 
@@ -33,9 +40,10 @@ const styles = StyleSheet.create({
     minHeight: touch.min,
     paddingHorizontal: spacing.md,
     borderRadius: radius.pill,
-    backgroundColor: color.background.raised,
+    // visible on white sections too: soft cream with a lavender rim
+    backgroundColor: palette.cream,
     borderWidth: 2,
-    borderColor: color.border.card,
+    borderColor: palette.lavender200,
     alignItems: 'center',
     justifyContent: 'center',
   },

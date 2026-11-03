@@ -1,4 +1,7 @@
 import { Pressable, StyleSheet, View } from 'react-native';
+import Animated from 'react-native-reanimated';
+
+import { usePressBounce } from '../motion/usePressBounce.ts';
 
 import { shadowStyle } from '../styles/helpers.ts';
 import { color, palette, radius, shadow, spacing, touch } from '../tokens.ts';
@@ -29,27 +32,31 @@ export function SortBasket({
   accessibilityLabel,
   testID,
 }: SortBasketProps) {
+  const bounce = usePressBounce();
   return (
-    <Pressable
-      testID={testID}
-      accessibilityRole="button"
-      accessibilityState={{ selected }}
-      accessibilityLabel={accessibilityLabel}
-      onPress={onPress}
-      onLongPress={onLongPress}
-      delayLongPress={450}
-      style={[styles.basket, selected ? styles.on : null, shadowStyle(shadow.card)]}
-    >
-      {swatch ? <View style={[styles.dot, { backgroundColor: swatch }]} /> : null}
-      <Text variant="label" numberOfLines={1}>
-        {label}
-      </Text>
-      <View style={[styles.count, selected ? styles.countOn : null]}>
-        <Text variant="caption" style={styles.countText}>
-          {count}
+    <Animated.View style={bounce.style}>
+      <Pressable
+        {...bounce.handlers}
+        testID={testID}
+        accessibilityRole="button"
+        accessibilityState={{ selected }}
+        accessibilityLabel={accessibilityLabel}
+        onPress={onPress}
+        onLongPress={onLongPress}
+        delayLongPress={450}
+        style={[styles.basket, selected ? styles.on : null, shadowStyle(shadow.card)]}
+      >
+        {swatch ? <View style={[styles.dot, { backgroundColor: swatch }]} /> : null}
+        <Text variant="label" numberOfLines={1}>
+          {label}
         </Text>
-      </View>
-    </Pressable>
+        <View style={[styles.count, selected ? styles.countOn : null]}>
+          <Text variant="caption" style={styles.countText}>
+            {count}
+          </Text>
+        </View>
+      </Pressable>
+    </Animated.View>
   );
 }
 

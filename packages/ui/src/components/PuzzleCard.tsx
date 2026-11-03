@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Image, Pressable, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 import { FRAME_LOOKS } from '../illustrations/rewards.ts';
+import { usePressBounce } from '../motion/usePressBounce.ts';
 import { shadowStyle } from '../styles/helpers.ts';
 import { color, palette, radius, shadow, spacing } from '../tokens.ts';
 import { ProgressBar } from './ProgressBar.tsx';
@@ -29,26 +31,30 @@ export function PuzzleCard(p: PuzzleCardProps) {
   const [width, setWidth] = useState(0);
   const onLayout = (e: LayoutChangeEvent) => setWidth(Math.round(e.nativeEvent.layout.width));
   const frame = p.stars !== null && p.frameId ? FRAME_LOOKS[p.frameId] : undefined;
+  const bounce = usePressBounce();
   return (
-    <Pressable
-      testID={p.testID}
-      accessibilityRole="button"
-      accessibilityLabel={p.accessibilityLabel}
-      onPress={p.onPress}
-      style={[
-        styles.card,
-        frame ? { borderColor: frame.outer, backgroundColor: frame.inner } : null,
-        shadowStyle(shadow.card),
-      ]}
-    >
-      <View style={[styles.picture, { height: width > 0 ? width / p.aspect : undefined }]} onLayout={onLayout}>
-        {width > 0 ? <Image source={{ uri: p.thumbUri }} style={{ width, height: width / p.aspect }} /> : null}
-      </View>
-      <View style={styles.meta}>
-        <Text variant="label">{p.title}</Text>
-        {p.stars !== null ? <StarRow stars={p.stars} size={18} /> : <ProgressBar value={p.progress} />}
-      </View>
-    </Pressable>
+    <Animated.View style={bounce.style}>
+      <Pressable
+        {...bounce.handlers}
+        testID={p.testID}
+        accessibilityRole="button"
+        accessibilityLabel={p.accessibilityLabel}
+        onPress={p.onPress}
+        style={[
+          styles.card,
+          frame ? { borderColor: frame.outer, backgroundColor: frame.inner } : null,
+          shadowStyle(shadow.card),
+        ]}
+      >
+        <View style={[styles.picture, { height: width > 0 ? width / p.aspect : undefined }]} onLayout={onLayout}>
+          {width > 0 ? <Image source={{ uri: p.thumbUri }} style={{ width, height: width / p.aspect }} /> : null}
+        </View>
+        <View style={styles.meta}>
+          <Text variant="label">{p.title}</Text>
+          {p.stars !== null ? <StarRow stars={p.stars} size={18} /> : <ProgressBar value={p.progress} />}
+        </View>
+      </Pressable>
+    </Animated.View>
   );
 }
 

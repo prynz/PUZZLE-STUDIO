@@ -211,6 +211,13 @@ export const spacing = {
 } as const;
 
 /** Generous, soft radii – no hard corners anywhere. */
+/** Screen rhythm: space between separated sections and inside them. */
+export const layout = {
+  sectionGap: 20,
+  /** Gap between items inside a section. */
+  itemGap: 12,
+} as const;
+
 export const radius = {
   sm: 12,
   md: 18,
