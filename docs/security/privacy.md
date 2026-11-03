@@ -1,6 +1,6 @@
 # Datenschutz & Kindersicherheit
 
-Status: **Konzept, Stand Phase 5** (Berechtigungen und SDK-Liste sind umgesetzt bzw. aktuell) – wird mit jeder Phase fortgeschrieben. Dies ist keine Rechtsberatung; vor Veröffentlichung sind DSGVO (inkl. Art. 8), Apple App Store Kids Category (Guideline 1.3, 5.1.4) und Google Play Families Policy fachlich/rechtlich zu prüfen.
+Status: **Stand Phase 7** (Berechtigungen, Löschen, Backup-Verhalten, Eltern-Schranke und SDK-Liste sind umgesetzt bzw. aktuell) – wird mit jeder Phase fortgeschrieben. Dies ist keine Rechtsberatung; vor Veröffentlichung sind DSGVO (inkl. Art. 8), Apple App Store Kids Category (Guideline 1.3, 5.1.4) und Google Play Families Policy fachlich/rechtlich zu prüfen.
 
 ## Grundsätze (verbindlich)
 
@@ -40,19 +40,22 @@ Umsetzung (Phase 1): `expo-image-picker` mit `photosPermission: false` und `micr
 
 ## Löschen
 
-Einzelnes Puzzle (inkl. ungenutztem Bild) · alle Puzzles · „Alle lokalen Daten löschen“ im Elternbereich. App-Deinstallation entfernt alle Daten.
+- Einzelnes Bild im Atelier (mit allen Dateien und den Puzzles daraus), einzelnes Puzzle in der Sammlung.
+- **„Alle lokalen Daten löschen“** im Elternbereich (Reiter „Daten“, nur nach Rückfrage): löscht alle Puzzles, alle Bilder samt Bildordner (`images/` im App-Dokumentenordner – Originale, Arbeitsversionen, Vorschaubilder), Sterne, Meilensteine und alle Einstellungen; danach startet die App mit der Begrüßung wie neu. Umgesetzt in `features/parents/ParentsData.tsx` über die `clear()`-Methoden der Stores.
+- App-Deinstallation entfernt alle Daten.
 
-## Backup-Verhalten
+## Backup-Verhalten (Entscheidung Phase 7)
 
-- iOS: App-Daten sind standardmäßig Teil des iCloud-Gerätebackups des Elterngeräts. Entscheidung Phase 7: Bilder mit `isExcludedFromBackup` markieren **oder** bewusst im Gerätebackup lassen – wird im Elternbereich transparent erklärt.
-- Android: `allowBackup` wird in Phase 7 bewusst konfiguriert (Standard-Vorschlag: `false` bzw. `dataExtractionRules` ohne Bildordner).
-- Optionales Cloud-Backup (Post-MVP): nur über Elternbereich, ausdrückliche Einwilligung, Ende-zu-Ende-Konzept vor Implementierung.
+- **Android: `allowBackup: false`** (`apps/mobile/app.config.ts`). Die automatische Google-Drive-Sicherung würde Kinderfotos ohne aktives Zutun hochladen – das widerspricht „kein automatischer Upload“. Folge: Beim Gerätewechsel ziehen Bilder und Spielstände nicht automatisch mit um; das wird im Elternbereich offen gesagt.
+- **iOS:** Die Daten liegen im App-Dokumentenordner und sind damit Teil der **Geräte-Sicherung** (iCloud-Backup oder Computer), die Eltern in den iPhone-Einstellungen selbst steuern; die Sicherung ist an das Apple-Konto der Eltern gebunden und Teil des Systems, nicht der App. Ein Ausschluss per `isExcludedFromBackup` wäre nur mit eigenem nativen Code möglich (expo-file-system bietet ihn nicht) – bewusst nicht umgesetzt, **zur Entscheidung durch den PO** (siehe Report 07).
+- Der Elternbereich erklärt beides (Reiter „Info“ → „Sicherung“).
+- Eine eigene Export-/Import-Funktion bzw. ein optionales Cloud-Backup gibt es nicht. Falls gewünscht (Post-MVP): nur über den Elternbereich, ausdrückliche Einwilligung, Konzept vor Implementierung.
 
-## Eltern-Schranke
+## Eltern-Schranke (umgesetzt Phase 7)
 
-Zufällige Rechenaufgabe in Worten bzw. „Halte die Taste 3 Sekunden gedrückt und tippe auf die Zahl …“, ohne visuelle Hinweise für Leseanfänger. **Die Schranke ersetzt keine rechtlich erforderliche Einwilligung.**
+Drei verschiedene Zahlen von 1 bis 9 werden **als Wörter** gezeigt („sieben · zwei · fünf“) und auf einem großen Ziffernfeld eingetippt. Leseanfänger können die Wörter nicht lesen; es gibt keine Farb-, Bild- oder Positionshinweise. Eine falsche Ziffer erzeugt sofort eine neue Aufgabe (keine Sperre, kein Zähler). Der Bereich bleibt nur geöffnet, solange er angezeigt wird – jedes neue Öffnen fragt erneut. Logik: `features/parents/gate.ts` (getestet). **Die Schranke ersetzt keine rechtlich erforderliche Einwilligung.**
 
-## SDK-Liste (Stand Phase 5, `apps/mobile/package.json` – Phase 4/5 ohne neue App-Abhängigkeiten)
+## SDK-Liste (Stand Phase 7, `apps/mobile/package.json` – Phasen 4–7 ohne neue App-Abhängigkeiten)
 
 | Paket                                                                                                              | Zweck                                                                       | Netzwerk / Daten nach außen    |
 | ------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------- | ------------------------------ |
