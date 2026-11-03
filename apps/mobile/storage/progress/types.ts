@@ -10,4 +10,6 @@ export interface ProgressStore {
   load(): Promise<ProgressSnapshot>;
   /** Appends one completion and the given new unlocks atomically. */
   record(completion: Completion, newUnlocks: readonly string[]): Promise<void>;
+  /** Forgets all stars and milestones (parents: "delete all data"). */
+  clear(): Promise<void>;
 }

@@ -59,5 +59,8 @@ export function createMemoryPuzzleStore(initial: StoredPuzzle[] = []): PuzzleSto
     remove: async (id) => {
       items = items.filter((x) => x.id !== id);
     },
+    clear: async () => {
+      items = [];
+    },
   };
 }

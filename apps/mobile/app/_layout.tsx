@@ -17,7 +17,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ImagesProvider } from '@/store/images';
 import { ProgressProvider } from '@/store/progress';
 import { PuzzlesProvider } from '@/store/puzzles';
-import { SettingsProvider } from '@/store/settings';
+import { MotionFromSettings, SettingsProvider } from '@/store/settings';
 
 // Keep the native splash until fonts are ready (prevents a flash of fallback text).
 SplashScreen.preventAutoHideAsync().catch(() => {
@@ -46,20 +46,22 @@ export default function RootLayout() {
     <GestureHandlerRootView style={styles.root}>
       <SafeAreaProvider>
         <SettingsProvider>
-          <ImagesProvider>
-            <PuzzlesProvider>
-              <ProgressProvider>
-                <StatusBar style="dark" />
-                <Stack
-                  screenOptions={{
-                    headerShown: false,
-                    contentStyle: { backgroundColor: color.background.primary },
-                    animation: 'fade',
-                  }}
-                />
-              </ProgressProvider>
-            </PuzzlesProvider>
-          </ImagesProvider>
+          <MotionFromSettings>
+            <ImagesProvider>
+              <PuzzlesProvider>
+                <ProgressProvider>
+                  <StatusBar style="dark" />
+                  <Stack
+                    screenOptions={{
+                      headerShown: false,
+                      contentStyle: { backgroundColor: color.background.primary },
+                      animation: 'fade',
+                    }}
+                  />
+                </ProgressProvider>
+              </PuzzlesProvider>
+            </ImagesProvider>
+          </MotionFromSettings>
         </SettingsProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>

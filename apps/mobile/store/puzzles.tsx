@@ -12,6 +12,7 @@ interface PuzzlesContextValue {
   reset: (id: string) => Promise<void>;
   /** Deletes one puzzle (the picture stays in the atelier, earned stars stay too). */
   remove: (id: string) => Promise<void>;
+  clearAll: () => Promise<void>;
   /** Called after an image was deleted (SQLite cascades; memory store and UI state follow here). */
   forgetImage: (imageId: string) => Promise<void>;
 }
@@ -58,6 +59,10 @@ export function PuzzlesProvider({ children, store }: { children: ReactNode; stor
     },
     [backend],
   );
+  const clearAll = useCallback(async () => {
+    await backend.clear();
+    setPuzzles([]);
+  }, [backend]);
   const forgetImage = useCallback(
     async (imageId: string) => {
       const gone = puzzles.filter((p) => p.imageId === imageId);
@@ -68,8 +73,8 @@ export function PuzzlesProvider({ children, store }: { children: ReactNode; stor
   );
 
   const value = useMemo(
-    () => ({ ready, error, puzzles, create, save, reset, remove, forgetImage }),
-    [ready, error, puzzles, create, save, reset, remove, forgetImage],
+    () => ({ ready, error, puzzles, create, save, reset, remove, clearAll, forgetImage }),
+    [ready, error, puzzles, create, save, reset, remove, clearAll, forgetImage],
   );
   return <PuzzlesContext.Provider value={value}>{children}</PuzzlesContext.Provider>;
 }

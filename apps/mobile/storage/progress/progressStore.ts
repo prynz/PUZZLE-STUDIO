@@ -32,6 +32,14 @@ export function createPersistentProgressStore(): ProgressStore {
       return { completions, unlocked: Object.fromEntries(unlocks.map((u) => [u.achievement_id, u.unlocked_at])) };
     },
 
+    async clear() {
+      const db = await getDatabase();
+      await db.withTransactionAsync(async () => {
+        await db.runAsync('DELETE FROM completion');
+        await db.runAsync('DELETE FROM achievement_unlock');
+      });
+    },
+
     async record(c, newUnlocks) {
       const db = await getDatabase();
       await db.withTransactionAsync(async () => {

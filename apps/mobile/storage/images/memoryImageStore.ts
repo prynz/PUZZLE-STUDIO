@@ -25,5 +25,9 @@ export function createMemoryImageStore(initial: StoredImage[] = []): ImageStore 
     remove: async (id) => {
       items = items.filter((i) => i.id !== id);
     },
+    clear: async () => {
+      items = [];
+    },
+    usage: async () => null,
   };
 }

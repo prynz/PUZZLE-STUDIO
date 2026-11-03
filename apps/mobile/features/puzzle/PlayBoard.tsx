@@ -1,8 +1,7 @@
 import type { Puzzle, Rect } from '@puzzle-studio/puzzle-engine';
-import { Burst, Icon, IconButton, Text, spacing } from '@puzzle-studio/ui';
+import { Burst, Icon, IconButton, Text, spacing, useReduceMotion } from '@puzzle-studio/ui';
 import { Suspense, lazy, useCallback, useMemo, useState, type ReactNode } from 'react';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
-import { useReducedMotion } from 'react-native-reanimated';
 
 import { t } from '@/i18n';
 import { loadSkia } from '@/services/skiaLoader';
@@ -27,13 +26,13 @@ export interface PlayBoardProps {
   zoom: number;
   setZoom: (z: number) => void;
   onReady: () => void;
-  /** Shown on top of the board (Pino's speech bubble) – does not move the board. */
+  /** Shown on top of the board (Pino's speech bubble) – does not move the board; decides itself what is touchable. */
   overlay?: ReactNode;
 }
 
 /** Measures the space, keeps the view (fit / bite / zoom + pan) and hosts the lazy Skia canvas. */
 export function PlayBoard({ puzzle, imageUri, game, zoom, setZoom, onReady, overlay }: PlayBoardProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReduceMotion();
   const [size, setSize] = useState<{ w: number; h: number } | null>(null);
   const onLayout = (e: LayoutChangeEvent) => {
     const { width, height } = e.nativeEvent.layout;
@@ -181,7 +180,7 @@ export function PlayBoard({ puzzle, imageUri, game, zoom, setZoom, onReady, over
           </Suspense>
         ) : null}
         {overlay ? (
-          <View style={styles.overlay} pointerEvents="none">
+          <View style={styles.overlay} pointerEvents="box-none">
             {overlay}
           </View>
         ) : null}

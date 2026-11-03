@@ -12,5 +12,9 @@ export function createMemoryProgressStore(initial?: ProgressSnapshot): ProgressS
       data.completions.push(completion);
       for (const id of newUnlocks) data.unlocked[id] ??= completion.completedAt;
     },
+    clear: async () => {
+      data.completions = [];
+      data.unlocked = {};
+    },
   };
 }

@@ -37,4 +37,6 @@ export interface PuzzleStore {
   /** Back to the start (state removed, status "new"). */
   reset(id: string): Promise<StoredPuzzle>;
   remove(id: string): Promise<void>;
+  /** Deletes every puzzle and saved game. */
+  clear(): Promise<void>;
 }

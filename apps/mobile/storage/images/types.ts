@@ -46,4 +46,8 @@ export interface ImageStore {
   add(input: NewImage): Promise<StoredImage>;
   /** Removes the row AND all files (original, work version, thumbnail). */
   remove(id: string): Promise<void>;
+  /** Deletes every image with all its files (parents: "delete all data"). */
+  clear(): Promise<void>;
+  /** Bytes used by all image files on this device; null where not measurable (web preview). */
+  usage(): Promise<number | null>;
 }

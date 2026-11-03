@@ -131,6 +131,11 @@ export function createPersistentPuzzleStore(): PuzzleStore {
       return get(id);
     },
 
+    async clear() {
+      const db = await getDatabase();
+      await db.runAsync('DELETE FROM puzzle'); // puzzle_state via ON DELETE CASCADE
+    },
+
     async remove(id) {
       const db = await getDatabase();
       await db.runAsync('DELETE FROM puzzle WHERE id = ?', id);

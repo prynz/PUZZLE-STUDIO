@@ -17,7 +17,9 @@ import {
   returnToTray,
   setReferenceVisible,
   suggestPiece,
+  type AssistRules,
   type DropOutcome,
+  type MisplaceMode,
   type Puzzle,
   type PuzzleState,
   type Rect,
@@ -29,9 +31,31 @@ import type { SaveProgress, StoredPuzzle } from '@/storage/puzzles/types';
 import { piecesIn } from './baskets';
 import { useAutosave } from './useAutosave';
 
-function initialState(stored: StoredPuzzle, puzzle: Puzzle): { state: PuzzleState; restoreFailed: boolean } {
-  const misplaceMode = assistFor(stored.profile, puzzle.pieces.length).misplaceDefault;
-  const fresh = () => createState(puzzle, { seed: stored.definition.seed + 1, misplaceMode });
+/** Parents' choices that shape a NEW game (docs/product/parents-area.md). */
+export interface GameOptions {
+  misplace: 'profile' | 'nudge' | 'return';
+  reference: boolean;
+}
+
+export const DEFAULT_GAME_OPTIONS: GameOptions = { misplace: 'profile', reference: true };
+
+/** The profile decides – parents may override it, except for toddlers (always back to the tray). */
+function misplaceFor(rules: AssistRules, options: GameOptions): MisplaceMode {
+  return rules.misplaceChangeable && options.misplace !== 'profile' ? options.misplace : rules.misplaceDefault;
+}
+
+function initialState(
+  stored: StoredPuzzle,
+  puzzle: Puzzle,
+  options: GameOptions,
+): { state: PuzzleState; restoreFailed: boolean } {
+  const rules = assistFor(stored.profile, puzzle.pieces.length);
+  const fresh = () =>
+    createState(puzzle, {
+      seed: stored.definition.seed + 1,
+      misplaceMode: misplaceFor(rules, options),
+      referenceVisible: options.reference,
+    });
   if (!stored.stateJson) return { state: fresh(), restoreFailed: false };
   const parsed = parseState(puzzle, stored.stateJson);
   return parsed.ok ? { state: parsed.state, restoreFailed: false } : { state: fresh(), restoreFailed: true };
@@ -48,9 +72,14 @@ export interface DropFeedback {
  * Game session: engine state, selection, baskets, hints, bites and autosave.
  * All rules come from the engine (`assistFor`, `dropPiece`, …) – this hook only wires them to the UI.
  */
-export function useGame(stored: StoredPuzzle, puzzle: Puzzle, save: (progress: SaveProgress) => Promise<void>) {
+export function useGame(
+  stored: StoredPuzzle,
+  puzzle: Puzzle,
+  save: (progress: SaveProgress) => Promise<void>,
+  options: GameOptions = DEFAULT_GAME_OPTIONS,
+) {
   const rules = useMemo(() => assistFor(stored.profile, puzzle.pieces.length), [stored.profile, puzzle]);
-  const [{ state, restoreFailed }, setSession] = useState(() => initialState(stored, puzzle));
+  const [{ state, restoreFailed }, setSession] = useState(() => initialState(stored, puzzle, options));
   const setState = useCallback(
     (update: (s: PuzzleState) => PuzzleState) => setSession((prev) => ({ ...prev, state: update(prev.state) })),
     [],
@@ -160,14 +189,18 @@ export function useGame(stored: StoredPuzzle, puzzle: Puzzle, save: (progress: S
 
   const restart = useCallback(() => {
     setSession({
-      state: createState(puzzle, { seed: (Date.now() & 0xffff) + 1, misplaceMode: rules.misplaceDefault }),
+      state: createState(puzzle, {
+        seed: (Date.now() & 0xffff) + 1,
+        misplaceMode: misplaceFor(rules, options),
+        referenceVisible: options.reference,
+      }),
       restoreFailed: false,
     });
     setSelected(null);
     setHint(null);
     setBasketId('all');
     setPage(0);
-  }, [puzzle, rules.misplaceDefault]);
+  }, [puzzle, rules, options]);
 
   const toggleReference = useCallback(() => setState((s) => setReferenceVisible(s, !s.referenceVisible)), [setState]);
 

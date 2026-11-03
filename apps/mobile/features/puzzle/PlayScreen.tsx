@@ -5,10 +5,8 @@ import {
   ConfirmDialog,
   EmptyState,
   LoadingState,
-  Mascot,
   Screen,
   SecondaryButton,
-  SpeechBubble,
   Surface,
   Text,
   spacing,
@@ -30,6 +28,8 @@ import { Celebration } from './Celebration';
 import { useCompletion } from './useCompletion';
 import { PlayBoard } from './PlayBoard';
 import { PlayHeader } from './PlayHeader';
+import { PinoBubble } from './PinoBubble';
+import { useHintOffer } from './useHintOffer';
 import { useGame } from './game/useGame';
 
 /** Route `/puzzle/[id]`: finds puzzle + picture, then hands over to the game. */
@@ -61,9 +61,9 @@ function Game({ stored, image }: { stored: StoredPuzzle; image: StoredImage }) {
   // geometry is regenerated from the stored definition – never stored itself
   const puzzle = useMemo(() => generatePuzzle(stored.definition), [stored.definition]);
   const persist = useCallback((p: SaveProgress) => save(stored.id, p), [save, stored.id]);
-  const game = useGame(stored, puzzle, persist);
-  const completion = useCompletion(stored, image, game.complete);
   const { settings } = useSettings();
+  const game = useGame(stored, puzzle, persist, settings.parent);
+  const completion = useCompletion(stored, image, game.complete);
   const { unlocked } = useProgress();
   const background = validChoice(settings.boardBackground, unlocked, 'background');
   const decor = background ? BACKGROUND_LOOKS[background] : undefined;
@@ -85,6 +85,15 @@ function Game({ stored, image }: { stored: StoredPuzzle; image: StoredImage }) {
     const timer = setTimeout(() => setCheer(false), 1800);
     return () => clearTimeout(timer);
   }, [cheer]);
+
+  // after a while without progress Pino offers a hint – only an offer, the child decides
+  const offer = useHintOffer(
+    game.placed,
+    game.rules.hintOfferAfterSec,
+    settings.parent.hintOffers,
+    !ready || game.complete || game.hint !== null || cheer || confirmRestart,
+  );
+  const says = cheer ? 'cheer' : game.hint !== null ? 'hint' : offer.offered ? 'offer' : null;
 
   const restart = () => {
     setConfirmRestart(false);
@@ -114,15 +123,15 @@ function Game({ stored, image }: { stored: StoredPuzzle; image: StoredImage }) {
         setZoom={setZoom}
         onReady={onReady}
         overlay={
-          game.hint !== null || cheer ? (
-            <View style={styles.pino}>
-              <Mascot emotion={cheer ? 'excited' : 'happy'} size={64} accessibilityLabel={null} />
-              <SpeechBubble>
-                <Text variant="label" accessibilityLiveRegion="polite">
-                  {cheer ? t('play.biteDone') : t('play.hintSay')}
-                </Text>
-              </SpeechBubble>
-            </View>
+          says ? (
+            <PinoBubble
+              says={says}
+              onAccept={() => {
+                offer.dismiss();
+                game.showHint();
+              }}
+              onDismiss={offer.dismiss}
+            />
           ) : null
         }
       />
@@ -155,6 +164,5 @@ function Game({ stored, image }: { stored: StoredPuzzle; image: StoredImage }) {
 const styles = StyleSheet.create({
   content: { flex: 1, gap: spacing.xs, paddingBottom: spacing.md },
   notice: { marginHorizontal: spacing.md },
-  pino: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs, paddingHorizontal: spacing.md },
   loading: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' },
 });

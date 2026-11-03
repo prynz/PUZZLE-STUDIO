@@ -1,9 +1,15 @@
 import { createMemorySettingsStore } from '@/storage/settingsStore';
-import { DEFAULT_PROFILE, parseSettings } from '@/store/settings';
+import { DEFAULT_PARENT_OPTIONS, DEFAULT_PROFILE, parseSettings } from '@/store/settings';
 
 describe('settings', () => {
   it('falls back to safe defaults for missing or invalid values', () => {
-    const defaults = { onboardingCompleted: false, profile: DEFAULT_PROFILE, boardBackground: null, cardFrame: null };
+    const defaults = {
+      onboardingCompleted: false,
+      profile: DEFAULT_PROFILE,
+      boardBackground: null,
+      cardFrame: null,
+      parent: DEFAULT_PARENT_OPTIONS,
+    };
     expect(parseSettings({})).toEqual(defaults);
     expect(
       parseSettings({
@@ -11,6 +17,7 @@ describe('settings', () => {
         'onboarding.completed': 'yes',
         'reward.background': 3,
         'reward.frame': '',
+        'parent.options': { misplace: 'explode', reference: 'no', hintOffers: 1 },
       }),
     ).toEqual(defaults);
   });
@@ -22,12 +29,14 @@ describe('settings', () => {
         'onboarding.completed': true,
         'reward.background': 'background_meadow',
         'reward.frame': 'frame_sun',
+        'parent.options': { misplace: 'return', reference: false, hintOffers: false, reduceMotion: true },
       }),
     ).toEqual({
       onboardingCompleted: true,
       profile: 'toddler',
       boardBackground: 'background_meadow',
       cardFrame: 'frame_sun',
+      parent: { misplace: 'return', reference: false, hintOffers: false, reduceMotion: true },
     });
   });
 

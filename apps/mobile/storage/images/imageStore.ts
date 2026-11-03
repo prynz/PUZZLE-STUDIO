@@ -113,6 +113,21 @@ export function createPersistentImageStore(): ImageStore {
       }
     },
 
+    async clear() {
+      const db = await getDatabase();
+      await db.runAsync('DELETE FROM image'); // puzzles + saved games follow via ON DELETE CASCADE
+      const root = new Directory(Paths.document, 'images');
+      if (root.exists) root.delete();
+    },
+
+    async usage() {
+      const root = new Directory(Paths.document, 'images');
+      if (!root.exists) return 0;
+      const walk = (dir: Directory): number =>
+        dir.list().reduce((sum, entry) => sum + (entry instanceof Directory ? walk(entry) : (entry.size ?? 0)), 0);
+      return walk(root);
+    },
+
     async remove(id) {
       const db = await getDatabase();
       await db.runAsync('DELETE FROM image WHERE id = ?', id);

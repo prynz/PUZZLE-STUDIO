@@ -12,6 +12,8 @@ interface ImagesContextValue {
   setPending: (p: PendingImage | null) => void;
   add: (img: NewImage) => Promise<StoredImage>;
   remove: (id: string) => Promise<void>;
+  clearAll: () => Promise<void>;
+  usage: () => Promise<number | null>;
   error: boolean;
 }
 
@@ -53,9 +55,16 @@ export function ImagesProvider({ children, store }: { children: ReactNode; store
     [backend],
   );
 
+  const clearAll = useCallback(async () => {
+    await backend.clear();
+    setImages([]);
+    setPending(null);
+  }, [backend]);
+  const usage = useCallback(() => backend.usage(), [backend]);
+
   const value = useMemo(
-    () => ({ ready, images, pending, setPending, add, remove, error }),
-    [ready, images, pending, add, remove, error],
+    () => ({ ready, images, pending, setPending, add, remove, clearAll, usage, error }),
+    [ready, images, pending, add, remove, clearAll, usage, error],
   );
   return <ImagesContext.Provider value={value}>{children}</ImagesContext.Provider>;
 }

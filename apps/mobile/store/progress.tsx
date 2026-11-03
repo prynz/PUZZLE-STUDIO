@@ -22,6 +22,7 @@ interface ProgressContextValue {
   unlocked: ReadonlySet<string>;
   /** Records a finished puzzle and returns stars + achievements unlocked right now. */
   complete: (c: Completion) => Promise<CompletionResult>;
+  clearAll: () => Promise<void>;
 }
 
 const ProgressContext = createContext<ProgressContextValue | null>(null);
@@ -63,8 +64,17 @@ export function ProgressProvider({ children, store }: { children: ReactNode; sto
     [backend, log, unlocked],
   );
 
+  const clearAll = useCallback(async () => {
+    await backend.clear();
+    setLog([]);
+    setUnlocked(new Set());
+  }, [backend]);
+
   const stats = useMemo(() => statsFrom(log), [log]);
-  const value = useMemo(() => ({ ready, stats, unlocked, complete }), [ready, stats, unlocked, complete]);
+  const value = useMemo(
+    () => ({ ready, stats, unlocked, complete, clearAll }),
+    [ready, stats, unlocked, complete, clearAll],
+  );
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;
 }
 
