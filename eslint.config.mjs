@@ -59,6 +59,7 @@ export default defineConfig([
       'packages/ui/src/illustrations/**/*.ts',
       'packages/image-processing/src/**/*.ts',
       'packages/puzzle-engine/src/**/*.ts',
+      'packages/game-progression/src/**/*.ts',
     ],
     rules: {
       'no-restricted-imports': ['error', { patterns: ['react', 'react-native', 'react-native-*', 'expo', 'expo-*'] }],

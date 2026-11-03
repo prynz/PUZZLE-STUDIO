@@ -1,0 +1,15 @@
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    include: ['test/**/*.test.ts'],
+    environment: 'node',
+    coverage: {
+      provider: 'v8',
+      include: ['src/**/*.ts'],
+      reporter: ['text-summary'],
+      // Phase 4 acceptance criterion (docs/development/testing.md)
+      thresholds: { lines: 95, functions: 95, statements: 95, branches: 90 },
+    },
+  },
+});
