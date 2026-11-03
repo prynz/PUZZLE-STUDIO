@@ -44,12 +44,14 @@ Umsetzung (Phase 1): `expo-image-picker` mit `photosPermission: false` und `micr
 - **„Alle lokalen Daten löschen“** im Elternbereich (Reiter „Daten“, nur nach Rückfrage): löscht alle Puzzles, alle Bilder samt Bildordner (`images/` im App-Dokumentenordner – Originale, Arbeitsversionen, Vorschaubilder), Sterne, Meilensteine und alle Einstellungen; danach startet die App mit der Begrüßung wie neu. Umgesetzt in `features/parents/ParentsData.tsx` über die `clear()`-Methoden der Stores.
 - App-Deinstallation entfernt alle Daten.
 
-## Backup-Verhalten (Entscheidung Phase 7)
+## Backup-Verhalten (Entscheidung Phase 7, PO-Freigabe 2026-11-03)
 
-- **Android: `allowBackup: false`** (`apps/mobile/app.config.ts`). Die automatische Google-Drive-Sicherung würde Kinderfotos ohne aktives Zutun hochladen – das widerspricht „kein automatischer Upload“. Folge: Beim Gerätewechsel ziehen Bilder und Spielstände nicht automatisch mit um; das wird im Elternbereich offen gesagt.
-- **iOS:** Die Daten liegen im App-Dokumentenordner und sind damit Teil der **Geräte-Sicherung** (iCloud-Backup oder Computer), die Eltern in den iPhone-Einstellungen selbst steuern; die Sicherung ist an das Apple-Konto der Eltern gebunden und Teil des Systems, nicht der App. Ein Ausschluss per `isExcludedFromBackup` wäre nur mit eigenem nativen Code möglich (expo-file-system bietet ihn nicht) – bewusst nicht umgesetzt, **zur Entscheidung durch den PO** (siehe Report 07).
-- Der Elternbereich erklärt beides (Reiter „Info“ → „Sicherung“).
-- Eine eigene Export-/Import-Funktion bzw. ein optionales Cloud-Backup gibt es nicht. Falls gewünscht (Post-MVP): nur über den Elternbereich, ausdrückliche Einwilligung, Konzept vor Implementierung.
+Bilder und Spielstände gehen **nie automatisch in eine Cloud** – weder durch die App noch durch die Geräte-Sicherung:
+
+- **Android: `allowBackup: false`** (`apps/mobile/app.config.ts`, Test `appConfig.test.ts`; CI prüft das zusammengeführte Manifest auf `android:allowBackup="false"`).
+- **iOS:** Der gesamte App-Dokumentenordner (`images/` mit Originalen, Arbeitsversionen, Vorschaubildern und `SQLite/` mit Spielständen, Sternen, Einstellungen) wird bei jedem Start mit `isExcludedFromBackup` markiert – also weder iCloud- noch Computer-Sicherung. Umgesetzt als kleines lokales Expo-Modul `apps/mobile/modules/backup-exclusion` (Swift, nur iOS, keine neue Fremd-Abhängigkeit); Aufruf in `services/backupExclusion.ts`. Der **Systemcheck** zeigt das Ergebnis („Cloud-Sicherung“), Maestro prüft es auf beiden Plattformen.
+- Folge (vom PO bewusst so entschieden): Beim Gerätewechsel oder Löschen der App sind Bilder, Puzzles und Sterne weg. Der Elternbereich erklärt das (Reiter „Info“ → „Sicherung“).
+- **Keine** Export-/Import-Datei (PO: „nicht nötig“). Ein optionales Backup käme nur nach erneuter PO-Entscheidung: über den Elternbereich, ausdrückliche Einwilligung, Konzept vor Implementierung.
 
 ## Eltern-Schranke (umgesetzt Phase 7)
 

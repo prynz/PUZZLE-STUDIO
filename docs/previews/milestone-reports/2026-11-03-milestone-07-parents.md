@@ -13,7 +13,7 @@
 | **Reiter „Daten“**            | Anzahl Bilder, Puzzles, fertige Puzzles, **Speicherplatz der Bilder** · Wege zum Aufräumen (Atelier, Sammlung) · **Alle lokalen Daten löschen** mit Rückfrage → App startet wie neu                                              |
 | **Reiter „Info“**             | Datenschutz in einfachen Worten · **Sicherung** (Backup-Verhalten Android/iOS) · Werkzeuge (Systemcheck, 256-Teile-Test, Begrüßung)                                                                                              |
 | **Pino fragt von selbst**     | Nach einer Weile ohne neues Teil (Kleinkind 20 s, Kind 45 s, Profi nie): „Soll ich dir ein Teil zeigen?“ – **Ja, bitte / Nein, danke**. Nur ein Angebot.                                                                         |
-| **Kein automatischer Upload** | Android: automatische Google-Sicherung für die App **ausgeschaltet** (`allowBackup: false`).                                                                                                                                     |
+| **Kein automatischer Upload** | Weder iCloud/Computer (iOS, eigenes kleines Modul) noch Google (Android, `allowBackup: false`) sichern Bilder und Spielstände – PO-Entscheidung, im Systemcheck sichtbar.                                                        |
 
 Details: [parents-area.md](../../product/parents-area.md) · [privacy.md](../../security/privacy.md)
 
@@ -55,19 +55,18 @@ Der Test öffnet die Schranke wie ein Erwachsener (liest die Zahlwörter, tippt 
 
 ## 4. Entscheidungen in dieser Phase
 
-| Thema                          | Entscheidung                                                                                                                                              |
-| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Art der Schranke               | Zahlwörter + Ziffernfeld statt Rechenaufgabe: kein Lesen von Formeln, keine Zeitgrenze, für Kinder im Zielalter nicht lösbar, für Erwachsene in Sekunden. |
-| Entsperrt bleiben              | Nur solange der Bereich offen ist – keine „5-Minuten-Freigabe“, die ein Kind ausnutzen könnte.                                                            |
-| Android-Backup                 | `allowBackup: false` (kein automatischer Upload von Kinderfotos). Nachteil: Beim Gerätewechsel wandern Daten nicht mit – wird im Elternbereich erklärt.   |
-| iOS-Backup                     | Bleibt Teil der vom Elternteil gesteuerten Geräte-Sicherung; ein Ausschluss bräuchte eigenen nativen Code (siehe offene Punkte).                          |
-| Einstellungen für neue Puzzles | „Falsch gelegte Teile“ und „Vorlage“ gehören zum Spielstand – angefangene Puzzles ändern sich nicht plötzlich. Tipp-Angebot und Bewegung wirken sofort.   |
-| Löschen                        | Einzelnes bleibt dort, wo es das Kind sieht (Atelier, Sammlung); der Elternbereich verlinkt dorthin und bietet zusätzlich „alles löschen“.                |
+| Thema                          | Entscheidung                                                                                                                                                                                                   |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Art der Schranke               | Zahlwörter + Ziffernfeld statt Rechenaufgabe: kein Lesen von Formeln, keine Zeitgrenze, für Kinder im Zielalter nicht lösbar, für Erwachsene in Sekunden.                                                      |
+| Entsperrt bleiben              | Nur solange der Bereich offen ist – keine „5-Minuten-Freigabe“, die ein Kind ausnutzen könnte.                                                                                                                 |
+| Geräte-Sicherung (PO)          | **Aus auf beiden Plattformen**: Android `allowBackup: false`, iOS Dokumentenordner mit `isExcludedFromBackup` (lokales Modul `modules/backup-exclusion`). Gerätewechsel = Neuanfang; im Elternbereich erklärt. |
+| Export/Import-Datei (PO)       | Nicht gebaut – „nicht nötig“.                                                                                                                                                                                  |
+| Einstellungen für neue Puzzles | „Falsch gelegte Teile“ und „Vorlage“ gehören zum Spielstand – angefangene Puzzles ändern sich nicht plötzlich. Tipp-Angebot und Bewegung wirken sofort.                                                        |
+| Löschen                        | Einzelnes bleibt dort, wo es das Kind sieht (Atelier, Sammlung); der Elternbereich verlinkt dorthin und bietet zusätzlich „alles löschen“.                                                                     |
 
 ## 5. Offen / Hinweise für den PO
 
-- **Bitte entscheiden – iOS-Sicherung:** so lassen (Daten in der iCloud-/Computer-Sicherung der Eltern, Umzug aufs neue iPhone klappt) **oder** Bilder davon ausschließen (gleiches Verhalten wie Android, braucht ein kleines eigenes natives Modul).
-- Wird eine **Export-/Import-Funktion** (z. B. Sicherung als Datei) für den Gerätewechsel gewünscht? Derzeit bewusst nicht enthalten.
+- **Entschieden (PO, 2026-11-03):** Geräte-Sicherung auch auf dem iPhone aus; keine Export-/Import-Datei. Umgesetzt nach der Freigabe; die iOS-Bestätigung im Systemcheck kommt mit dem nächsten iOS-Lauf.
 - Phase 6 (iOS-Screenshots): weiter abhängig von freien macOS-Rechnern bei GitHub.
 - Weiter offen: Töne/Vibration (dann mit Schalter im Elternbereich), Messung auf echten Geräten, EAS/TestFlight.
 

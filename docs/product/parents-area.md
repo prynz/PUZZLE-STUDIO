@@ -12,11 +12,11 @@ Status: **umgesetzt (Phase 7)** – `apps/mobile/features/parents`, Einstellunge
 
 ## 2. Drei Bereiche statt einer langen Seite
 
-| Reiter    | Inhalt                                                                                                                                                                                                    |
-| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Spiel** | Spielhilfe-Profil (Kleine Puzzler / Puzzle-Kids / Puzzle-Profis) · „Falsch gelegte Teile“ · Hilfen: Vorlage anzeigen, Pino bietet Tipps an, Bewegung reduzieren                                           |
-| **Daten** | Auf diesem Gerät: Anzahl Bilder, Puzzles, davon fertig, Speicher für Bilder · Aufräumen: Wege ins Atelier (Bilder löschen) und in die Sammlung (Puzzles löschen) · **Alles löschen** (nur nach Rückfrage) |
-| **Info**  | Datenschutz in einfachen Worten · Sicherung (Backup-Verhalten Android/iOS) · Werkzeuge: Systemcheck, 256-Teile-Test, Begrüßung erneut zeigen                                                              |
+| Reiter    | Inhalt                                                                                                                                                                                                                |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Spiel** | Spielhilfe-Profil (Kleine Puzzler / Puzzle-Kids / Puzzle-Profis) · „Falsch gelegte Teile“ · Hilfen: Vorlage anzeigen, Pino bietet Tipps an, Bewegung reduzieren                                                       |
+| **Daten** | Auf diesem Gerät: Anzahl Bilder, Puzzles, davon fertig, Speicher für Bilder · Aufräumen: Wege ins Atelier (Bilder löschen) und in die Sammlung (Puzzles löschen) · **Alles löschen** (nur nach Rückfrage)             |
+| **Info**  | Datenschutz in einfachen Worten · Sicherung (Bilder und Spielstände sind auf iOS und Android von der automatischen Geräte-Sicherung ausgeschlossen) · Werkzeuge: Systemcheck, 256-Teile-Test, Begrüßung erneut zeigen |
 
 ## 3. Einstellungen und ihre Wirkung
 
