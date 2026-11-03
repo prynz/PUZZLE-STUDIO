@@ -64,3 +64,20 @@ describe('random', () => {
     expect(items[0]).toBe(0); // input untouched
   });
 });
+
+describe('chooseGrid – exact counts for children', () => {
+  it('keeps the preset count on common formats', () => {
+    for (const aspect of [4 / 3, 1, 3 / 4]) {
+      for (const n of [4, 9, 16, 25, 36, 64, 100, 144, 256]) {
+        const g = chooseGrid(n, aspect);
+        expect(g.rows * g.cols).toBe(n);
+      }
+    }
+  });
+
+  it('falls back to a nearby count when the exact one would give long pieces', () => {
+    const g = chooseGrid(49, 16 / 9); // 7 × 7 would be 1.78 : 1
+    expect(g.rows * g.cols).not.toBe(49);
+    expect(Math.abs(Math.log((16 / 9) * (g.rows / g.cols)))).toBeLessThan(Math.log(1.45));
+  });
+});
