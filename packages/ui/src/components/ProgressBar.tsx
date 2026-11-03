@@ -5,8 +5,8 @@ import { palette, radius } from '../tokens.ts';
 export interface ProgressBarProps {
   /** 0 … 1 */
   value: number;
-  /** Spoken, e.g. "3 von 9 Häppchen fertig". */
-  accessibilityLabel: string;
+  /** Spoken, e.g. "3 von 9 Häppchen fertig" – omit when the parent already announces it. */
+  accessibilityLabel?: string;
 }
 
 /** Slim, rounded progress bar without numbers (toddlers can't read). */
@@ -15,7 +15,7 @@ export function ProgressBar({ value, accessibilityLabel }: ProgressBarProps) {
   return (
     <View
       style={styles.track}
-      accessible
+      accessible={accessibilityLabel !== undefined}
       accessibilityRole="progressbar"
       accessibilityLabel={accessibilityLabel}
       accessibilityValue={{ min: 0, max: 100, now: Math.round(v * 100) }}

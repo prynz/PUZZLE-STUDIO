@@ -30,3 +30,8 @@ export * from './components/SortBasket.tsx';
 export * from './components/TextField.tsx';
 export * from './components/Sheet.tsx';
 export * from './components/ProgressBar.tsx';
+export * from './illustrations/rewards.ts';
+export * from './components/StarRow.tsx';
+export * from './components/RewardBadge.tsx';
+export * from './components/AchievementCard.tsx';
+export * from './components/PuzzleCard.tsx';
