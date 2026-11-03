@@ -69,10 +69,10 @@ appId: com.puzzlestudio.app.preview
 - takeScreenshot: screenshots/shot-${PLATFORM}-08-crop-square-rotated
 - tapOn:
     id: 'crop-confirm'
-# CI simulators render without GPU and vary a lot – real devices take about a second
+# CI simulators render without GPU and vary a lot (iOS runner 2026-11-03: > 2 min) – real devices take about a second
 - extendedWaitUntil:
     visible: 'Meine Bilder · 1'
-    timeout: 120000
+    timeout: 240000
 - waitForAnimationToEnd
 - takeScreenshot: screenshots/shot-${PLATFORM}-09-atelier-image-saved
 # Phase 5: start a puzzle from the saved picture and solve it with Pino's hints
