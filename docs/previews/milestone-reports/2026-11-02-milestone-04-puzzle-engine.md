@@ -42,7 +42,15 @@ Nach der ersten Sichtprüfung habe ich die Nasen runder und den Hals schmaler ge
 | Hit-Test-Tempo Web-Vorschau           | **3,1 µs** pro Berührung bei 256 Teilen (Chromium)                                                                                                                                                                                                |
 | Aufbau 256 Teile Web-Vorschau         | 95 ms (Geometrie + Skia-Pfade), 60 fps beim Ziehen                                                                                                                                                                                                |
 
-Der 256-Teile-Test zeigt die Hit-Test-Zeit jetzt direkt an („Treffer µs“). Damit lässt sich die PO-Vorgabe 2 auf **echten Geräten** ablesen – Simulator/Emulator in CI messen nur grob.
+### 256-Teile-Test in CI (Simulator/Emulator, ohne Grafikkarte – echte Geräte sind schneller)
+
+| Plattform                     | Aufbau 256 Teile | Treffer (Hit-Test) | fps | min fps |
+| ----------------------------- | ---------------- | ------------------ | --- | ------- |
+| iOS-Simulator (iPhone 17 Pro) | 60 ms            | **8,1 µs**         | 60  | 60      |
+| Android-Emulator (Pixel 6)    | 53 ms            | **14,2 µs**        | 60  | 60      |
+| Web-Vorschau (Chromium)       | 95 ms            | 3,1 µs             | 60  | 60      |
+
+Ziel für den Hit-Test auf Mittelklasse-Android: < 500 µs – in CI liegt er 35- bis 60-mal darunter. Der Test zeigt die Werte direkt an („Treffer µs“); damit lässt sich PO-Vorgabe 2 auf **echten Geräten** ablesen.
 
 ## 4. Screenshots (echt)
 
@@ -52,15 +60,22 @@ Der 256-Teile-Test zeigt die Hit-Test-Zeit jetzt direkt an („Treffer µs“). 
 
 ### iOS-Simulator und Android-Emulator – Maestro in GitHub Actions
 
-> Stand beim Schreiben: Die Geräte-Läufe für diesen Stand laufen noch; die Bilder werden vom CI-Lauf ergänzt und dieser Hinweis danach entfernt.
-
 | iOS                                                                  | Android                                                                  |
 | -------------------------------------------------------------------- | ------------------------------------------------------------------------ |
 | ![](../screenshots/2026-11-02-milestone-04-ios-12-benchmark-256.png) | ![](../screenshots/2026-11-02-milestone-04-android-12-benchmark-256.png) |
 
 Der komplette Ablauf (Onboarding, Atelier, Zuschnitt, Speichern, Elternbereich, Systemcheck, 256-Teile-Test, Neustart mit erhaltenem Profil und Bild) lief auf beiden Plattformen erneut durch; alle Bilder `2026-11-02-milestone-04-*` liegen in `docs/previews/screenshots/`.
 
-## 5. Entscheidungen in dieser Phase (dokumentiert)
+## 5. In diesem Meilenstein gefundene und behobene Fehler
+
+| Fehler                                                                                                             | Gefunden durch              | Behebung                                                                                                                                                               |
+| ------------------------------------------------------------------------------------------------------------------ | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Testablauf fand den „Zurück“-Knopf im Systemcheck nicht (liegt unterhalb des sichtbaren Bereichs)                  | iOS + Android in CI         | Knopf hat eine feste Kennung, der Test scrollt vorher dorthin. Kein App-Fehler.                                                                                        |
+| Speichern des Bildes dauerte im iOS-Simulator teils > 30 s (CI ohne Grafikkarte, stark schwankend: 6 s bis > 30 s) | iOS in CI                   | Bild wurde korrekt gespeichert; der Test wartet jetzt bis 120 s. Die App protokolliert die Dauer der Speicher-Schritte (nur Millisekunden). Auf echten Geräten prüfen. |
+| Aufbauzeit „314.8“ brach in der schmalen Spalte um                                                                 | Android-Screenshot          | Anzeige ohne Nachkommastelle.                                                                                                                                          |
+| Nasen der Teile wirkten schmal und flach                                                                           | Sichtprüfung Engine-Ausgabe | Rundere Nase, schmalerer Hals (weiterhin ≤ 25 % Teilhöhe).                                                                                                             |
+
+## 6. Entscheidungen in dieser Phase (dokumentiert)
 
 | Thema                          | Entscheidung                                                                                                                                                                                                          |
 | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -71,11 +86,12 @@ Der komplette Ablauf (Onboarding, Atelier, Zuschnitt, Speichern, Elternbereich, 
 | Nachbar-Gruppen                | Post-MVP – deshalb bewusst nicht angelegt.                                                                                                                                                                            |
 | Neue Entwicklungs-Abhängigkeit | `@vitest/coverage-v8` misst die Testabdeckung. Nur Entwicklung, nicht in der App.                                                                                                                                     |
 
-## 6. Offen / Hinweise für den PO
+## 7. Offen / Hinweise für den PO
 
 - **Messung auf echten Geräten** (PO-Vorgabe 2): Elternbereich → „256-Teile-Test“, ein paar Teile ziehen, Werte „fps“, „min fps“ und „Treffer µs“ notieren.
+- **Speichern eines Bildes auf einem echten iPhone** kurz beobachten: Es sollte etwa eine Sekunde dauern. Im CI-Simulator schwankt es stark.
 - Der Test ist weiterhin der „Worst Case“ mit allen Teilen gleichzeitig lose. In Phase 5 kommt die echte Spielsituation dazu: Brett, Ablage und ein gezogenes Teil.
 
-## 7. Nächster Schritt – Phase 5 (Gameplay)
+## 8. Nächster Schritt – Phase 5 (Gameplay)
 
 Das Spielbrett: Puzzle aus einem gespeicherten Bild starten (Teilezahl wählen), Skia-Darstellung, Ablage, Sortier-Schalen mit Farbgruppen, Ziehen und Einrasten mit Feder-Animation, Pino-Tipps, Häppchen-Modus für Kleinkinder, Vorlage, Fortschritt, automatisches Speichern und eine kleine Feier am Ende.
