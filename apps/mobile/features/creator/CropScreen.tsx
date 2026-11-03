@@ -66,12 +66,14 @@ export function CropScreen() {
     setBusy(true);
     setFailed(false);
     let stage: 'derive' | 'store' = 'derive';
+    const t0 = Date.now();
     try {
       const rotated = rotatedSize(original, rotation);
       const scale = coverScale(rotated, frame) * zoom.get();
       const crop = cropFromView(rotated, frame, scale, tx.get(), ty.get());
       const derived = await deriveImages(pending.uri, original, rotation, crop);
       stage = 'store';
+      const t1 = Date.now();
       await add({
         sourceUri: pending.uri,
         sourceKind: pending.kind,
@@ -82,6 +84,8 @@ export function CropScreen() {
         crop,
         derived,
       });
+      // Durations only – helps to spot slow devices (no paths, no image data).
+      console.info(`[image-save] ok derive=${t1 - t0}ms store=${Date.now() - t1}ms`);
       setPending(null);
       router.dismissTo('/create');
     } catch (e) {

@@ -69,9 +69,10 @@ appId: com.puzzlestudio.app.preview
 - takeScreenshot: screenshots/shot-${PLATFORM}-08-crop-square-rotated
 - tapOn:
     id: 'crop-confirm'
+# CI simulators render without GPU and vary a lot – real devices take about a second
 - extendedWaitUntil:
     visible: 'Meine Bilder · 1'
-    timeout: 30000
+    timeout: 120000
 - waitForAnimationToEnd
 - takeScreenshot: screenshots/shot-${PLATFORM}-09-atelier-image-saved
 - tapOn:
