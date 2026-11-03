@@ -41,14 +41,12 @@ Der Spielstand wird **automatisch gespeichert** (kurz nach jedem Zug und beim Ve
 
 ### iOS-Simulator und Android-Emulator – Maestro löst ein 4-Teile-Puzzle mit Pino-Tipps
 
-> Stand beim Schreiben: Die Geräte-Läufe laufen noch; die Bilder werden vom CI-Lauf ergänzt und dieser Hinweis danach entfernt.
-
 | Plattform | Neues Puzzle                                                          | Spieltisch                                                      | Pino-Tipp                                                       | Geschafft!                                                             |
 | --------- | --------------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | iOS       | ![](../screenshots/2026-11-03-milestone-05-ios-10-new-puzzle.png)     | ![](../screenshots/2026-11-03-milestone-05-ios-11-play.png)     | ![](../screenshots/2026-11-03-milestone-05-ios-12-hint.png)     | ![](../screenshots/2026-11-03-milestone-05-ios-13-puzzle-done.png)     |
 | Android   | ![](../screenshots/2026-11-03-milestone-05-android-10-new-puzzle.png) | ![](../screenshots/2026-11-03-milestone-05-android-11-play.png) | ![](../screenshots/2026-11-03-milestone-05-android-12-hint.png) | ![](../screenshots/2026-11-03-milestone-05-android-13-puzzle-done.png) |
 
-Der Ablauf im Test ist derselbe wie für ein Kind: Pino-Tipp antippen, dann auf den leuchtenden Zielplatz tippen – viermal, bis Pino „Geschafft!“ sagt. Danach prüft der Test weiter Elternbereich, Systemcheck, 256-Teile-Test und den Neustart der App.
+Der Ablauf im Test ist derselbe wie für ein Kind: Pino-Tipp antippen, dann auf den leuchtenden Zielplatz tippen – viermal, bis Pino „Geschafft!“ sagt. Danach prüft der Test weiter Elternbereich, Systemcheck, 256-Teile-Test und den Neustart der App. **Beide Plattformen bestehen den kompletten Ablauf** (iOS-Lauf 41625765447, Android-Lauf 41625760316); alle 18 Bilder je Plattform liegen unter `2026-11-03-milestone-05-*`.
 
 ## 4. Qualität
 
