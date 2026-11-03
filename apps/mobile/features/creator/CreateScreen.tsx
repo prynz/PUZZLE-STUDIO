@@ -17,11 +17,13 @@ import { Platform, StyleSheet, View } from 'react-native';
 import { t, type MessageKey } from '@/i18n';
 import { pickFromLibrary, takePhoto, type PickResult } from '@/services/imageSources';
 import { useImages } from '@/store/images';
+import { usePuzzles } from '@/store/puzzles';
 
 /** Puzzle-Atelier: choose a source, see and manage "Meine Bilder". */
 export function CreateScreen() {
   const router = useRouter();
   const { images, setPending, remove } = useImages();
+  const { forgetImage } = usePuzzles();
   const [notice, setNotice] = useState<MessageKey | null>(null);
   const [toDelete, setToDelete] = useState<string | null>(null);
 
@@ -93,6 +95,7 @@ export function CreateScreen() {
                 source={{ uri: img.thumbUri }}
                 aspect={img.work.width / img.work.height}
                 accessibilityLabel={t('creator.imageLabel')}
+                onPress={() => router.push({ pathname: '/puzzle/new', params: { imageId: img.id } })}
                 action={
                   <IconButton
                     size={48}
@@ -119,7 +122,9 @@ export function CreateScreen() {
         onConfirm={async () => {
           const id = toDelete;
           setToDelete(null);
-          if (id) await remove(id);
+          if (!id) return;
+          await remove(id);
+          await forgetImage(id); // its puzzles go with it
         }}
       />
     </Screen>

@@ -4,7 +4,9 @@ import { CreateScreen } from '@/features/creator/CreateScreen';
 import { extensionFor } from '@/services/imageSources';
 import { createMemoryImageStore } from '@/storage/images/memoryImageStore';
 import type { StoredImage } from '@/storage/images/types';
+import { createMemoryPuzzleStore } from '@/storage/puzzles/memoryPuzzleStore';
 import { ImagesProvider } from '@/store/images';
+import { PuzzlesProvider } from '@/store/puzzles';
 
 const mockPush = jest.fn();
 jest.mock('expo-router', () => ({ useRouter: () => ({ push: mockPush, back: jest.fn(), dismissTo: jest.fn() }) }));
@@ -30,7 +32,9 @@ const renderCreate = async (initial: StoredImage[] = []) => {
   const store = createMemoryImageStore(initial);
   await render(
     <ImagesProvider store={store}>
-      <CreateScreen />
+      <PuzzlesProvider store={createMemoryPuzzleStore()}>
+        <CreateScreen />
+      </PuzzlesProvider>
     </ImagesProvider>,
   );
   return store;
@@ -53,6 +57,13 @@ describe('Puzzle-Atelier', () => {
     await fireEvent.press(screen.getByTestId('src-camera'));
     await waitFor(() => expect(screen.getByText(/darf die Kamera nicht benutzen/)).toBeTruthy());
     expect(mockPush).not.toHaveBeenCalled();
+  });
+
+  it('opens "Neues Puzzle" when a saved picture is tapped', async () => {
+    await renderCreate([image]);
+    await waitFor(() => expect(screen.getAllByTestId('my-image')).toHaveLength(1));
+    await fireEvent.press(screen.getByTestId('my-image'));
+    expect(mockPush).toHaveBeenCalledWith({ pathname: '/puzzle/new', params: { imageId: 'img-1' } });
   });
 
   it('deletes an image only after confirmation', async () => {
