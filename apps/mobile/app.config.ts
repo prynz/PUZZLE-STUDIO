@@ -51,6 +51,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       monochromeImage: './assets/brand/android-icon-monochrome.png',
     },
     predictiveBackGestureEnabled: false,
+    // Privacy: no automatic Google Drive backup of children's photos and play data
+    // ("kein automatischer Upload", docs/security/privacy.md §Sicherung).
+    allowBackup: false,
     // Privacy: the system photo picker needs no media permission and we never
     // record audio. Block permissions that libraries might merge in.
     blockedPermissions: [

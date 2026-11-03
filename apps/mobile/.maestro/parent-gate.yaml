@@ -1,0 +1,20 @@
+# Opens the parent gate like an adult would: read the number words, tap the digits.
+appId: com.puzzlestudio.app.preview
+---
+- extendedWaitUntil:
+    visible:
+      id: 'gate-task'
+    timeout: 10000
+- copyTextFrom:
+    id: 'gate-task'
+- runScript: parent-gate.js
+- tapOn:
+    id: 'gate-digit-${output.gate0}'
+- tapOn:
+    id: 'gate-digit-${output.gate1}'
+- tapOn:
+    id: 'gate-digit-${output.gate2}'
+- extendedWaitUntil:
+    visible:
+      id: 'parents-title'
+    timeout: 10000

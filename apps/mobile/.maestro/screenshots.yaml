@@ -150,11 +150,35 @@ appId: com.puzzlestudio.app.preview
     id: 'tab-home'
 - tapOn:
     id: 'open-parents'
+# Phase 7: parent gate (number words) → parents' area with three areas
 - extendedWaitUntil:
-    visible: 'Spielhilfe-Profil'
+    visible:
+      id: 'gate-task'
     timeout: 10000
 - waitForAnimationToEnd
-- takeScreenshot: screenshots/shot-${PLATFORM}-16-parents
+- takeScreenshot: screenshots/shot-${PLATFORM}-16-parent-gate
+- runFlow: parent-gate.yaml
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-17-parents-play
+- tapOn:
+    id: 'parents-data'
+- extendedWaitUntil:
+    visible:
+      id: 'data-wipe'
+    timeout: 10000
+- assertVisible:
+    id: 'data-images'
+    text: '1'
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-18-parents-data
+- tapOn:
+    id: 'parents-info'
+- extendedWaitUntil:
+    visible:
+      id: 'parents-privacy'
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: screenshots/shot-${PLATFORM}-19-parents-info
 - scrollUntilVisible:
     element:
       id: 'parents-system-check'
@@ -165,7 +189,7 @@ appId: com.puzzlestudio.app.preview
     visible: 'Datenbank \(SQLite\)'
     timeout: 15000
 - waitForAnimationToEnd
-- takeScreenshot: screenshots/shot-${PLATFORM}-17-system-check
+- takeScreenshot: screenshots/shot-${PLATFORM}-20-system-check
 # 256-piece test – now built from the real puzzle engine (Phase 4)
 - scrollUntilVisible:
     element:
@@ -187,7 +211,7 @@ appId: com.puzzlestudio.app.preview
     timeout: 30000
 - waitForAnimationToEnd:
     timeout: 5000
-- takeScreenshot: screenshots/shot-${PLATFORM}-18-benchmark-256
+- takeScreenshot: screenshots/shot-${PLATFORM}-21-benchmark-256
 # Persistence: relaunch WITHOUT clearing state → onboarding skipped, profile and image kept
 - stopApp
 - launchApp:
@@ -198,14 +222,13 @@ appId: com.puzzlestudio.app.preview
     timeout: 60000
 - tapOn:
     id: 'open-parents'
-- extendedWaitUntil:
-    visible: 'Spielhilfe-Profil'
-    timeout: 10000
+- runFlow: parent-gate.yaml
 - assertVisible:
     id: 'parents-profile-toddler'
     selected: true
-- takeScreenshot: screenshots/shot-${PLATFORM}-19-after-relaunch-profile-kept
-- tapOn: 'Zurück'
+- takeScreenshot: screenshots/shot-${PLATFORM}-22-after-relaunch-profile-kept
+- tapOn:
+    id: 'parents-back'
 - tapOn:
     id: 'tab-create'
 - extendedWaitUntil:
@@ -214,4 +237,4 @@ appId: com.puzzlestudio.app.preview
 - assertVisible:
     id: 'my-image'
 - waitForAnimationToEnd
-- takeScreenshot: screenshots/shot-${PLATFORM}-20-after-relaunch-image-kept
+- takeScreenshot: screenshots/shot-${PLATFORM}-23-after-relaunch-image-kept

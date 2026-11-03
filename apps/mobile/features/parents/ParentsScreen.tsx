@@ -1,75 +1,46 @@
-import {
-  Icon,
-  IconButton,
-  Screen,
-  SecondaryButton,
-  Section,
-  SelectionCard,
-  Surface,
-  Text,
-  layout,
-  spacing,
-} from '@puzzle-studio/ui';
+import { Appear, Icon, IconButton, Screen, SegmentedControl, Text, layout, spacing } from '@puzzle-studio/ui';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { t } from '@/i18n';
-import { PLAY_PROFILES, useSettings } from '@/store/settings';
+import { t, type MessageKey } from '@/i18n';
+
+import { ParentGate } from './ParentGate';
+import { ParentsData } from './ParentsData';
+import { ParentsInfo } from './ParentsInfo';
+import { ParentsPlay } from './ParentsPlay';
+
+type Area = 'play' | 'data' | 'info';
+const AREAS: Area[] = ['play', 'data', 'info'];
 
 /**
- * Parents' area – PREVIEW. The parent gate, storage management and privacy
- * settings follow in Phase 7; today it holds the play-help profile and dev tools.
+ * Parents' area behind the parent gate (docs/product/parents-area.md). Opening it again always
+ * asks again – nothing stays unlocked in the background. Three areas instead of one long page.
  */
 export function ParentsScreen() {
   const router = useRouter();
-  const { settings, setProfile, resetOnboarding } = useSettings();
+  const [open, setOpen] = useState(false);
+  const [area, setArea] = useState<Area>('play');
+  if (!open) return <ParentGate onOpen={() => setOpen(true)} onCancel={() => router.back()} />;
+
+  const segments = AREAS.map((key) => ({ key, label: t(`parents.area.${key}` as MessageKey) }));
   return (
     <Screen scroll background="warm" contentStyle={styles.content}>
       <View style={styles.header}>
-        <IconButton accessibilityLabel={t('parents.back')} icon={<Icon name="back" />} onPress={() => router.back()} />
-        <Text variant="title1" accessibilityRole="header">
+        <IconButton
+          testID="parents-back"
+          accessibilityLabel={t('parents.back')}
+          icon={<Icon name="back" />}
+          onPress={() => router.back()}
+        />
+        <Text variant="title1" accessibilityRole="header" testID="parents-title">
           {t('parents.title')}
         </Text>
       </View>
-      <Surface tone="yellow">
-        <Text variant="body">{t('parents.preview')}</Text>
-      </Surface>
-
-      <Section title={t('parents.profile')} tone="lavender">
-        <Text variant="body">{t('parents.profileHint')}</Text>
-        <View style={styles.cards} accessibilityRole="radiogroup">
-          {PLAY_PROFILES.map((p) => (
-            <SelectionCard
-              key={p}
-              testID={`parents-profile-${p}`}
-              title={t(`profile.${p}.title` as const)}
-              subtitle={t(`profile.${p}.sub` as const)}
-              selected={settings.profile === p}
-              onPress={() => setProfile(p)}
-            />
-          ))}
-        </View>
-        <SecondaryButton
-          label={t('parents.onboarding')}
-          onPress={async () => {
-            await resetOnboarding();
-            router.replace('/onboarding');
-          }}
-        />
-      </Section>
-
-      <Section title={t('parents.tools')}>
-        <SecondaryButton
-          testID="parents-system-check"
-          label={t('parents.systemCheck')}
-          onPress={() => router.push('/system-check')}
-        />
-        <SecondaryButton
-          testID="parents-benchmark"
-          label={t('parents.benchmark')}
-          onPress={() => router.push('/dev/stress')}
-        />
-      </Section>
+      <SegmentedControl segments={segments} value={area} onChange={setArea} testIDPrefix="parents" />
+      <Appear key={area} variant="rise" style={styles.content}>
+        {area === 'play' ? <ParentsPlay /> : area === 'data' ? <ParentsData /> : <ParentsInfo />}
+      </Appear>
     </Screen>
   );
 }
@@ -77,5 +48,4 @@ export function ParentsScreen() {
 const styles = StyleSheet.create({
   content: { gap: layout.sectionGap },
   header: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
-  cards: { gap: spacing.sm },
 });
