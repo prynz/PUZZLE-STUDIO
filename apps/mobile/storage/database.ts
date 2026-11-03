@@ -9,7 +9,7 @@ export function getDatabase(): Promise<SQLite.SQLiteDatabase> {
   dbPromise ??= (async () => {
     const db = await SQLite.openDatabaseAsync('puzzle-studio.db');
     await db.execAsync(
-      'PRAGMA journal_mode = WAL; CREATE TABLE IF NOT EXISTS schema_migration (version INTEGER PRIMARY KEY NOT NULL, applied_at INTEGER NOT NULL);',
+      'PRAGMA journal_mode = WAL; PRAGMA foreign_keys = ON; CREATE TABLE IF NOT EXISTS schema_migration (version INTEGER PRIMARY KEY NOT NULL, applied_at INTEGER NOT NULL);',
     );
     const rows = await db.getAllAsync<{ version: number }>('SELECT version FROM schema_migration');
     const applied = new Set(rows.map((r) => r.version));

@@ -34,4 +34,33 @@ export const MIGRATIONS: readonly { version: number; sql: string }[] = [
           );
           CREATE INDEX IF NOT EXISTS image_created_at ON image (created_at DESC);`,
   },
+  {
+    // Phase 5: puzzles + saved game state. Geometry is never stored – it is regenerated
+    // from (seed, rows, cols, shape, size, engine_version). Deleting an image deletes its puzzles.
+    version: 3,
+    sql: `CREATE TABLE IF NOT EXISTS puzzle (
+            id TEXT PRIMARY KEY NOT NULL,
+            image_id TEXT NOT NULL REFERENCES image(id) ON DELETE CASCADE,
+            rows INTEGER NOT NULL,
+            cols INTEGER NOT NULL,
+            shape TEXT NOT NULL CHECK (shape IN ('classic', 'square')),
+            seed INTEGER NOT NULL,
+            engine_version INTEGER NOT NULL,
+            width INTEGER NOT NULL,
+            height INTEGER NOT NULL,
+            profile TEXT NOT NULL CHECK (profile IN ('toddler', 'kid', 'pro')),
+            status TEXT NOT NULL CHECK (status IN ('new', 'in_progress', 'completed')),
+            created_at INTEGER NOT NULL,
+            updated_at INTEGER NOT NULL,
+            completed_at INTEGER
+          );
+          CREATE INDEX IF NOT EXISTS puzzle_image ON puzzle (image_id);
+          CREATE TABLE IF NOT EXISTS puzzle_state (
+            puzzle_id TEXT PRIMARY KEY NOT NULL REFERENCES puzzle(id) ON DELETE CASCADE,
+            state_version INTEGER NOT NULL,
+            state_json TEXT NOT NULL,
+            placed_count INTEGER NOT NULL,
+            updated_at INTEGER NOT NULL
+          );`,
+  },
 ];
