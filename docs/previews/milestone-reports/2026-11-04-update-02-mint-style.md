@@ -1,30 +1,29 @@
-# Änderung 02 – Neuer Look: Mint und weiches 3D
+# Änderung 02 – Neuer Look: Pino als glänzendes Puzzleteil, Limette → Petrol
 
-**Datum:** 2026-11-04 · **Anlass:** Wunsch des PO („Maskottchen und Farben diesem Stil anpassen“, Referenzbild mit weichem, glänzendem 3D in Mint) · Entscheidung des PO: **Mint/Grün als Grundfarbe** · **Status:** umgesetzt, wartet auf Review
+**Datum:** 2026-11-04 · **Anlass:** Wunsch des PO – zuerst Stil-Referenz (weiches 3D, Mint), dann **eigenes Konzeptbild des PO**: Pino als glänzendes Puzzleteil mit Limette-Petrol-Verlauf und Neon-Effekten, „genau dieses Maskottchen, Stil auf die ganze App“ · **Status:** umgesetzt (Pino als Vektor-Nachzeichnung bis die Original-Dateien vom PO kommen), wartet auf Review
 
 > Screenshots stammen aus der **laufenden App** (Web via Chromium; Android-/iOS-Läufe siehe unten). Die Pino-Übersicht ist direkt aus dem App-Code (`pinoSvg`) gerendert.
 
 ## Was sich ändert
 
-| Bereich                             | Vorher                   | Jetzt                                                                                                                                                     |
-| ----------------------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Markenfarbe                         | Lavendel / Lila          | frisches **Mint/Grün** (`leaf`-Skala), kleiner Markentext tief-grün (`forest`)                                                                            |
-| Hintergründe                        | Creme mit Rosa-Hauch     | helles **Mint-Weiß** (`mist`)                                                                                                                             |
-| Haupt-Knöpfe                        | gelb mit dunkler Schrift | **tiefgrün, glänzend, weiße Schrift** wie „Get started“ in der Referenz; „Weiter“/„Fertig“ grün                                                           |
-| Große Aktionskarte                  | heller Lila-Verlauf      | tiefgrüner Verlauf, weiße Schrift                                                                                                                         |
-| Tab-Leiste                          | lila Blase               | grüne Blase                                                                                                                                               |
-| Text                                | Navy / Grau-Lila         | grün-getöntes Fast-Schwarz (`ink`) / Grau (`slate`)                                                                                                       |
-| Schatten                            | Navy-getönt              | grün-getönt, weich                                                                                                                                        |
-| **Pino**                            | Honiggelb, Kontur        | **Mint, weiches 3D**: Licht von oben links, dunklere Unterseite, großer Glanz, grünes Leuchten am Boden, kaum Kontur; Stern-Clip jetzt gelb, Wangen rosig |
-| App-Icon, Startbild, Beispielbilder | alt                      | neu gerendert im neuen Stil                                                                                                                               |
+| Bereich                             | Vorher                   | Jetzt                                                                                                                                                                                                                                                                                                    |
+| ----------------------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Pino**                            | gelbes Quadrat mit Armen | **glänzendes Puzzleteil mit vier Knubbeln** nach dem Konzeptbild des PO: Verlauf Limette → Grün → Petrol, Glanz oben links, dunklere Unterseite, kleine dunkle Augen, schmales Lächeln, leicht schräg; **Neon-Limette-Effekte** je Stimmung (Funkeln, Ring, Fragezeichen, „!“-Striche, Krone, Herz, Zzz) |
+| Markenfarben                        | Lavendel / Lila          | **Limette → Grün → Petrol** (`lime`, `leaf`-Skala, `teal`), Neon-Limette (`neon`) als Leuchtakzent, kleiner Markentext tief-petrol (`forest`)                                                                                                                                                            |
+| Hintergründe                        | Creme mit Rosa-Hauch     | kühles, weiches **Grau-Grün** (`mist`) wie im Konzeptbild                                                                                                                                                                                                                                                |
+| Haupt-Knöpfe                        | gelb, dunkle Schrift     | **tief petrolgrün, glänzend, weiße Schrift**; „Weiter“/„Fertig“ grün                                                                                                                                                                                                                                     |
+| Große Aktionskarte                  | Lila-Verlauf             | **Pino-Verlauf Limette → Grün**, dunkle Schrift                                                                                                                                                                                                                                                          |
+| Tab-Leiste                          | lila Blase               | Blase im Pino-Verlauf mit weißem Ring und Neon-Schimmer                                                                                                                                                                                                                                                  |
+| Text / Schatten                     | Navy                     | grün-getöntes Fast-Schwarz (`ink`), grün-getönte Schatten                                                                                                                                                                                                                                                |
+| App-Icon, Startbild, Beispielbilder | alt                      | neu gerendert mit dem neuen Pino                                                                                                                                                                                                                                                                         |
 
-Gelb, Himmelblau, Pfirsich und Rosa bleiben als **Akzente** (Sterne, Belohnungen, Kategorie-Karten) – wie die gelbe und blaue Karte im Referenzbild.
+Gelb, Himmelblau, Pfirsich und Rosa bleiben als **Akzente** (Sterne, Belohnungen, Kategorie-Karten).
 
-**Abgrenzung:** Aus der Referenz übernommen werden nur Licht, Material und Farbstimmung. Deren Figur (grüner Wolken-Blob) wird nicht nachgebildet – Pino bleibt ein Puzzleteil mit Stern-Clip, Armen und Füßen ([Maskottchen-Richtlinien](../../design/mascot-guidelines.md)).
+**Original-Dateien:** Der PO liefert Pino als PNG/SVG. Bis dahin ist Pino eine Vektor-Nachzeichnung im App-Code (`packages/ui/src/mascot/pino.ts`), damit er in allen Größen scharf bleibt und alle 8 Stimmungen funktionieren. Die gelieferten Dateien werden zentral an derselben Stelle eingesetzt – die Screens ändern sich dafür nicht. Lieferformat: siehe [Maskottchen-Richtlinien → Original-Dateien](../../design/mascot-guidelines.md#original-dateien-lieferung-durch-den-po).
 
-**Barrierefreiheit:** Alle Kontraste neu geprüft und getestet – Text ≥ 5,2 : 1, weiße Schrift auf beiden Grün-Knöpfen ≥ 4,9 : 1, Schalter ≥ 4,2 : 1.
+**Barrierefreiheit:** Kontraste neu geprüft und als Tests festgeschrieben – Text ≥ 5,3 : 1 auf allen Flächen, dunkle Schrift auf jeder Farbe des Limette-Grün-Verlaufs ≥ 6,4 : 1, weiße Schrift auf jeder Farbe beider Knopf-Verläufe ≥ 4,5 : 1 (der Test hat einen zu hellen Knopf-Verlauf gefunden – korrigiert), Schalter ≥ 4 : 1.
 
-**Zentral umgesetzt:** nur Tokens (`packages/ui/src/tokens.ts`), Maskottchen-Farben (`mascot/theme.ts`) und -Zeichnung (`mascot/pino.ts`). Screens nutzen weiter nur Tokens; der Flächen-Ton `lavender` heißt jetzt `leaf`.
+**Zentral umgesetzt:** nur Tokens (`tokens.ts`), Maskottchen (`mascot/theme.ts`, `mascot/pino.ts`) und zwei ui-Komponenten (große Karte, Tab-Blase). Screens nutzen weiter nur Tokens; der Flächen-Ton `lavender` heißt jetzt `leaf`.
 
 ## Bilder
 
@@ -44,7 +43,7 @@ Die Konzept-Mockups unter `docs/design/concept/` sind mit demselben Code neu ger
 
 ## Prüfung
 
-TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 58, App 67, Engine 91, image-processing 21, game-progression 10) · Web ohne Fehlermeldungen ✅ · Android-Emulator / iOS-Simulator: Läufe gestartet, Ergebnis wird hier nachgetragen.
+TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 60, App 67, Engine 91, image-processing 21, game-progression 10) · Web ohne Fehlermeldungen ✅ · Android-Emulator / iOS-Simulator: Läufe gestartet, Ergebnis wird hier nachgetragen.
 
 ## Bewusst noch offen
 

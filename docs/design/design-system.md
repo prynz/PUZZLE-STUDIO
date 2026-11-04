@@ -5,7 +5,7 @@
 > Visuelle Übersicht: [`concept/concept-design-tokens.png`](concept/concept-design-tokens.png)
 
 **Stil:** Soft Pastel Cartoon · Whimsical Illustration · Premium Kids App · Gentle Playful UI
-**Stil-Update 2026-11-04 (PO-Referenz):** frisches **Mint/Grün** statt Lavendel/Lila, weiches glänzendes 3D beim Maskottchen, dunkelgrüne Haupt-Knöpfe mit weißer Schrift. Gelb, Himmelblau, Pfirsich bleiben Akzentfarben (Sterne, Belohnungen, Kategorien).
+**Stil-Update 2026-11-04 (Konzeptbild des PO):** Pino als glänzendes Puzzleteil; Markenverlauf **Limette → Grün → Petrol** mit **Neon-Limette** als Leuchtakzent, kühles Grau-Grün als Hintergrund, tief petrolgrüne Haupt-Knöpfe mit weißer Schrift. Gelb, Himmelblau, Pfirsich bleiben Akzentfarben (Sterne, Belohnungen, Kategorien).
 Grundlage: [reference-analysis.md](reference-analysis.md)
 
 ## 1. Prinzipien
@@ -21,21 +21,22 @@ Grundlage: [reference-analysis.md](reference-analysis.md)
 
 | Rolle                | Token                                    | Wert                              | Verwendung                                                       |
 | -------------------- | ---------------------------------------- | --------------------------------- | ---------------------------------------------------------------- |
-| Haupt-Hintergrund    | `color.background.primary` (`mist`)      | `#F4FAF6`                         | dominante Fläche, Mint-Weiß                                      |
-| Sekundär-Hintergrund | `color.background.secondary` (`mist200`) | `#E8F4EC`                         | Verläufe, Sektionen                                              |
-| Marke                | `color.brand.soft` / `.main` / `.strong` | `#93D6AC` / `#4DAA7A` / `#1D4A36` | Tab-Blase, Auswahl, Fortschritt; `strong` für kleinen Markentext |
-| Haupt-Aktion         | `color.action.accent` (`forest`)         | `#1D4A36`                         | „Los geht's“, „Zum Atelier“ – weiße Schrift                      |
-| Bestätigen           | `color.action.primary` (`leaf700`)       | `#2F7F57`                         | „Weiter“, „Fertig“ – weiße Schrift                               |
+| Haupt-Hintergrund    | `color.background.primary` (`mist`)      | `#F1F5F3`                         | dominante Fläche, kühles Grau-Grün                               |
+| Sekundär-Hintergrund | `color.background.secondary` (`mist200`) | `#E4ECE8`                         | Verläufe, Sektionen                                              |
+| Marke                | `color.brand.soft` / `.main` / `.strong` | `#9BD86A` / `#3BAA79` / `#123E33` | Tab-Blase, Auswahl, Fortschritt; `strong` für kleinen Markentext |
+| Haupt-Aktion         | `color.action.accent` (`forest`)         | `#123E33`                         | „Los geht's“, „Zum Atelier“ – weiße Schrift                      |
+| Bestätigen           | `color.action.primary` (`leaf700`)       | `#1F7F62`                         | „Weiter“, „Fertig“ – weiße Schrift                               |
 | Akzente              | `palette.yellow`, `sky`, `peach`, `pink` | `#FFE18A` …                       | Sterne, Belohnungen, Kategorie-Karten                            |
-| Text primär          | `color.text.primary` (`ink`)             | `#1E2D26`                         | Titel, Labels                                                    |
-| Text sekundär        | `color.text.secondary` (`slate`)         | `#56655D`                         | Fließtext                                                        |
+| Text primär          | `color.text.primary` (`ink`)             | `#14261E`                         | Titel, Labels                                                    |
+| Text sekundär        | `color.text.secondary` (`slate`)         | `#53635B`                         | Fließtext                                                        |
 
-Tonstufen `*100` = Kartenflächen, `leaf600/700` = Icons/Schalter, `forest` = kleiner Markentext und Haupt-Knöpfe.
+Tonstufen `*100` = Kartenflächen, `leaf600/700` = Icons/Schalter, `forest` = kleiner Markentext und Haupt-Knöpfe. **Pino-Verlauf** `gradient.brand` / `brandDeep` (`lime #D4EE3F` → Grün → `teal #1E8A6C`) für große Aktionskarte und Tab-Blase, **`neon #C7F03A`** nur als Leuchten (nie für Text).
 
 **Kontrastregeln (WCAG 2.2 AA, in `tokens.test.ts` geprüft):**
 
-- `ink` auf allen Flächen ≥ 12 : 1, `slate` ≥ 5,2 : 1 ✅
-- Weiß auf `forest` ≈ 10 : 1, auf `leaf700` ≈ 4,9 : 1 – beide Knopfvarianten für jede Schriftgröße ✅
+- `ink` auf allen Flächen ≥ 13 : 1, `slate` ≥ 5,2 : 1 ✅
+- Weiß auf jeder Farbe beider Knopf-Verläufe ≥ 4,5 : 1 ✅
+- Dunkle Schrift (`ink`) auf jeder Farbe des Pino-Verlaufs der großen Karte ≥ 6,4 : 1 ✅
 - `leaf600`/`leaf` nur für Flächen, Symbole und große Formen, **nie** für kleinen Text.
 - **Schalter** (`color.control.*`, WCAG 1.4.11 Nicht-Text-Kontrast ≥ 3 : 1, Phase 8): An = gefüllte Spur `leaf700` mit weißem Knopf (≥ 4,2 : 1 auf allen Kartenflächen), Aus = umrandete Spur mit dunklem Knopf `slate` (≥ 5,2 : 1). Der Zustand ist zusätzlich an der Knopfposition erkennbar – nie nur an der Farbe. Getestet in `packages/ui/test/tokens.test.ts`.
 
@@ -44,7 +45,7 @@ Tonstufen `*100` = Kartenflächen, `leaf600/700` = Icons/Schalter, `forest` = kl
 | Token                                     | Einsatz                                            |
 | ----------------------------------------- | -------------------------------------------------- |
 | `gradient.screenWarm`                     | Standard-Hintergrund (Creme → Blush)               |
-| `gradient.screenDream`                    | Erzähl-/Creator-Screens (Mint-Hauch)               |
+| `gradient.screenDream`                    | Erzähl-/Creator-Screens (Limette-Hauch)            |
 | `gradient.playTable`                      | Spieltisch – kontrastarm, damit Teile hervortreten |
 | `gradient.buttonAccent` / `buttonPrimary` | Buttons (vertikal, hell → satt)                    |
 | `gradient.meadow`, `gradient.mascotBody`  | Illustration                                       |
@@ -111,13 +112,13 @@ Grün-getönt (`ink`), max. zwei Ebenen pro Screen: `shadow.card` (Karten), `sha
 Bausteine: `CloudIllustration`, `StarDecoration` (Stern, Funkeln), `Leaf`, `Flower`, `Meadow`.
 `DecorativeBackground` bekommt ein **Preset** pro Screen-Typ statt freier Platzierung:
 
-| Preset   | Screens                 | Elemente                          |
-| -------- | ----------------------- | --------------------------------- |
-| `meadow` | Welcome, Erfolg         | Wolken oben, Wiese + Blumen unten |
-| `sky`    | Home, Sammlung, Erfolge | 1–2 Wolken, 3–4 Sterne am Rand    |
-| `dream`  | Onboarding 2, Creator   | Mint-Verlauf, Wolken, Funkeln     |
-| `table`  | Gameplay                | keine Dekoration (Fokus)          |
-| `calm`   | Elternbereich           | nur Verlauf                       |
+| Preset   | Screens                 | Elemente                                     |
+| -------- | ----------------------- | -------------------------------------------- |
+| `meadow` | Welcome, Erfolg         | Wolken oben, Wiese + Blumen unten            |
+| `sky`    | Home, Sammlung, Erfolge | 1–2 Wolken, 3–4 Sterne am Rand               |
+| `dream`  | Onboarding 2, Creator   | Grau-Grün mit Limette-Hauch, Wolken, Funkeln |
+| `table`  | Gameplay                | keine Dekoration (Fokus)                     |
+| `calm`   | Elternbereich           | nur Verlauf                                  |
 
 Dekoration ist `pointerEvents="none"`, `accessible={false}` und liegt nie hinter Text.
 
