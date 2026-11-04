@@ -13,7 +13,7 @@ Status: **Phase 8 – automatisierbarer Teil umgesetzt (2026-11-03)**; Tests auf
 | Native Builds                       | ✅ Android (Gradle) · ✅ iOS-Simulator (xcodebuild)                                                                                                  |
 | Android-Manifest                    | ✅ keine Medien-, Mikrofon- oder Standort-Berechtigung (Kamera erst bei Bedarf); **neu:** CI bricht ab, wenn `android:allowBackup` nicht `false` ist |
 | Maestro Android-Emulator            | ✅ kompletter Ablauf (23 Bilder) inkl. Eltern-Schranke und Systemcheck „Cloud-Sicherung“                                                             |
-| Maestro iOS-Simulator               | siehe Milestone-Report 08 (abhängig von freien macOS-Rechnern bei GitHub)                                                                            |
+| Maestro iOS-Simulator               | ✅ kompletter Ablauf (23 Bilder, Lauf 41744278567) inkl. Systemcheck „Cloud-Sicherung: OK – von der iCloud-/Computer-Sicherung ausgeschlossen“       |
 
 ## 2. Security-Review
 
@@ -28,6 +28,7 @@ Status: **Phase 8 – automatisierbarer Teil umgesetzt (2026-11-03)**; Tests auf
 | Elternbereich                        | Eltern-Schranke vor allen Einstellungen und dem Löschen; jedes Öffnen fragt neu.                                                                                                                                                                         | ✅                           |
 | Deep Links (`puzzlestudio://`)       | Erreichbar sind nur App-Bildschirme. Der Elternbereich zeigt auch per Link immer zuerst die Schranke. Systemcheck und 256-Teile-Test sind per Link ohne Schranke erreichbar – sie zeigen keine Daten, ändern nichts und verlinken nicht nach außen.      | ✅ akzeptiert (dokumentiert) |
 | Abhängigkeiten (`pnpm audit --prod`) | 5 Meldungen (1 niedrig, 4 mittel) in `glob`, `minimatch`, `deepmerge` – **nur in Entwicklungswerkzeugen** (Expo-CLI, Jest), nicht im App-Paket auf dem Gerät. Behebung kommt mit Expo-Updates; keine Zwangs-Overrides, um das Expo-SDK nicht zu brechen. | ✅ kein Risiko für Nutzer    |
+| Vollständigkeit nativer Bausteine    | **Gefunden durch den iOS-Lauf:** eine zu breite `.gitignore`-Regel (`ios/`) hatte die Quelldateien des Backup-Moduls ausgeschlossen. Behoben; CI prüft jetzt bei jedem Push, dass Expo das Modul findet.                                                 | ✅ behoben                   |
 | Neue Abhängigkeiten Phase 7/8        | Keine (das Backup-Modul ist eigener Code in `apps/mobile/modules/backup-exclusion`).                                                                                                                                                                     | ✅                           |
 
 ## 3. Barrierefreiheit

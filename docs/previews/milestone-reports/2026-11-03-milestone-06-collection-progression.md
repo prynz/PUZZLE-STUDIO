@@ -32,11 +32,12 @@ Details und Liste aller Meilensteine: [progression.md](../../product/progression
 
 ### iOS-Simulator und Android-Emulator – Maestro
 
-> **Stand:** Android-Emulator ✅ (Lauf 41678634490, alle 20 Bilder, nach der Design-Überarbeitung). iOS-Simulator: noch offen – GitHub konnte wegen Kapazitätsengpässen bei macOS-Rechnern (arm64) mehrfach keinen Rechner zuweisen („The job was not acquired by Runner … capacity constraints“); kein App-Fehler. Die iOS-Bilder werden nachgereicht, sobald ein Lauf durchkommt. Der letzte erfolgreiche iOS-Lauf (Phase 5) zeigt denselben Spielablauf.
+> **Stand:** Android-Emulator ✅ (Lauf 41678634490, alle 20 Bilder, nach der Design-Überarbeitung). iOS-Simulator ✅ nachgereicht: Puzzle lösen, Sammlung und Erfolge liefen am 2026-11-04 im iOS-Simulator durch (Lauf 41744278567, Bilder `2026-11-03-milestone-08-ios-13…15`). Vorher hatte GitHub wegen Kapazitätsengpässen keinen macOS-Rechner zugewiesen.
 
 | Plattform | Geschafft!                                                             | Sammlung                                                              | Erfolge                                                           |
 | --------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------- |
 | Android   | ![](../screenshots/2026-11-03-milestone-06-android-13-puzzle-done.png) | ![](../screenshots/2026-11-03-milestone-06-android-14-collection.png) | ![](../screenshots/2026-11-03-milestone-06-android-15-awards.png) |
+| iOS       | ![](../screenshots/2026-11-03-milestone-08-ios-13-puzzle-done.png)     | ![](../screenshots/2026-11-03-milestone-08-ios-14-collection.png)     | ![](../screenshots/2026-11-03-milestone-08-ios-15-awards.png)     |
 
 Der Test löst wie in Phase 5 ein 4-Teile-Puzzle mit Pino-Tipps, prüft danach, dass es in der Sammlung liegt und der Meilenstein „Erstes Puzzle“ freigeschaltet ist, und läuft dann weiter durch Elternbereich, Systemcheck, 256-Teile-Test und den Neustart der App.
 
