@@ -28,7 +28,7 @@ Ausführlich im **[Testprotokoll](../../qa/test-protocol.md)**.
 | --------------------------------------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
 | ![](../screenshots/2026-11-03-milestone-08-web-01-switches.png) | ![](../screenshots/2026-11-03-milestone-08-web-02-system-check-backup.png) | ![](../screenshots/2026-11-03-milestone-08-android-20-system-check.png) | ![](../screenshots/2026-11-03-milestone-08-android-17-parents-play.png) |
 
-> **Android-Emulator ✅** (Lauf 41735946137, alle 23 Bilder des Gesamtablaufs). **iOS-Simulator:** Lauf 41735072320 mit dem neuen Backup-Modul läuft noch; Ergebnis wird hier nachgetragen.
+> **Android-Emulator ✅** (Lauf 41735946137, alle 23 Bilder des Gesamtablaufs). **iOS-Simulator:** Lauf 41735072320 kam zum ersten Mal durch den ganzen Ablauf bis zum Elternbereich (19 Bilder) – und der neue Systemcheck fand dann einen **echten Fehler**: „Cloud-Sicherung: Fehler“. Ursache: Die `.gitignore` schloss alle `ios/`-Ordner aus, dadurch waren Swift-Datei und Podspec des Backup-Moduls nie im Repository und fehlten im iOS-Build. Behoben (nur noch die generierten Projektordner ausgeschlossen); zusätzlich bricht die CI jetzt ab, wenn das Modul fehlt, und der Systemcheck meldet „Baustein fehlt“ getrennt. Neuer iOS-Lauf gestartet – Ergebnis wird nachgetragen.
 
 ## 4. Offen – bitte durch den PO
 
