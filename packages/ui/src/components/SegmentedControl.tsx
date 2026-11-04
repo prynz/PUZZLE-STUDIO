@@ -40,7 +40,7 @@ function SegmentButton<K extends string>(p: {
           numberOfLines={1}
           adjustsFontSizeToFit
           minimumFontScale={0.8}
-          style={{ color: p.active ? color.brand.purpleStrong : color.text.secondary }}
+          style={{ color: p.active ? color.brand.strong : color.text.secondary }}
         >
           {p.segment.label}
         </Text>
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     gap: spacing.xxs,
     padding: spacing.xxs,
     borderRadius: radius.pill,
-    backgroundColor: palette.lavender100,
+    backgroundColor: palette.leaf100,
   },
   flex: { flex: 1 },
   segment: {

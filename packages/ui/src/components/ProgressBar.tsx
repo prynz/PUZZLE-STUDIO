@@ -26,6 +26,6 @@ export function ProgressBar({ value, accessibilityLabel }: ProgressBarProps) {
 }
 
 const styles = StyleSheet.create({
-  track: { height: 14, borderRadius: radius.pill, backgroundColor: palette.lavender100, overflow: 'hidden' },
+  track: { height: 14, borderRadius: radius.pill, backgroundColor: palette.leaf100, overflow: 'hidden' },
   fill: { height: '100%', borderRadius: radius.pill, backgroundColor: palette.mint600 },
 });

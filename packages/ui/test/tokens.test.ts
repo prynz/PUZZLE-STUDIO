@@ -41,7 +41,7 @@ describe('color tokens', () => {
   });
 
   it('brand purpleStrong is usable for small text on cream', () => {
-    expect(contrast(color.brand.purpleStrong, color.background.primary)).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(color.brand.strong, color.background.primary)).toBeGreaterThanOrEqual(4.5);
   });
 
   it('switch states meet WCAG 1.4.11 (3:1) on every card surface', () => {

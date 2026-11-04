@@ -12,13 +12,13 @@ export interface SelectionCardProps {
   illustration?: ReactNode;
   selected: boolean;
   onPress: () => void;
-  tone?: 'lavender' | 'mint' | 'yellow' | 'peach' | 'sky';
+  tone?: 'leaf' | 'mint' | 'yellow' | 'peach' | 'sky';
   style?: StyleProp<ViewStyle>;
   testID?: string;
 }
 
 const tones = {
-  lavender: color.surface.lavender,
+  leaf: color.surface.leaf,
   mint: color.surface.mint,
   yellow: color.surface.yellow,
   peach: color.surface.peach,
@@ -32,7 +32,7 @@ export function SelectionCard({
   illustration,
   selected,
   onPress,
-  tone = 'lavender',
+  tone = 'leaf',
   style,
   testID,
 }: SelectionCardProps) {
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.md,
     gap: spacing.md,
   },
-  selected: { borderColor: palette.lavender },
+  selected: { borderColor: palette.leaf },
   illustration: { width: 72, alignItems: 'center', justifyContent: 'center' },
   text: { flex: 1, gap: 2 },
   radio: {
@@ -88,11 +88,11 @@ const styles = StyleSheet.create({
     height: 28,
     borderRadius: radius.pill,
     borderWidth: 3,
-    borderColor: palette.lavender200,
+    borderColor: palette.leaf200,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: color.background.raised,
   },
-  radioOn: { borderColor: color.brand.purple },
-  radioDot: { width: 12, height: 12, borderRadius: radius.pill, backgroundColor: color.brand.purple },
+  radioOn: { borderColor: color.brand.main },
+  radioDot: { width: 12, height: 12, borderRadius: radius.pill, backgroundColor: color.brand.main },
 });

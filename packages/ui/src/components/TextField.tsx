@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.md,
     borderRadius: radius.md,
     borderWidth: 2,
-    borderColor: palette.lavender,
+    borderColor: palette.leaf,
     backgroundColor: color.background.raised,
     color: color.text.primary,
     fontFamily: fontFace['600'],

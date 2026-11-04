@@ -145,7 +145,7 @@ export function BottomNavigation({ items, activeKey, onSelect }: BottomNavigatio
             <G clipPath="url(#nav-shadow)">
               {SHADOW_LAYERS.map((l) => (
                 <G key={l.dy} transform={`translate(0 ${l.dy})`}>
-                  <AnimatedPath animatedProps={barProps} fill={palette.navy} fillOpacity={l.opacity} />
+                  <AnimatedPath animatedProps={barProps} fill={palette.ink} fillOpacity={l.opacity} />
                 </G>
               ))}
             </G>
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     width: NAV_BUBBLE,
     height: NAV_BUBBLE,
     borderRadius: NAV_BUBBLE / 2,
-    backgroundColor: color.brand.purple,
+    backgroundColor: color.brand.main,
     borderWidth: 4,
     borderColor: palette.white,
     alignItems: 'center',

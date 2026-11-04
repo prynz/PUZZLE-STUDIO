@@ -67,6 +67,6 @@ const styles = StyleSheet.create({
     padding: spacing.xs,
     gap: spacing.xs,
   },
-  picture: { borderRadius: radius.md, overflow: 'hidden', backgroundColor: palette.cream200, minHeight: 40 },
+  picture: { borderRadius: radius.md, overflow: 'hidden', backgroundColor: palette.mist200, minHeight: 40 },
   meta: { gap: spacing.xs, paddingHorizontal: spacing.xs, paddingBottom: spacing.xs },
 });

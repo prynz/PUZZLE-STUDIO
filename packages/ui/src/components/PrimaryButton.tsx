@@ -12,7 +12,7 @@ export type PrimaryButtonVariant = 'primary' | 'accent';
 export interface PrimaryButtonProps {
   label: string;
   onPress: () => void;
-  /** `accent` (yellow) = playful "go" actions, `primary` (purple) = confirm / continue. */
+  /** `accent` (deep glossy green) = main "go" actions, `primary` (green) = confirm / continue. Both white labels. */
   variant?: PrimaryButtonVariant;
   /** Shows the round chevron badge on the right (default true). */
   showChevron?: boolean;
@@ -73,16 +73,11 @@ export function PrimaryButton({
           colors={isPrimary ? gradient.buttonPrimary.colors : gradient.buttonAccent.colors}
           style={styles.fill}
         >
-          <Text variant="button" tone={isPrimary ? 'onPrimary' : 'primary'} numberOfLines={1}>
+          <Text variant="button" tone="onPrimary" numberOfLines={1}>
             {label}
           </Text>
           {showChevron ? (
-            <View
-              style={[
-                styles.badge,
-                { backgroundColor: isPrimary ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.45)' },
-              ]}
-            >
+            <View style={[styles.badge, { backgroundColor: 'rgba(255,255,255,0.22)' }]}>
               <Chevron tint={fg} />
             </View>
           ) : null}

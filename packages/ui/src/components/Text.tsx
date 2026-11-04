@@ -10,7 +10,7 @@ const toneColor: Record<TextTone, string> = {
   primary: colorTokens.text.primary,
   secondary: colorTokens.text.secondary,
   onPrimary: colorTokens.text.onPrimary,
-  brand: colorTokens.brand.purpleStrong,
+  brand: colorTokens.brand.strong,
 };
 
 export interface TextProps extends RNTextProps {

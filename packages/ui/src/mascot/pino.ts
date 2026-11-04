@@ -111,14 +111,14 @@ function arm(side: 'left' | 'right', pose: ArmPose, id: string): string {
   const ey = sy + Math.cos(rad) * len;
   return (
     `<line x1="${sx}" y1="${sy}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="url(#${id}-arm)" stroke-width="30" stroke-linecap="round"/>` +
-    `<circle cx="${ex.toFixed(1)}" cy="${ey.toFixed(1)}" r="15" fill="none" stroke="${C.outline}" stroke-opacity="0.35" stroke-width="2"/>`
+    `<circle cx="${ex.toFixed(1)}" cy="${ey.toFixed(1)}" r="15" fill="none" stroke="${C.outline}" stroke-opacity="0.14" stroke-width="2"/>`
   );
 }
 
 /** Arm resting in front of the body, hand under the chin (thinking). */
 function chinArm(id: string): string {
   return `<path d="M186 170 Q178 188 154 182" stroke="url(#${id}-arm)" stroke-width="22" fill="none" stroke-linecap="round"/>
-          <path d="M160 190 Q172 192 182 184" stroke="${C.outline}" stroke-opacity="0.35" stroke-width="2" fill="none" stroke-linecap="round"/>`;
+          <path d="M160 190 Q172 192 182 184" stroke="${C.outline}" stroke-opacity="0.14" stroke-width="2" fill="none" stroke-linecap="round"/>`;
 }
 
 // ---- eyes ------------------------------------------------------------------
@@ -260,31 +260,39 @@ export function pinoSvg(emotion: MascotEmotion = 'greeting', idPrefix?: string):
   const sleeping = emotion === 'sleeping';
   return `<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="${id}-body" x1="0.2" y1="0" x2="0.6" y2="1">
-      <stop offset="0" stop-color="${C.bodyLight}"/><stop offset="0.55" stop-color="${C.body}"/><stop offset="1" stop-color="${C.bodyDark}"/>
+    <radialGradient id="${id}-body" cx="0.36" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="${C.bodyLight}"/><stop offset="0.5" stop-color="${C.body}"/><stop offset="1" stop-color="${C.bodyDark}"/>
+    </radialGradient>
+    <linearGradient id="${id}-under" x1="0" y1="0.45" x2="0" y2="1">
+      <stop offset="0" stop-color="${C.underside}" stop-opacity="0"/><stop offset="1" stop-color="${C.underside}" stop-opacity="0.32"/>
     </linearGradient>
     <linearGradient id="${id}-arm" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="${C.body}"/><stop offset="1" stop-color="${C.bodyDark}"/>
     </linearGradient>
-    <radialGradient id="${id}-shine" cx="0.32" cy="0.28" r="0.5">
-      <stop offset="0" stop-color="#fff" stop-opacity="0.75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    <radialGradient id="${id}-shine" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="${id}-glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="${C.glow}" stop-opacity="0.38"/><stop offset="1" stop-color="${C.glow}" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <ellipse cx="120" cy="222" rx="70" ry="9" fill="${C.shadow}" opacity="0.08"/>
+  <ellipse cx="120" cy="218" rx="86" ry="16" fill="url(#${id}-glow)"/>
   <g ${sleeping ? 'transform="rotate(-4 120 200)"' : ''}>
     <ellipse cx="92" cy="208" rx="21" ry="12" fill="${C.foot}"/>
     <ellipse cx="148" cy="208" rx="21" ry="12" fill="${C.foot}"/>
     ${arm('left', e.left, id)}
     ${e.right === 'none' ? '' : arm('right', e.right, id)}
-    <path d="${BODY}" fill="url(#${id}-body)" stroke="${C.outline}" stroke-opacity="0.45" stroke-width="2.5"/>
-    <path d="${BODY}" fill="url(#${id}-shine)"/>
-    <path d="M70 186 Q120 200 170 186" stroke="#fff" stroke-opacity="0.35" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="${BODY}" fill="url(#${id}-body)" stroke="${C.outline}" stroke-opacity="0.16" stroke-width="2"/>
+    <path d="${BODY}" fill="url(#${id}-under)"/>
+    <ellipse cx="88" cy="104" rx="30" ry="16" transform="rotate(-24 88 104)" fill="url(#${id}-shine)"/>
+    <circle cx="104" cy="96" r="4" fill="#fff" opacity="0.8"/>
+    <path d="M66 184 Q120 200 174 184" stroke="#fff" stroke-opacity="0.28" stroke-width="5" fill="none" stroke-linecap="round"/>
     ${star(142, 50, 11, C.star, 14)}
-    <circle cx="139" cy="47" r="2.6" fill="#fff" opacity="0.8"/>
+    <circle cx="139" cy="47" r="2.6" fill="#fff" opacity="0.85"/>
     ${brows(e.brows)}
     ${eyes(e.eyes)}
-    <ellipse cx="78" cy="152" rx="11" ry="7" fill="${C.cheek}" opacity="0.55"/>
-    <ellipse cx="162" cy="152" rx="11" ry="7" fill="${C.cheek}" opacity="0.55"/>
+    <ellipse cx="78" cy="152" rx="11" ry="7" fill="${C.cheek}" opacity="0.72"/>
+    <ellipse cx="162" cy="152" rx="11" ry="7" fill="${C.cheek}" opacity="0.72"/>
     ${mouth(e.mouth)}
     ${emotion === 'thinking' ? chinArm(id) : ''}
   </g>

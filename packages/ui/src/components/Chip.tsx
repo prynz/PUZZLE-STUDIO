@@ -27,7 +27,7 @@ export function Chip({ label, selected, onPress, testID }: ChipProps) {
         onPress={onPress}
         style={[styles.chip, selected ? styles.on : null]}
       >
-        <Text variant="label" style={{ color: selected ? color.brand.purpleStrong : color.text.primary }}>
+        <Text variant="label" style={{ color: selected ? color.brand.strong : color.text.primary }}>
           {label}
         </Text>
       </Pressable>
@@ -41,11 +41,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.md,
     borderRadius: radius.pill,
     // visible on white sections too: soft cream with a lavender rim
-    backgroundColor: palette.cream,
+    backgroundColor: palette.mist,
     borderWidth: 2,
-    borderColor: palette.lavender200,
+    borderColor: palette.leaf200,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  on: { backgroundColor: palette.lavender100, borderColor: palette.lavender },
+  on: { backgroundColor: palette.leaf100, borderColor: palette.leaf },
 });

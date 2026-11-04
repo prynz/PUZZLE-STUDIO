@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   on: { backgroundColor: color.background.raised, borderColor: palette.yellow600 },
-  off: { backgroundColor: palette.cream200, borderColor: color.border.card },
+  off: { backgroundColor: palette.mist200, borderColor: color.border.card },
   dim: { opacity: 0.35 },
   text: { flex: 1, gap: 2 },
   tile: { flexDirection: 'column', gap: spacing.xs, padding: spacing.sm, minHeight: 150 },

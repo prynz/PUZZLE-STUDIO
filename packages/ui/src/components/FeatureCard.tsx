@@ -15,7 +15,7 @@ export interface FeatureCardProps {
   testID?: string;
 }
 
-/** Large lavender hero card for the main action of a screen (e.g. "Puzzle erstellen"). */
+/** Large deep-green hero card for the main action of a screen (e.g. "Puzzle erstellen"). */
 export function FeatureCard({ title, subtitle, illustration, onPress, testID }: FeatureCardProps) {
   const scale = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.get() }] }));
@@ -30,7 +30,7 @@ export function FeatureCard({ title, subtitle, illustration, onPress, testID }: 
         onPressOut={() => scale.set(withSpring(1, spring.press))}
       >
         <LinearGradient
-          colors={[palette.lavender200, palette.lavender, palette.purple]}
+          colors={[palette.leaf700, palette.forest]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={styles.card}
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   text: { flex: 1, gap: spacing.xxs },
   shadowText: {
-    textShadowColor: withAlpha(palette.purple700, 0.4),
+    textShadowColor: withAlpha(palette.forest, 0.4),
     textShadowRadius: 3,
     textShadowOffset: { width: 0, height: 1 },
   },

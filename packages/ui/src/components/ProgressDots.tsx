@@ -25,7 +25,7 @@ export function ProgressDots({ count, active, accessibilityLabel }: ProgressDots
             width: i === active ? 28 : 10,
             height: 10,
             borderRadius: radius.pill,
-            backgroundColor: i === active ? color.brand.purple : palette.lavender200,
+            backgroundColor: i === active ? color.brand.main : palette.leaf200,
           }}
         />
       ))}

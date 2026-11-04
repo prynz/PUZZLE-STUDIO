@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { backgroundSvg } from '../src/illustrations/backgrounds.ts';
 import { MASCOT_EMOTION_LIST, MASCOT_EMOTIONS, pinoSvg } from '../src/mascot/pino.ts';
+import { mascotColors } from '../src/mascot/theme.ts';
 
 describe('Pino', () => {
   it('has exactly the 8 specified emotions', () => {
@@ -33,8 +34,13 @@ describe('Pino', () => {
     expect(pinoSvg('happy', 'a')).not.toBe(pinoSvg('happy', 'b'));
   });
 
-  it('keeps the signature lavender star clip in every emotion', () => {
-    for (const e of MASCOT_EMOTION_LIST) expect(pinoSvg(e, 'x')).toContain('#B9A7F8');
+  it('keeps the signature yellow star clip and the soft 3D shading in every emotion', () => {
+    for (const e of MASCOT_EMOTION_LIST) {
+      const svg = pinoSvg(e, 'x');
+      expect(svg).toContain(mascotColors.star);
+      expect(svg).toContain('id="x-shine"');
+      expect(svg).toContain('id="x-glow"');
+    }
   });
 });
 

@@ -16,18 +16,21 @@
 
 /** Raw palette. Prefer the semantic `color` map below in UI code. */
 export const palette = {
-  cream: '#FFF8ED',
-  cream200: '#FFF1DC',
-  cream300: '#FBE6C8',
+  /** Screen backgrounds: very light, fresh mint-white (style update 2026-11-04, PO reference). */
+  mist: '#F4FAF6',
+  mist200: '#E8F4EC',
+  mist300: '#D9EDE0',
   pink: '#F9EAF0',
   pink300: '#F3D3E0',
 
-  lavender100: '#EFEAFE',
-  lavender200: '#DCD3FC',
-  lavender: '#B9A7F8',
-  purple: '#9983D4',
-  purple600: '#7E68BE',
-  purple700: '#6A55A8',
+  /** Brand green scale (was lavender/purple until 2026-11-04). */
+  leaf100: '#E7F5EC',
+  leaf200: '#CDEBD8',
+  leaf: '#93D6AC',
+  leaf600: '#4DAA7A',
+  leaf700: '#2F7F57',
+  /** Deep green for the main buttons ("Los geht's") and small brand text. */
+  forest: '#1D4A36',
 
   sky100: '#E6F5FC',
   sky: '#A9DDF4',
@@ -50,44 +53,43 @@ export const palette = {
   green: '#D7E8B5',
   green600: '#A9CB7C',
 
-  navy: '#38334F',
-  /** Brief value #77718A, darkened to #6C6680 for WCAG AA (≥4.5:1) on all tinted surfaces. */
-  greyPurple: '#6C6680',
-  greyPurple300: '#B7B2C4',
+  /** Text: green-tinted near-black and grey (≥ 4.5:1 on every surface, tested). */
+  ink: '#1E2D26',
+  slate: '#56655D',
+  slate300: '#B5C2BA',
   white: '#FFFFFF',
 } as const;
 
 /** Semantic color roles. */
 export const color = {
   background: {
-    primary: palette.cream,
-    secondary: palette.pink,
+    primary: palette.mist,
+    secondary: palette.mist200,
     raised: palette.white,
-    sunken: palette.cream200,
+    sunken: palette.mist200,
   },
   text: {
-    primary: palette.navy,
-    secondary: palette.greyPurple,
-    disabled: palette.greyPurple300,
+    primary: palette.ink,
+    secondary: palette.slate,
+    disabled: palette.slate300,
     onPrimary: palette.white,
-    onAccent: palette.navy,
+    onAccent: palette.white,
   },
   brand: {
-    lavender: palette.lavender,
-    purple: palette.purple,
-    purpleStrong: palette.purple700,
+    /** Light brand green (rings, dots, soft accents). */
+    soft: palette.leaf,
+    /** Main brand green (tab bubble, highlights). */
+    main: palette.leaf600,
+    /** Small text in brand color – deep green, AA on every surface. */
+    strong: palette.forest,
   },
   action: {
-    /** Positive / "go" actions (Los geht's, Spielen). */
-    accent: palette.yellow,
-    accentPressed: palette.yellow600,
-    /**
-     * Primary navigation / confirm actions (Weiter, Puzzle erstellen).
-     * White label on purple is 3.2:1 → only allowed for bold labels ≥ 19px
-     * (WCAG "large text"). Small text on purple uses `brand.purpleStrong`.
-     */
-    primary: palette.purple,
-    primaryPressed: palette.purple600,
+    /** Main "go" actions (Los geht's, Spielen): deep glossy green, white label (≈ 10:1). */
+    accent: palette.forest,
+    accentPressed: '#163A2A',
+    /** Confirm / continue actions (Weiter): green, white label (≈ 4.9:1, AA for all sizes). */
+    primary: palette.leaf700,
+    primaryPressed: '#276B49',
   },
   feedback: {
     success: palette.mint600,
@@ -102,7 +104,7 @@ export const color = {
   },
   /** Tinted card surfaces – one per content category. */
   surface: {
-    lavender: palette.lavender100,
+    leaf: palette.leaf100,
     sky: palette.sky100,
     yellow: palette.yellow100,
     peach: palette.peach100,
@@ -112,18 +114,18 @@ export const color = {
   },
   /** On/off controls (switches): state colors meet WCAG 1.4.11 (≥ 3:1) on every surface. */
   control: {
-    on: palette.purple600,
-    off: palette.greyPurple,
+    on: palette.leaf700,
+    off: palette.slate,
     knobOn: palette.white,
   },
   border: {
-    subtle: 'rgba(56, 51, 79, 0.08)',
+    subtle: 'rgba(30, 45, 38, 0.08)',
     card: 'rgba(255, 255, 255, 0.9)',
-    focus: palette.purple,
+    focus: palette.leaf600,
   },
-  /** Navy-tinted shadows – never pure black. */
-  shadow: 'rgba(56, 51, 79, 1)',
-  scrim: 'rgba(56, 51, 79, 0.35)',
+  /** Green-tinted shadows – never pure black. */
+  shadow: 'rgba(30, 45, 38, 1)',
+  scrim: 'rgba(30, 45, 38, 0.35)',
 } as const;
 
 /* ------------------------------------------------------------------ */
@@ -137,16 +139,17 @@ export interface GradientToken {
 }
 
 export const gradient = {
-  /** Default screen background: warm cream with a soft blush at the bottom. */
-  screenWarm: { colors: [palette.cream, palette.cream200, palette.pink], angle: 180 },
+  /** Default screen background: fresh mint-white, slightly deeper at the bottom. */
+  screenWarm: { colors: ['#F7FCF8', palette.mist200, '#E2F2E8'], angle: 180 },
   /** Dreamy variant for "promise"/story screens. */
-  screenDream: { colors: ['#F7F1FF', palette.pink, palette.cream], angle: 180 },
+  screenDream: { colors: ['#F2FBF5', '#E4F4EA', '#F7FCF8'], angle: 180 },
   /** Gameplay table – calm, low-contrast so pieces stand out. */
-  playTable: { colors: [palette.sky100, '#F4F1FF'], angle: 180 },
-  buttonAccent: { colors: ['#FFEAA6', palette.yellow, palette.yellow600], angle: 180 },
-  buttonPrimary: { colors: ['#B3A0F0', palette.purple, palette.purple600], angle: 180 },
+  playTable: { colors: ['#EEF8F2', '#F8FCF9'], angle: 180 },
+  /** Glossy deep green like a soft 3D pill (top light, bottom deep). */
+  buttonAccent: { colors: ['#356D52', palette.forest, '#143424'], angle: 180 },
+  buttonPrimary: { colors: ['#4C9B72', palette.leaf700, '#25684A'], angle: 180 },
   meadow: { colors: [palette.green, palette.green600], angle: 180 },
-  mascotBody: { colors: ['#FFF0B8', palette.yellow, palette.yellow600], angle: 160 },
+  mascotBody: { colors: ['#E6FBEC', palette.leaf, palette.leaf600], angle: 160 },
 } as const satisfies Record<string, GradientToken>;
 
 /* ------------------------------------------------------------------ */
@@ -264,7 +267,7 @@ export interface ShadowToken {
   readonly elevation: number;
 }
 
-/** Soft, navy-tinted, low-opacity shadows. Max. two levels per screen. */
+/** Soft, green-tinted, low-opacity shadows. Max. two levels per screen. */
 export const shadow = {
   none: { offsetY: 0, blur: 0, opacity: 0, elevation: 0 },
   card: { offsetY: 6, blur: 18, opacity: 0.08, elevation: 3 },
