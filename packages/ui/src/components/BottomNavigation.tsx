@@ -1,14 +1,21 @@
-import { useEffect } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { useEffect, useState } from 'react';
+import { Pressable, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSequence,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Svg, { Path } from 'react-native-svg';
 
-import { shadowStyle } from '../styles/helpers.ts';
-import { usePressBounce } from '../motion/usePressBounce.ts';
-import { color, palette, radius, shadow, spacing, spring } from '../tokens.ts';
-import { Icon, type NavIconName } from './Icon.tsx';
-import { Text } from './Text.tsx';
 import { useReduceMotion } from '../motion/MotionProvider.tsx';
+import { shadowStyle } from '../styles/helpers.ts';
+import { color, duration, palette, radius, shadow, spacing, spring } from '../tokens.ts';
+import { Icon, type NavIconName } from './Icon.tsx';
+import { NAV_BAR_HEIGHT, NAV_BUBBLE, NAV_BUBBLE_RISE, notchedBarPath, tabCenter } from './navShape.ts';
+import { Text } from './Text.tsx';
 
 export interface BottomNavItem {
   key: string;
@@ -22,8 +29,8 @@ export interface BottomNavigationProps {
   onSelect: (key: string) => void;
 }
 
-/** Height of the floating bar incl. its bottom offset – screens add this as bottom inset. */
-export const BOTTOM_NAV_HEIGHT = 76 + spacing.lg;
+/** Height of the bar incl. the bubble above it and its bottom offset – screens add this as bottom inset. */
+export const BOTTOM_NAV_HEIGHT = NAV_BAR_HEIGHT + NAV_BUBBLE_RISE + spacing.md;
 
 function TabItem({
   item,
@@ -34,73 +41,127 @@ function TabItem({
   active: boolean;
   onSelect: (key: string) => void;
 }) {
-  const bounce = usePressBounce();
-  const lift = useSharedValue(active ? 1 : 0);
+  const shown = useSharedValue(active ? 0 : 1);
   const reduceMotion = useReduceMotion();
   useEffect(() => {
-    lift.set(reduceMotion ? (active ? 1 : 0) : withSpring(active ? 1 : 0, spring.bouncy));
-  }, [active, lift, reduceMotion]);
-  // the active icon hops up a little – the child sees where it is
+    const to = active ? 0 : 1;
+    shown.set(reduceMotion ? to : withTiming(to, { duration: duration.fast }));
+  }, [active, shown, reduceMotion]);
+  // the active icon lives in the bubble – the slot only keeps its (bold) name
   const iconStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: -3 * lift.get() }, { scale: 1 + 0.08 * lift.get() }],
+    opacity: shown.get(),
+    transform: [{ scale: 0.6 + 0.4 * shown.get() }],
   }));
   return (
-    <Animated.View style={bounce.style}>
-      <Pressable
-        testID={`tab-${item.key}`}
-        accessibilityRole="tab"
-        accessibilityState={{ selected: active }}
-        accessibilityLabel={item.label}
-        onPress={() => onSelect(item.key)}
-        {...bounce.handlers}
-        style={[styles.item, active ? styles.itemActive : null]}
+    <Pressable
+      testID={`tab-${item.key}`}
+      accessibilityRole="tab"
+      accessibilityState={{ selected: active }}
+      accessibilityLabel={item.label}
+      onPress={() => onSelect(item.key)}
+      style={styles.item}
+    >
+      <Animated.View style={iconStyle}>
+        <Icon name={item.icon} />
+      </Animated.View>
+      <Text
+        variant={active ? 'label' : 'caption'}
+        numberOfLines={1}
+        style={{ color: active ? color.text.primary : color.text.secondary }}
       >
-        <Animated.View style={iconStyle}>
-          <Icon name={item.icon} active={active} />
-        </Animated.View>
-        <Text variant="caption" style={{ color: active ? color.text.primary : color.text.secondary }}>
-          {item.label}
-        </Text>
-      </Pressable>
-    </Animated.View>
+        {item.label}
+      </Text>
+    </Pressable>
   );
 }
 
-/** Floating, rounded tab bar with illustrated two-tone icons. */
+/**
+ * Bottom tab bar: a white bar with a soft notch; the active tab sits in a round purple bubble
+ * above it. On a tab change notch and bubble glide over with a spring and the icon pops in.
+ * Without motion (Reduced Motion) the bubble simply jumps.
+ */
 export function BottomNavigation({ items, activeKey, onSelect }: BottomNavigationProps) {
   const insets = useSafeAreaInsets();
+  const reduceMotion = useReduceMotion();
+  const [width, setWidth] = useState(0);
+  const index = Math.max(
+    0,
+    items.findIndex((it) => it.key === activeKey),
+  );
+  const active = items[index];
+  const x = useSharedValue(0);
+  const pop = useSharedValue(1);
+
+  useEffect(() => {
+    if (width === 0) return;
+    const to = tabCenter(width, items.length, index);
+    if (reduceMotion || x.get() === 0) {
+      x.set(to);
+      return;
+    }
+    x.set(withSpring(to, spring.glide));
+    pop.set(withSequence(withTiming(0.7, { duration: duration.fast }), withSpring(1, spring.bouncy)));
+  }, [width, index, items.length, reduceMotion, x, pop]);
+
+  const barStyle = useAnimatedStyle(() => ({ transform: [{ translateX: x.get() - 1.5 * width }] }));
+  const bubbleStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: x.get() - NAV_BUBBLE / 2 }, { scale: pop.get() }],
+  }));
+
+  const onLayout = (e: LayoutChangeEvent) => setWidth(Math.round(e.nativeEvent.layout.width));
+
   return (
-    <View
-      style={[styles.wrap, { bottom: Math.max(insets.bottom, spacing.sm) + spacing.xs }]}
-      accessibilityRole="tablist"
-    >
-      <View style={[styles.bar, shadowStyle(shadow.raised)]}>
-        {items.map((it) => (
-          <TabItem key={it.key} item={it} active={it.key === activeKey} onSelect={onSelect} />
-        ))}
+    <View style={[styles.wrap, { bottom: Math.max(insets.bottom, spacing.sm) }]} accessibilityRole="tablist">
+      <View style={[styles.shadow, shadowStyle(shadow.raised)]} onLayout={onLayout}>
+        <View style={styles.clip}>
+          {width > 0 ? (
+            <Animated.View style={[styles.shape, { width: 3 * width }, barStyle]}>
+              <Svg width={3 * width} height={NAV_BAR_HEIGHT}>
+                <Path d={notchedBarPath(3 * width, NAV_BAR_HEIGHT, 1.5 * width)} fill={color.background.raised} />
+              </Svg>
+            </Animated.View>
+          ) : null}
+        </View>
+        <View style={styles.row}>
+          {items.map((it) => (
+            <TabItem key={it.key} item={it} active={it.key === activeKey} onSelect={onSelect} />
+          ))}
+        </View>
       </View>
+      {width > 0 && active ? (
+        <Animated.View style={[styles.bubble, shadowStyle(shadow.card), bubbleStyle]} pointerEvents="none">
+          <Icon name={active.icon} active size={32} />
+        </Animated.View>
+      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  wrap: { position: 'absolute', left: spacing.md, right: spacing.md },
-  bar: {
-    height: 76,
-    borderRadius: radius.xl,
-    backgroundColor: color.background.raised,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingHorizontal: spacing.xs,
-  },
+  wrap: { position: 'absolute', left: spacing.md, right: spacing.md, paddingTop: NAV_BUBBLE_RISE },
+  shadow: { height: NAV_BAR_HEIGHT, borderRadius: radius.xl },
+  clip: { position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, borderRadius: radius.xl, overflow: 'hidden' },
+  shape: { position: 'absolute', top: 0, left: 0, height: NAV_BAR_HEIGHT },
+  row: { flex: 1, flexDirection: 'row' },
   item: {
-    minWidth: 72,
-    height: 62,
-    borderRadius: radius.lg - 2,
+    flex: 1,
+    minHeight: NAV_BAR_HEIGHT,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
+    paddingBottom: spacing.xs,
     gap: 2,
   },
-  itemActive: { backgroundColor: palette.yellow100 },
+  bubble: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: NAV_BUBBLE,
+    height: NAV_BUBBLE,
+    borderRadius: NAV_BUBBLE / 2,
+    backgroundColor: color.brand.purple,
+    borderWidth: 4,
+    borderColor: palette.white,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

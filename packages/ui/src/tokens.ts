@@ -302,6 +302,8 @@ export const spring = {
   snap: { damping: 14, stiffness: 260, mass: 0.7 },
   /** Mascot idle bounce – used sparingly, disabled with Reduced Motion. */
   bouncy: { damping: 9, stiffness: 180, mass: 0.8 },
+  /** Bottom bar bubble gliding to the chosen tab – soft, with a small overshoot. */
+  glide: { damping: 15, stiffness: 170, mass: 0.9 },
 } as const;
 
 export const pressScale = 0.96;
