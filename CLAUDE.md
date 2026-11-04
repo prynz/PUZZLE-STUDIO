@@ -5,7 +5,7 @@ Produkt: [PROJECT_BRIEF.md](PROJECT_BRIEF.md) · Architektur: [docs/architecture
 
 ## Aktueller Stand
 
-Phase 8 (QA & Optimierung) umgesetzt – Tests auf echten Geräten offen ([test-protocol.md](docs/qa/test-protocol.md)) –, **wartet auf Review**. Phase 9 erst nach Freigabe des Product Owners (siehe [docs/product/roadmap.md](docs/product/roadmap.md)). Maskottchen und Styles sind **noch nicht final** – Änderungen nur zentral (Tokens, `packages/ui/src/mascot`, `packages/ui/src/illustrations`).
+Phase 8 (QA & Optimierung) umgesetzt – Tests auf echten Geräten offen ([test-protocol.md](docs/qa/test-protocol.md)). **Jetzt: Überarbeitung nach eigener Nutzung des PO, Schritt für Schritt** ([Änderungsberichte](docs/previews/milestone-reports/)); Veröffentlichung (Phase 9) ist noch weit entfernt und startet nur nach Freigabe des Product Owners (siehe [docs/product/roadmap.md](docs/product/roadmap.md)). Maskottchen und Styles sind **noch nicht final** – Änderungen nur zentral (Tokens, `packages/ui/src/mascot`, `packages/ui/src/illustrations`).
 
 PO-Vorgaben aus der Freigabe von Phase 1 (dauerhaft gültig):
 
