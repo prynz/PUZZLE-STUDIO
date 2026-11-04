@@ -5,6 +5,7 @@
 > Visuelle Übersicht: [`concept/concept-design-tokens.png`](concept/concept-design-tokens.png)
 
 **Stil:** Soft Pastel Cartoon · Whimsical Illustration · Premium Kids App · Gentle Playful UI
+**Stil-Update 2026-11-04 (PO-Referenz):** frisches **Mint/Grün** statt Lavendel/Lila, weiches glänzendes 3D beim Maskottchen, dunkelgrüne Haupt-Knöpfe mit weißer Schrift. Gelb, Himmelblau, Pfirsich bleiben Akzentfarben (Sterne, Belohnungen, Kategorien).
 Grundlage: [reference-analysis.md](reference-analysis.md)
 
 ## 1. Prinzipien
@@ -18,32 +19,32 @@ Grundlage: [reference-analysis.md](reference-analysis.md)
 
 ## 2. Farben
 
-| Rolle                | Token                              | Wert                  | Verwendung                            |
-| -------------------- | ---------------------------------- | --------------------- | ------------------------------------- |
-| Haupt-Hintergrund    | `color.background.primary`         | `#FFF8ED`             | dominante Fläche                      |
-| Sekundär-Hintergrund | `color.background.secondary`       | `#F9EAF0`             | Verläufe, Sektionen                   |
-| Marke                | `color.brand.lavender` / `.purple` | `#B9A7F8` / `#9983D4` | Wiedererkennung, Fortschritt, Auswahl |
-| Primär-Aktion        | `color.action.primary`             | `#9983D4`             | „Weiter“, „Puzzle erstellen“          |
-| Positive Aktion      | `color.action.accent`              | `#FFE18A`             | „Los geht's“, „Spielen“, Belohnung    |
-| Ergänzung            | `palette.sky`, `palette.mint`      | `#A9DDF4`, `#B7E7D1`  | Spieltisch, Erfolg                    |
-| Text primär          | `color.text.primary`               | `#38334F`             | Titel, Labels                         |
-| Text sekundär        | `color.text.secondary`             | `#6C6680`             | Fließtext (AA-konform, s. Analyse)    |
+| Rolle                | Token                                    | Wert                              | Verwendung                                                       |
+| -------------------- | ---------------------------------------- | --------------------------------- | ---------------------------------------------------------------- |
+| Haupt-Hintergrund    | `color.background.primary` (`mist`)      | `#F4FAF6`                         | dominante Fläche, Mint-Weiß                                      |
+| Sekundär-Hintergrund | `color.background.secondary` (`mist200`) | `#E8F4EC`                         | Verläufe, Sektionen                                              |
+| Marke                | `color.brand.soft` / `.main` / `.strong` | `#93D6AC` / `#4DAA7A` / `#1D4A36` | Tab-Blase, Auswahl, Fortschritt; `strong` für kleinen Markentext |
+| Haupt-Aktion         | `color.action.accent` (`forest`)         | `#1D4A36`                         | „Los geht's“, „Zum Atelier“ – weiße Schrift                      |
+| Bestätigen           | `color.action.primary` (`leaf700`)       | `#2F7F57`                         | „Weiter“, „Fertig“ – weiße Schrift                               |
+| Akzente              | `palette.yellow`, `sky`, `peach`, `pink` | `#FFE18A` …                       | Sterne, Belohnungen, Kategorie-Karten                            |
+| Text primär          | `color.text.primary` (`ink`)             | `#1E2D26`                         | Titel, Labels                                                    |
+| Text sekundär        | `color.text.secondary` (`slate`)         | `#56655D`                         | Fließtext                                                        |
 
-Tonstufen `*100` = Kartenflächen, `*600` = gedrückt/Icons, `purple700` = kleiner Text auf hellen Flächen.
+Tonstufen `*100` = Kartenflächen, `leaf600/700` = Icons/Schalter, `forest` = kleiner Markentext und Haupt-Knöpfe.
 
-**Kontrastregeln (WCAG 2.2 AA):**
+**Kontrastregeln (WCAG 2.2 AA, in `tokens.test.ts` geprüft):**
 
-- Navy auf allen Hintergründen: ≥ 9 : 1 ✅
-- Weiß auf `purple` (3,2 : 1) nur für **fette Labels ≥ 19 px** (Large Text). Kleinere Texte auf Lila → `purple700` bzw. Navy.
-- Navy auf Gelb-Button: 9,3 : 1 ✅
-- **Schalter** (`color.control.*`, WCAG 1.4.11 Nicht-Text-Kontrast ≥ 3 : 1, Phase 8): An = gefüllte Spur `purple600` mit weißem Knopf (≥ 4,1 : 1 auf allen Kartenflächen), Aus = umrandete Spur mit dunklem Knopf `greyPurple` (≥ 4,9 : 1). Der Zustand ist zusätzlich an der Knopfposition erkennbar – nie nur an der Farbe. Getestet in `packages/ui/test/tokens.test.ts`.
+- `ink` auf allen Flächen ≥ 12 : 1, `slate` ≥ 5,2 : 1 ✅
+- Weiß auf `forest` ≈ 10 : 1, auf `leaf700` ≈ 4,9 : 1 – beide Knopfvarianten für jede Schriftgröße ✅
+- `leaf600`/`leaf` nur für Flächen, Symbole und große Formen, **nie** für kleinen Text.
+- **Schalter** (`color.control.*`, WCAG 1.4.11 Nicht-Text-Kontrast ≥ 3 : 1, Phase 8): An = gefüllte Spur `leaf700` mit weißem Knopf (≥ 4,2 : 1 auf allen Kartenflächen), Aus = umrandete Spur mit dunklem Knopf `slate` (≥ 5,2 : 1). Der Zustand ist zusätzlich an der Knopfposition erkennbar – nie nur an der Farbe. Getestet in `packages/ui/test/tokens.test.ts`.
 
 ## 3. Verläufe
 
 | Token                                     | Einsatz                                            |
 | ----------------------------------------- | -------------------------------------------------- |
 | `gradient.screenWarm`                     | Standard-Hintergrund (Creme → Blush)               |
-| `gradient.screenDream`                    | Erzähl-/Creator-Screens (Lavendel-Hauch)           |
+| `gradient.screenDream`                    | Erzähl-/Creator-Screens (Mint-Hauch)               |
 | `gradient.playTable`                      | Spieltisch – kontrastarm, damit Teile hervortreten |
 | `gradient.buttonAccent` / `buttonPrimary` | Buttons (vertikal, hell → satt)                    |
 | `gradient.meadow`, `gradient.mascotBody`  | Illustration                                       |
@@ -76,7 +77,7 @@ Regeln: keine Gewichte < 600, keine Großbuchstaben-Fließtexte, Dynamic Type bi
 
 ## 6. Schatten
 
-Navy-getönt, max. zwei Ebenen pro Screen: `shadow.card` (Karten), `shadow.raised` (Buttons, Navigation), `shadow.lifted` (gezogenes Puzzleteil). Android über `elevation`.
+Grün-getönt (`ink`), max. zwei Ebenen pro Screen: `shadow.card` (Karten), `shadow.raised` (Buttons, Navigation), `shadow.lifted` (gezogenes Puzzleteil). Android über `elevation`.
 
 ## 7. Bewegung
 
@@ -114,7 +115,7 @@ Bausteine: `CloudIllustration`, `StarDecoration` (Stern, Funkeln), `Leaf`, `Flow
 | -------- | ----------------------- | --------------------------------- |
 | `meadow` | Welcome, Erfolg         | Wolken oben, Wiese + Blumen unten |
 | `sky`    | Home, Sammlung, Erfolge | 1–2 Wolken, 3–4 Sterne am Rand    |
-| `dream`  | Onboarding 2, Creator   | Lavendel-Verlauf, Wolken, Funkeln |
+| `dream`  | Onboarding 2, Creator   | Mint-Verlauf, Wolken, Funkeln     |
 | `table`  | Gameplay                | keine Dekoration (Fokus)          |
 | `calm`   | Elternbereich           | nur Verlauf                       |
 
@@ -122,7 +123,7 @@ Dekoration ist `pointerEvents="none"`, `accessible={false}` und liegt nie hinter
 
 ## 9. Ikonografie
 
-Eigene SVG-Icons (abgerundete Linien 2,6 px, zweifarbig: Navy-Kontur + Pastellfüllung; aktiv = Gelb-Füllung). Kein generisches Icon-Set als Ersatz für Illustrationen. Vorlage: `scripts/design-preview/decor.mjs` → in Phase 2 nach `packages/ui` portiert.
+Eigene SVG-Icons (abgerundete Linien 2,6 px, zweifarbig: dunkle Kontur (`ink`) + Pastellfüllung; aktiv = Gelb-Füllung). Kein generisches Icon-Set als Ersatz für Illustrationen. Vorlage: `scripts/design-preview/decor.mjs` → in Phase 2 nach `packages/ui` portiert.
 
 ## 10. Plattformkonsistenz
 

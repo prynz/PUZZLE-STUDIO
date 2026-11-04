@@ -1,23 +1,25 @@
 # Maskottchen „Pino“
 
-Status: **Umgesetzt (Phase 2), Gestaltung noch nicht final.** Quelle: [`packages/ui/src/mascot/pino.ts`](../../packages/ui/src/mascot/pino.ts) (Zeichnung), [`theme.ts`](../../packages/ui/src/mascot/theme.ts) (Farben), App-Komponente `<Mascot emotion=… />`. Übersicht: [`concept/concept-mascot-sheet.png`](concept/concept-mascot-sheet.png).
+Status: **Umgesetzt (Phase 2), Stil-Update 2026-11-04 (Mint, weiches 3D), Gestaltung noch nicht final.** Quelle: [`packages/ui/src/mascot/pino.ts`](../../packages/ui/src/mascot/pino.ts) (Zeichnung), [`theme.ts`](../../packages/ui/src/mascot/theme.ts) (Farben), App-Komponente `<Mascot emotion=… />`. Übersicht: [`concept/concept-mascot-sheet.png`](concept/concept-mascot-sheet.png).
 Die React-Native-Komponente `<Mascot emotion="…" />` entsteht in Phase 2 aus derselben Geometrie.
 
 ## Charakter
 
 Pino ist ein kleines, weiches **Puzzleteil**. Er ist neugierig, geduldig und freut sich über jeden Fortschritt – nie ungeduldig, nie enttäuscht.
 
-| Merkmal       | Umsetzung                                                                                       |
-| ------------- | ----------------------------------------------------------------------------------------------- |
-| Silhouette    | Abgerundetes Quadrat mit Puzzle-**Tab als Kopf-„Knubbel“**, seitliche Tabs als Arme, kurze Füße |
-| Farbe         | Honiggelb-Verlauf `#FFF0B8 → #FFE18A → #F8C95A`, sanfte Kontur `#E9A93C` @45 %                  |
-| Markenzeichen | Lavendelfarbener Stern-Clip am Kopf (`#B9A7F8`) – verbindet Figur und UI-Markenfarbe            |
-| Gesicht       | Große Navy-Augen mit 2 Glanzpunkten, Peach-Wangen @55 %, kleiner Mund                           |
-| Licht         | Glanzlicht oben links, heller Bauch-Bogen                                                       |
+| Merkmal       | Umsetzung                                                                                                                                                                                                  |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Silhouette    | Abgerundetes Quadrat mit Puzzle-**Tab als Kopf-„Knubbel“**, seitliche Tabs als Arme, kurze Füße                                                                                                            |
+| Farbe         | **Seit 2026-11-04 (PO-Referenz):** frisches Mint, weiches 3D – runder Lichtverlauf `#F1FFF4 → leaf #93D6AC → leaf600 #4DAA7A` von oben links, dunklere Unterseite, kaum sichtbare Kontur (`leaf700` @16 %) |
+| Markenzeichen | Gelber Stern-Clip am Kopf (`palette.yellow`) – leuchtet auf dem Grün                                                                                                                                       |
+| Gesicht       | Große dunkle Augen (`ink`) mit 2 Glanzpunkten, rosige Wangen @72 %, kleiner Mund                                                                                                                           |
+| Licht         | Großer weicher Glanz oben links + Glanzpunkt, heller Bauch-Bogen, grünes Leuchten statt grauem Schatten am Boden                                                                                           |
 
 ## Abgrenzung zur Referenz
 
-Die Referenzfigur (lila Blob mit Spross) wird **nicht** kopiert: andere Grundfarbe (Gelb statt Lila), andere Silhouette (Puzzleteil statt Tropfen), eigenes Accessoire (Stern statt Spross), eigener Name. Kein Peekaboo-Logo, keine fremden Markenbestandteile.
+Die Referenzfigur (lila Blob mit Spross) wird **nicht** kopiert: andere Silhouette (Puzzleteil statt Tropfen), eigenes Accessoire (Stern statt Spross), eigener Name. Kein Peekaboo-Logo, keine fremden Markenbestandteile.
+
+Stil-Referenz vom 2026-11-04 (weiches, glänzendes 3D in Mint, Milchglas-Karten): übernommen werden nur **Licht, Material und Farbstimmung**. Die dortige Figur (grüner Wolken-Blob) wird nicht nachgebildet – Pino bleibt ein Puzzleteil mit Stern-Clip, Armen und Füßen.
 
 ## Zustände
 
