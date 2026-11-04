@@ -37,7 +37,7 @@ export default function RootLayout() {
   // Once per start (idempotent): no automatic cloud backup of photos and play data.
   useEffect(() => {
     keepDataOutOfBackups()
-      .then((state) => state === 'failed' && console.warn('[backup] exclusion failed'))
+      .then((state) => (state === 'failed' || state === 'module-missing') && console.warn(`[backup] ${state}`))
       .catch(() => undefined);
   }, []);
 

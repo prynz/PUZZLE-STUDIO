@@ -12,6 +12,8 @@ export async function probeBackup(): Promise<ProbeResult> {
       return { status: 'ok', detail: t('check.backupAndroid') };
     case 'not-applicable':
       return { status: 'unsupported', detail: t('check.backupWeb') };
+    case 'module-missing':
+      return { status: 'fail', detail: t('check.backupMissing') };
     case 'failed':
       return { status: 'fail', detail: t('check.backupFailed') };
   }

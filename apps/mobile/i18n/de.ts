@@ -292,6 +292,7 @@ export const de = {
   'check.backupAndroid': 'Automatische Google-Sicherung für diese App ausgeschaltet',
   'check.backupWeb': 'Im Browser wird nichts dauerhaft gespeichert',
   'check.backupFailed': 'Ausschluss von der Sicherung hat nicht geklappt',
+  'check.backupMissing': 'Baustein für den Ausschluss fehlt in diesem Build',
   'check.picker': 'Bildauswahl & Bildverarbeitung',
   'check.pickerButton': 'Bild auswählen',
   'check.pickerHint': 'Das Bild wird nur verkleinert angezeigt und nicht gespeichert.',

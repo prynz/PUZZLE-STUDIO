@@ -9,11 +9,11 @@ import { BackupExclusion } from '@/modules/backup-exclusion';
  *  - iOS: the whole Documents folder (images/ + SQLite/) is marked "exclude from backup".
  *  - Android: switched off in app.config.ts (`allowBackup: false`, checked in CI).
  */
-export type BackupState = 'excluded' | 'off-by-config' | 'failed' | 'not-applicable';
+export type BackupState = 'excluded' | 'off-by-config' | 'module-missing' | 'failed' | 'not-applicable';
 
 export async function keepDataOutOfBackups(): Promise<BackupState> {
   if (Platform.OS === 'android') return 'off-by-config';
-  if (!BackupExclusion) return 'failed'; // the native module must be part of every iOS build
+  if (!BackupExclusion) return 'module-missing'; // must be part of every iOS build – shows up in the system check
   try {
     return (await BackupExclusion.excludeFromBackup(Paths.document.uri)) ? 'excluded' : 'failed';
   } catch {

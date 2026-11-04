@@ -27,6 +27,11 @@ jobs:
       - run: pnpm lint
       - run: pnpm format:check
       - run: pnpm test
+      - name: Local native modules are linked (iOS backup exclusion)
+        working-directory: apps/mobile
+        run: |
+          npx expo-modules-autolinking resolve --platform apple --json > "$RUNNER_TEMP/autolinking.json"
+          grep -q '"podName":"BackupExclusion"' "$RUNNER_TEMP/autolinking.json" || { echo "::error::BackupExclusion pod missing – check apps/mobile/modules and .gitignore"; exit 1; }
       - name: Expo doctor (dependency compatibility)
         working-directory: apps/mobile
         run: pnpm doctor
