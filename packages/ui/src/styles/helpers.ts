@@ -6,7 +6,7 @@ import { fontFace, type ShadowToken, type TextStyleToken, color } from '../token
 export function shadowStyle(token: ShadowToken): ViewStyle {
   if (token.opacity === 0) return {};
   return {
-    boxShadow: `0px ${token.offsetY}px ${token.blur}px rgba(30, 45, 38, ${token.opacity})`,
+    boxShadow: `0px ${token.offsetY}px ${token.blur}px rgba(20, 38, 30, ${token.opacity})`,
   };
 }
 

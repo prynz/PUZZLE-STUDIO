@@ -1,27 +1,21 @@
-import { palette } from '../tokens.ts';
-
 /**
  * Pino's colors. Adjusting the mascot's look later starts here.
- * Values outside the UI palette are mascot-specific shades.
  *
- * Style since 2026-11-04 (PO reference): soft 3D, glossy, fresh mint – light from the top left,
- * a deeper green underside, a big soft highlight and a green glow instead of a grey shadow.
+ * Style since 2026-11-04 (PO concept art): a puffy 3D jigsaw piece with a lime → green → teal
+ * gradient, soft highlight top left, deeper teal underside, neon-lime glow effects.
  */
 export const mascotColors = {
-  bodyLight: '#F1FFF4',
-  body: palette.leaf,
-  bodyDark: palette.leaf600,
-  /** Very soft edge (no hard outline). */
-  outline: palette.leaf700,
-  underside: palette.leaf700,
-  foot: '#5FB887',
-  eye: palette.ink,
-  cheek: '#FF8AA3',
-  mouth: '#24392F',
-  tongue: '#FF9C8A',
-  /** Signature star clip on the head and sparkles. */
-  star: palette.yellow,
-  starDark: palette.leaf700,
-  peach: palette.peach,
-  glow: palette.leaf600,
+  lime: '#E2F55A',
+  limeDeep: '#C3E83F',
+  green: '#4DB97D',
+  teal: '#1E8A6C',
+  shade: '#0C5C47',
+  halo: '#D6F24A',
+  eye: '#0E2318',
+  mouth: '#0E2318',
+  tongue: '#4FAE6E',
+  /** Neon accents: sparkles, crown, heart, ring, zzz. */
+  neon: '#C7F03A',
+  neonDeep: '#8DC425',
+  shadow: '#1E8A6C',
 } as const;

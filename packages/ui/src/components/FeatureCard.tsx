@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 import { shadowStyle, withAlpha } from '../styles/helpers.ts';
-import { palette, pressScale, radius, shadow, spacing, spring } from '../tokens.ts';
+import { gradient, palette, pressScale, radius, shadow, spacing, spring } from '../tokens.ts';
 import { Text } from './Text.tsx';
 
 export interface FeatureCardProps {
@@ -15,7 +15,7 @@ export interface FeatureCardProps {
   testID?: string;
 }
 
-/** Large deep-green hero card for the main action of a screen (e.g. "Puzzle erstellen"). */
+/** Large hero card in Pino's lime → green gradient with dark text (≥ 6.4:1) for the main action of a screen. */
 export function FeatureCard({ title, subtitle, illustration, onPress, testID }: FeatureCardProps) {
   const scale = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.get() }] }));
@@ -29,18 +29,13 @@ export function FeatureCard({ title, subtitle, illustration, onPress, testID }: 
         onPressIn={() => scale.set(withSpring(pressScale, spring.press))}
         onPressOut={() => scale.set(withSpring(1, spring.press))}
       >
-        <LinearGradient
-          colors={[palette.leaf700, palette.forest]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.card}
-        >
+        <LinearGradient colors={gradient.brand.colors} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.card}>
           <View style={styles.text}>
-            <Text variant="title2" tone="onPrimary" style={styles.shadowText}>
+            <Text variant="title2" tone="primary">
               {title}
             </Text>
             {subtitle ? (
-              <Text variant="label" tone="onPrimary">
+              <Text variant="label" tone="primary">
                 {subtitle}
               </Text>
             ) : null}
@@ -65,10 +60,5 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   text: { flex: 1, gap: spacing.xxs },
-  shadowText: {
-    textShadowColor: withAlpha(palette.forest, 0.4),
-    textShadowRadius: 3,
-    textShadowOffset: { width: 0, height: 1 },
-  },
   illustration: { marginRight: -spacing.xs },
 });

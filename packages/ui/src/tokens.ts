@@ -16,21 +16,25 @@
 
 /** Raw palette. Prefer the semantic `color` map below in UI code. */
 export const palette = {
-  /** Screen backgrounds: very light, fresh mint-white (style update 2026-11-04, PO reference). */
-  mist: '#F4FAF6',
-  mist200: '#E8F4EC',
-  mist300: '#D9EDE0',
+  /** Screen backgrounds: cool, soft grey-green (style of the PO concept art, 2026-11-04). */
+  mist: '#F1F5F3',
+  mist200: '#E4ECE8',
+  mist300: '#D3E0DA',
   pink: '#F9EAF0',
   pink300: '#F3D3E0',
 
-  /** Brand green scale (was lavender/purple until 2026-11-04). */
-  leaf100: '#E7F5EC',
-  leaf200: '#CDEBD8',
-  leaf: '#93D6AC',
-  leaf600: '#4DAA7A',
-  leaf700: '#2F7F57',
-  /** Deep green for the main buttons ("Los geht's") and small brand text. */
-  forest: '#1D4A36',
+  /** Brand scale lime → green → teal, like Pino (was lavender/purple until 2026-11-04). */
+  leaf100: '#EEF6E2',
+  leaf200: '#DCEFC2',
+  leaf: '#9BD86A',
+  leaf600: '#3BAA79',
+  leaf700: '#1F7F62',
+  /** Deep teal-green for the main buttons ("Los geht's") and small brand text. */
+  forest: '#123E33',
+  /** Pino's lime and teal, and the neon-lime glow used for highlights. */
+  lime: '#D4EE3F',
+  teal: '#1E8A6C',
+  neon: '#C7F03A',
 
   sky100: '#E6F5FC',
   sky: '#A9DDF4',
@@ -54,9 +58,9 @@ export const palette = {
   green600: '#A9CB7C',
 
   /** Text: green-tinted near-black and grey (≥ 4.5:1 on every surface, tested). */
-  ink: '#1E2D26',
-  slate: '#56655D',
-  slate300: '#B5C2BA',
+  ink: '#14261E',
+  slate: '#53635B',
+  slate300: '#B3C0BA',
   white: '#FFFFFF',
 } as const;
 
@@ -86,10 +90,10 @@ export const color = {
   action: {
     /** Main "go" actions (Los geht's, Spielen): deep glossy green, white label (≈ 10:1). */
     accent: palette.forest,
-    accentPressed: '#163A2A',
+    accentPressed: '#0D2E26',
     /** Confirm / continue actions (Weiter): green, white label (≈ 4.9:1, AA for all sizes). */
     primary: palette.leaf700,
-    primaryPressed: '#276B49',
+    primaryPressed: '#186A51',
   },
   feedback: {
     success: palette.mint600,
@@ -119,13 +123,13 @@ export const color = {
     knobOn: palette.white,
   },
   border: {
-    subtle: 'rgba(30, 45, 38, 0.08)',
+    subtle: 'rgba(20, 38, 30, 0.08)',
     card: 'rgba(255, 255, 255, 0.9)',
     focus: palette.leaf600,
   },
   /** Green-tinted shadows – never pure black. */
-  shadow: 'rgba(30, 45, 38, 1)',
-  scrim: 'rgba(30, 45, 38, 0.35)',
+  shadow: 'rgba(20, 38, 30, 1)',
+  scrim: 'rgba(20, 38, 30, 0.35)',
 } as const;
 
 /* ------------------------------------------------------------------ */
@@ -139,17 +143,20 @@ export interface GradientToken {
 }
 
 export const gradient = {
-  /** Default screen background: fresh mint-white, slightly deeper at the bottom. */
-  screenWarm: { colors: ['#F7FCF8', palette.mist200, '#E2F2E8'], angle: 180 },
-  /** Dreamy variant for "promise"/story screens. */
-  screenDream: { colors: ['#F2FBF5', '#E4F4EA', '#F7FCF8'], angle: 180 },
+  /** Default screen background: cool soft grey-green, a touch deeper at the bottom. */
+  screenWarm: { colors: ['#F5F8F6', palette.mist, palette.mist200], angle: 180 },
+  /** Dreamy variant for "promise"/story screens: a faint lime glow at the top. */
+  screenDream: { colors: ['#F3F8E6', '#EDF3EF', palette.mist], angle: 180 },
   /** Gameplay table – calm, low-contrast so pieces stand out. */
-  playTable: { colors: ['#EEF8F2', '#F8FCF9'], angle: 180 },
-  /** Glossy deep green like a soft 3D pill (top light, bottom deep). */
-  buttonAccent: { colors: ['#356D52', palette.forest, '#143424'], angle: 180 },
-  buttonPrimary: { colors: ['#4C9B72', palette.leaf700, '#25684A'], angle: 180 },
+  playTable: { colors: ['#EEF4F1', '#F7FAF8'], angle: 180 },
+  /** Glossy deep teal-green pill (top light, bottom deep). */
+  buttonAccent: { colors: ['#2A5E50', palette.forest, '#0B2A22'], angle: 180 },
+  buttonPrimary: { colors: ['#248468', palette.leaf700, '#186A51'], angle: 180 },
+  /** Pino's signature: lime → green → teal (big hero cards, tab bubble). */
+  brand: { colors: [palette.lime, '#8FD162', '#4DB97D'], angle: 135 },
+  brandDeep: { colors: [palette.lime, '#4DB97D', palette.teal], angle: 135 },
   meadow: { colors: [palette.green, palette.green600], angle: 180 },
-  mascotBody: { colors: ['#E6FBEC', palette.leaf, palette.leaf600], angle: 160 },
+  mascotBody: { colors: ['#E2F55A', '#4DB97D', palette.teal], angle: 160 },
 } as const satisfies Record<string, GradientToken>;
 
 /* ------------------------------------------------------------------ */

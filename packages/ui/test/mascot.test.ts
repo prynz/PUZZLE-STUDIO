@@ -34,13 +34,16 @@ describe('Pino', () => {
     expect(pinoSvg('happy', 'a')).not.toBe(pinoSvg('happy', 'b'));
   });
 
-  it('keeps the signature yellow star clip and the soft 3D shading in every emotion', () => {
+  it('is always the glossy lime-to-teal puzzle piece with a neon touch', () => {
     for (const e of MASCOT_EMOTION_LIST) {
       const svg = pinoSvg(e, 'x');
-      expect(svg).toContain(mascotColors.star);
+      expect(svg).toContain(mascotColors.lime);
+      expect(svg).toContain(mascotColors.teal);
       expect(svg).toContain('id="x-shine"');
-      expect(svg).toContain('id="x-glow"');
+      expect(svg).toContain('id="x-clip"');
     }
+    // every emotion but the plain one carries a neon extra
+    expect(MASCOT_EMOTION_LIST.filter((e) => pinoSvg(e, 'y').includes(mascotColors.neon))).toHaveLength(8);
   });
 });
 

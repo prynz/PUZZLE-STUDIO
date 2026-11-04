@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { withAlpha } from '../src/styles/helpers.ts';
-import { color, fontFace, palette, radius, spacing, touch, typography } from '../src/tokens.ts';
+import { color, fontFace, gradient, palette, radius, spacing, touch, typography } from '../src/tokens.ts';
 
 /** WCAG 2.x relative luminance / contrast ratio. */
 function luminance(hex: string): number {
@@ -51,6 +51,15 @@ describe('color tokens', () => {
       expect(contrast(color.control.off, bg)).toBeGreaterThanOrEqual(3);
     }
     expect(contrast(color.control.knobOn, color.control.on)).toBeGreaterThanOrEqual(3);
+  });
+
+  it('dark text stays readable on every stop of the lime → green hero gradient', () => {
+    for (const stop of gradient.brand.colors) expect(contrast(color.text.primary, stop)).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('white labels stay readable on both button gradients', () => {
+    for (const g of [gradient.buttonAccent, gradient.buttonPrimary])
+      for (const stop of g.colors) expect(contrast(color.text.onPrimary, stop)).toBeGreaterThanOrEqual(4.5);
   });
 
   it('palette contains only #RRGGBB values', () => {

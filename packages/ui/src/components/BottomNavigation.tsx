@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, View, useWindowDimensions, type LayoutChangeEvent } from 'react-native';
 import Animated, {
@@ -12,7 +13,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { ClipPath, Defs, G, Path, Rect } from 'react-native-svg';
 
 import { useReduceMotion } from '../motion/MotionProvider.tsx';
-import { color, duration, fontFace, palette, spacing, spring } from '../tokens.ts';
+import { color, duration, fontFace, gradient, palette, spacing, spring } from '../tokens.ts';
+import { withAlpha } from '../styles/helpers.ts';
 import { Icon, type NavIconName } from './Icon.tsx';
 import { NAV_BAR_HEIGHT, NAV_BUBBLE, NAV_BUBBLE_RISE, navInset, notchedBarPath, tabCenter } from './navShape.ts';
 import { Text } from './Text.tsx';
@@ -167,7 +169,14 @@ export function BottomNavigation({ items, activeKey, onSelect }: BottomNavigatio
       </View>
       {width > 0 && active ? (
         <Animated.View style={[styles.bubble, bubbleStyle]} pointerEvents="none">
-          <Icon name={active.icon} active size={32} />
+          <LinearGradient
+            colors={gradient.brandDeep.colors}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.bubbleFill}
+          >
+            <Icon name={active.icon} active size={32} />
+          </LinearGradient>
         </Animated.View>
       ) : null}
     </View>
@@ -196,10 +205,11 @@ const styles = StyleSheet.create({
     width: NAV_BUBBLE,
     height: NAV_BUBBLE,
     borderRadius: NAV_BUBBLE / 2,
-    backgroundColor: color.brand.main,
     borderWidth: 4,
     borderColor: palette.white,
-    alignItems: 'center',
-    justifyContent: 'center',
+    overflow: 'hidden',
+    // soft neon-lime glow like Pino's effects
+    boxShadow: `0px 4px 14px ${withAlpha(palette.neon, 0.55)}`,
   },
+  bubbleFill: { flex: 1, alignItems: 'center', justifyContent: 'center' },
 });
