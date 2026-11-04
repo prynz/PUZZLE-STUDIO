@@ -22,4 +22,8 @@ Farben, Größen und Feder kommen zentral aus dem Designsystem (`color.brand.pur
 
 ## Prüfung
 
-TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 53, App 67, Engine 91 …) · Web ohne Fehlermeldungen ✅ · Android-Emulator / iOS-Simulator: Läufe gestartet, Ergebnis wird hier nachgetragen.
+TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 53, App 67, Engine 91 …) · Web ohne Fehlermeldungen ✅ · **Android-Emulator ✅** (Lauf 41797465551, kompletter Ablauf mit 23 Bildern; Tab-Wechsel per Maestro über die neuen Tabs) · iOS-Simulator: Lauf läuft, Ergebnis wird nachgetragen.
+
+| Android-Emulator: Leiste in allen vier Tabs (Ausschnitte aus den Maestro-Bildern 04, 05, 14, 15) |
+| ------------------------------------------------------------------------------------------------ |
+| ![](../screenshots/2026-11-04-update-01-android-navbar-tabs.png)                                 |
