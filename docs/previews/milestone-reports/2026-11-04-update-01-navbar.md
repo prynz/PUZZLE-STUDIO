@@ -33,12 +33,12 @@ Farben, Größen und Feder kommen zentral aus dem Designsystem (`color.brand.pur
 
 ## Prüfung
 
-TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 53, App 67, Engine 91 …) · Web ohne Fehlermeldungen ✅ · **Android-Emulator ✅** (erste Fassung: Lauf 41797465551, kompletter Ablauf mit 23 Bildern; Tab-Wechsel per Maestro über die neuen Tabs) · **iOS-Simulator ✅** (erste Fassung: Lauf 41797470037, kompletter Ablauf mit 23 Bildern). Die Nachbesserung läuft gerade auf beiden; die Ausschnitte unten zeigen noch die erste Fassung und werden ersetzt.
+TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 53, App 67, Engine 91 …) · Web ohne Fehlermeldungen ✅ · **Android-Emulator ✅** (erste Fassung: Lauf 41797465551, kompletter Ablauf mit 23 Bildern; Tab-Wechsel per Maestro über die neuen Tabs) · **iOS-Simulator ✅** (erste Fassung: Lauf 41797470037, kompletter Ablauf mit 23 Bildern). **Nachbesserung ✅** auf beiden: Android-Lauf 41848964098 und iOS-Lauf 41848970156, jeweils kompletter Ablauf mit 23 Bildern; die Ausschnitte unten zeigen die nachgebesserte Fassung.
 
-| Android-Emulator: Leiste in allen vier Tabs (Ausschnitte aus den Maestro-Bildern 04, 05, 14, 15) |
-| ------------------------------------------------------------------------------------------------ |
-| ![](../screenshots/2026-11-04-update-01-android-navbar-tabs.png)                                 |
+| Android-Emulator: Leiste in allen vier Tabs (Ausschnitte aus den Maestro-Bildern 04, 05, 14, 15, nach der Nachbesserung) |
+| ------------------------------------------------------------------------------------------------------------------------ |
+| ![](../screenshots/2026-11-04-update-01b-android-navbar-tabs.png)                                                        |
 
-| iOS-Simulator: Leiste in allen vier Tabs (Ausschnitte aus den Maestro-Bildern 04, 05, 14, 15) |
-| --------------------------------------------------------------------------------------------- |
-| ![](../screenshots/2026-11-04-update-01-ios-navbar-tabs.png)                                  |
+| iOS-Simulator: Leiste in allen vier Tabs (Ausschnitte aus den Maestro-Bildern 04, 05, 14, 15, nach der Nachbesserung) |
+| --------------------------------------------------------------------------------------------------------------------- |
+| ![](../screenshots/2026-11-04-update-01b-ios-navbar-tabs.png)                                                         |
