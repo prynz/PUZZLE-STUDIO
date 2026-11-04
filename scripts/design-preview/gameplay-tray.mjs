@@ -25,8 +25,8 @@ function bowl(fill, rim) {
 }
 
 function frameIcon() {
-  return `<svg width="46" height="34" viewBox="0 0 46 34"><rect x="8" y="4" width="30" height="26" rx="6" fill="none" stroke="${P.purple}" stroke-width="5"/>
-    <rect x="14" y="10" width="18" height="14" rx="3" fill="${P.lavender100}"/></svg>`;
+  return `<svg width="46" height="34" viewBox="0 0 46 34"><rect x="8" y="4" width="30" height="26" rx="6" fill="none" stroke="${P.leaf600}" stroke-width="5"/>
+    <rect x="14" y="10" width="18" height="14" rx="3" fill="${P.leaf100}"/></svg>`;
 }
 
 function stackIcon() {
@@ -75,7 +75,7 @@ export function gameplayTray() {
     const ts = 0.86;
     const hl = k === hintIdx;
     return `
-      <rect x="${x}" y="${y}" width="${slotW}" height="${slotH}" rx="18" fill="${hl ? P.yellow100 : P.white}" stroke="${hl ? P.yellow600 : P.lavender100}" stroke-width="${hl ? 3 : 2}"/>
+      <rect x="${x}" y="${y}" width="${slotW}" height="${slotH}" rx="18" fill="${hl ? P.yellow100 : P.white}" stroke="${hl ? P.yellow600 : P.leaf100}" stroke-width="${hl ? 3 : 2}"/>
       ${hl ? `<rect x="${x - 4}" y="${y - 4}" width="${slotW + 8}" height="${slotH + 8}" rx="22" fill="none" stroke="${P.yellow}" stroke-width="4" opacity=".55" filter="url(#tglow)"/>` : ''}
       <g transform="translate(${cx} ${cy}) scale(${ts}) translate(${-(p.x + p.w / 2)} ${-(p.y + p.h / 2)})" filter="url(#tsoft)">${pieceArt(k)}</g>`;
   });
@@ -98,14 +98,14 @@ export function gameplayTray() {
         <div class="progress" style="flex:1"><b style="width:${(38 / 64) * 100}%"></b></div>
         <span class="label">38/64</span>
       </div>
-      <div class="round-btn" style="background:${P.lavender100};border:2px solid ${P.lavender}" aria-label="Vorlage zeigen">${icon.eye()}</div>
+      <div class="round-btn" style="background:${P.leaf100};border:2px solid ${P.leaf}" aria-label="Vorlage zeigen">${icon.eye()}</div>
     </div>
   </div>
 
   <svg class="layer" width="390" height="844" viewBox="0 0 390 844">
     <defs>
       <g id="timg">${g}</g>${defs}
-      <filter id="tsoft" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="${P.navy}" flood-opacity=".18"/></filter>
+      <filter id="tsoft" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="${P.ink}" flood-opacity=".18"/></filter>
       <filter id="tglow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="4"/></filter>
     </defs>
 
@@ -113,8 +113,8 @@ export function gameplayTray() {
     <rect x="${boardX - 10}" y="${boardY - 10}" width="${342 + 20}" height="${SH * s + 20}" rx="22" fill="${P.white}" filter="url(#tsoft)"/>
     <g transform="translate(${boardX} ${boardY}) scale(${s})">
       <g opacity=".07">${g}</g>
-      <rect width="${SW}" height="${SH}" fill="${P.lavender100}" opacity=".45"/>
-      ${pieces.map((p, k) => (placed.has(k) ? '' : `<path d="${p.d}" fill="none" stroke="${P.purple}" stroke-opacity=".22" stroke-width="1.6" stroke-dasharray="5 6"/>`)).join('')}
+      <rect width="${SW}" height="${SH}" fill="${P.leaf100}" opacity=".45"/>
+      ${pieces.map((p, k) => (placed.has(k) ? '' : `<path d="${p.d}" fill="none" stroke="${P.leaf600}" stroke-opacity=".22" stroke-width="1.6" stroke-dasharray="5 6"/>`)).join('')}
       ${[...placed].map((k) => pieceArt(k, 0.35)).join('')}
       <path d="${hintPiece.d}" fill="${P.yellow}" fill-opacity=".4" stroke="${P.yellow600}" stroke-width="6" filter="url(#tglow)"/>
       <path d="${hintPiece.d}" fill="none" stroke="${P.yellow600}" stroke-width="3.5" stroke-dasharray="8 6"/>
@@ -133,8 +133,8 @@ export function gameplayTray() {
 
   <!-- zoom pill -->
   <div style="position:absolute;right:28px;top:${boardY + 256 - 52}px;display:flex;gap:6px;background:rgba(255,255,255,.92);border-radius:${radius.pill}px;padding:4px;box-shadow:${sh(shadow.card)}">
-    <div class="round-btn" style="width:40px;height:40px;box-shadow:none;font:800 22px Nunito;color:${P.navy}">−</div>
-    <div class="round-btn" style="width:40px;height:40px;box-shadow:none;font:800 22px Nunito;color:${P.navy}">+</div>
+    <div class="round-btn" style="width:40px;height:40px;box-shadow:none;font:800 22px Nunito;color:${P.ink}">−</div>
+    <div class="round-btn" style="width:40px;height:40px;box-shadow:none;font:800 22px Nunito;color:${P.ink}">+</div>
   </div>
 
   <!-- hint bubble -->
@@ -146,9 +146,9 @@ export function gameplayTray() {
       .map(
         (
           b,
-        ) => `<div style="flex:none;width:72px;height:96px;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${b.on ? P.lavender100 : 'rgba(255,255,255,.8)'};border:${b.on ? `3px solid ${P.lavender}` : '2px solid #fff'};box-shadow:${sh(shadow.card)}">
-        ${b.art}<div class="caption" style="color:${P.navy};font-weight:800">${b.label}</div>
-        <div class="badge" style="height:20px;padding:0 7px;background:${b.on ? P.purple : P.lavender100};color:${b.on ? '#fff' : P.purple700}">${b.n}</div></div>`,
+        ) => `<div style="flex:none;width:72px;height:96px;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:${b.on ? P.leaf100 : 'rgba(255,255,255,.8)'};border:${b.on ? `3px solid ${P.leaf}` : '2px solid #fff'};box-shadow:${sh(shadow.card)}">
+        ${b.art}<div class="caption" style="color:${P.ink};font-weight:800">${b.label}</div>
+        <div class="badge" style="height:20px;padding:0 7px;background:${b.on ? P.leaf600 : P.leaf100};color:${b.on ? '#fff' : P.forest}">${b.n}</div></div>`,
       )
       .join('')}
   </div>
@@ -158,7 +158,7 @@ export function gameplayTray() {
     <div class="label">Himmel · 14 Teile</div>
     <div style="display:flex;align-items:center;gap:6px;background:${P.yellow};border-radius:${radius.pill}px;padding:2px 12px 2px 2px;box-shadow:${sh(shadow.card)}">
       <div style="width:34px;height:34px;border-radius:17px;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center">${mascot({ emotion: 'thinking', size: 40 })}</div>
-      <span class="label" style="color:${P.navy}">Tipp</span>
+      <span class="label" style="color:${P.ink}">Tipp</span>
     </div>
   </div>
   <div class="homebar"></div>

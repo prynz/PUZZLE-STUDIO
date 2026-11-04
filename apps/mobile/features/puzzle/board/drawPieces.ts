@@ -23,7 +23,7 @@ boardPaint.setColor(Skia.Color(palette.white));
 const targetPaint = Skia.Paint();
 targetPaint.setStyle(PaintStyle.Stroke);
 targetPaint.setAntiAlias(true);
-targetPaint.setColor(Skia.Color(withAlpha(palette.greyPurple300, 0.55)));
+targetPaint.setColor(Skia.Color(withAlpha(palette.slate300, 0.55)));
 const edgePaint = Skia.Paint();
 edgePaint.setStyle(PaintStyle.Stroke);
 edgePaint.setAntiAlias(true);

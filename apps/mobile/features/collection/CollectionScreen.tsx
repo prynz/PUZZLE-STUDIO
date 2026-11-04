@@ -63,7 +63,7 @@ export function CollectionScreen() {
       <Text variant="title1" accessibilityRole="header">
         {t('collection.title')}
       </Text>
-      <Section tone="lavender">
+      <Section tone="leaf">
         <View style={styles.chips}>
           {FILTERS.map((f) => (
             <Chip

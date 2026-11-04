@@ -22,8 +22,8 @@ const nameSuffix = variant === 'production' ? '' : variant === 'development' ? '
 
 // Brand colors duplicated here on purpose: app.config is evaluated by Node
 // before Metro, so it cannot import the token package. Keep in sync with
-// packages/ui/src/tokens.ts (palette.cream).
-const CREAM = '#FFF8ED';
+// packages/ui/src/tokens.ts (palette.mist).
+const MIST = '#F4FAF6';
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -34,7 +34,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   orientation: 'portrait',
   icon: './assets/brand/icon.png',
   userInterfaceStyle: 'light',
-  backgroundColor: CREAM,
+  backgroundColor: MIST,
   ios: {
     bundleIdentifier: `${BASE_ID}${suffix}`,
     supportsTablet: true,
@@ -45,7 +45,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     package: `${BASE_ID}${suffix}`,
     adaptiveIcon: {
-      backgroundColor: CREAM,
+      backgroundColor: MIST,
       foregroundImage: './assets/brand/android-icon-foreground.png',
       backgroundImage: './assets/brand/android-icon-background.png',
       monochromeImage: './assets/brand/android-icon-monochrome.png',
@@ -81,7 +81,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         image: './assets/brand/splash-icon.png',
         imageWidth: 200,
         resizeMode: 'contain',
-        backgroundColor: CREAM,
+        backgroundColor: MIST,
       },
     ],
     'expo-font',

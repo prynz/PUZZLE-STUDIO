@@ -62,7 +62,7 @@ export function ParentGate({ onOpen, onCancel }: { onOpen: () => void; onCancel:
         </SpeechBubble>
       </View>
       <Appear key={task.round} variant="pop">
-        <Surface tone="lavender" style={styles.task}>
+        <Surface tone="leaf" style={styles.task}>
           <Text variant="caption" tone="secondary">
             {t('gate.ask')}
           </Text>

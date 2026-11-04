@@ -30,13 +30,13 @@ try {
 }
 
 const bg = (size) => `<svg width="${size}" height="${size}" viewBox="0 0 1024 1024" style="position:absolute;inset:0">
-  <defs><linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="${P.cream}"/><stop offset="0.6" stop-color="${P.pink}"/><stop offset="1" stop-color="${P.lavender100}"/></linearGradient></defs>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="${P.mist}"/><stop offset="0.6" stop-color="${P.pink}"/><stop offset="1" stop-color="${P.leaf100}"/></linearGradient></defs>
   <rect width="1024" height="1024" fill="url(#bg)"/>
-  ${star(170, 190, 34, P.yellow, 12)}${star(860, 250, 26, P.lavender, -10)}${twinkle(820, 820, 30, '#fff')}${star(190, 830, 22, P.peach, 8)}
+  ${star(170, 190, 34, P.yellow, 12)}${star(860, 250, 26, P.leaf, -10)}${twinkle(820, 820, 30, '#fff')}${star(190, 830, 22, P.peach, 8)}
 </svg>`;
 
 const box = (size, inner, transparent) =>
-  `<div id="a" style="width:${size}px;height:${size}px;position:relative;display:flex;align-items:center;justify-content:center;${transparent ? '' : `background:${P.cream}`}">${inner}</div>`;
+  `<div id="a" style="width:${size}px;height:${size}px;position:relative;display:flex;align-items:center;justify-content:center;${transparent ? '' : `background:${P.mist}`}">${inner}</div>`;
 
 const ASSETS = [
   // iOS / generic icon: full-bleed background + mascot (opaque)

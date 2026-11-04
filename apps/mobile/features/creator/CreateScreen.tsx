@@ -71,7 +71,7 @@ export function CreateScreen() {
             />
             <ActionTile
               testID="src-samples"
-              tone="lavender"
+              tone="leaf"
               label={t('creator.samples')}
               illustration={<Icon name="sample" />}
               onPress={() => router.push('/creator/samples')}

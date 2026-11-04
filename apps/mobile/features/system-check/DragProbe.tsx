@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: radius.sm,
-    backgroundColor: color.brand.lavender,
+    backgroundColor: color.brand.soft,
     alignItems: 'center',
   },
   knob: {
@@ -67,6 +67,6 @@ const styles = StyleSheet.create({
     width: 22,
     height: 22,
     borderRadius: 11,
-    backgroundColor: color.brand.lavender,
+    backgroundColor: color.brand.soft,
   },
 });

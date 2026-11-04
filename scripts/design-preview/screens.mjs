@@ -29,7 +29,7 @@ body{font-family:Nunito,sans-serif;color:${color.text.primary};-webkit-font-smoo
 .layer{position:absolute;inset:0;pointer-events:none}
 .status{position:absolute;top:0;left:0;right:0;height:50px;display:flex;align-items:center;justify-content:space-between;padding:14px 30px 0 34px;font-weight:800;font-size:16px;z-index:5}
 .status .icons{display:flex;gap:6px;align-items:center}
-.homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:${P.navy};opacity:.85;z-index:5}
+.homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:${P.ink};opacity:.85;z-index:5}
 .content{position:absolute;inset:0;padding:64px ${spacing.xl}px 0;display:flex;flex-direction:column}
 .hero{${type(typography.hero)}}
 .t1{${type(typography.title1)}}
@@ -49,26 +49,26 @@ body{font-family:Nunito,sans-serif;color:${color.text.primary};-webkit-font-smoo
 .card{border-radius:${radius.lg}px;background:#fff;box-shadow:${sh(shadow.card)};border:2px solid ${color.border.card}}
 .round-btn{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.9);box-shadow:${sh(shadow.card)};display:flex;align-items:center;justify-content:center}
 .chip{height:44px;padding:0 18px;border-radius:${radius.pill}px;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.75);${type(typography.label)};color:${color.text.secondary};border:2px solid transparent}
-.chip.on{background:${P.lavender100};color:${P.purple700};border-color:${P.lavender}}
+.chip.on{background:${P.leaf100};color:${P.forest};border-color:${P.leaf}}
 .dots{display:flex;gap:10px;justify-content:center}
-.dots i{width:10px;height:10px;border-radius:5px;background:${P.lavender200}}
-.dots i.on{width:28px;background:${P.purple}}
+.dots i{width:10px;height:10px;border-radius:5px;background:${P.leaf200}}
+.dots i.on{width:28px;background:${P.leaf600}}
 .nav{position:absolute;left:16px;right:16px;bottom:26px;height:76px;border-radius:${radius.xl}px;background:rgba(255,255,255,.94);box-shadow:${sh(shadow.raised)};display:flex;justify-content:space-around;align-items:center;padding:0 8px;z-index:4}
 .nav .it{display:flex;flex-direction:column;align-items:center;gap:2px;width:76px;height:62px;justify-content:center;border-radius:22px;${type(typography.caption)};color:${color.text.secondary}}
-.nav .it.on{background:${P.yellow100};color:${P.navy}}
-.progress{height:14px;border-radius:7px;background:${P.lavender100};overflow:hidden}
-.progress b{display:block;height:100%;border-radius:7px;background:linear-gradient(90deg, ${P.lavender}, ${P.purple})}
+.nav .it.on{background:${P.yellow100};color:${P.ink}}
+.progress{height:14px;border-radius:7px;background:${P.leaf100};overflow:hidden}
+.progress b{display:block;height:100%;border-radius:7px;background:linear-gradient(90deg, ${P.leaf}, ${P.leaf600})}
 .badge{height:28px;padding:0 10px;border-radius:14px;display:inline-flex;align-items:center;gap:4px;${type(typography.caption)}}
 `;
 }
 
 export const statusBar = () => `<div class="status"><span>9:41</span><span class="icons">
-  <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="${P.navy}"/><rect x="5" y="5" width="3" height="7" rx="1" fill="${P.navy}"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="${P.navy}"/><rect x="15" y="0" width="3" height="12" rx="1" fill="${P.navy}"/></svg>
-  <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 L5.5 8.6 A3.6 3.6 0 0 1 10.5 8.6Z M2.8 5.8 A7.6 7.6 0 0 1 13.2 5.8 L11.6 7.6 A5.2 5.2 0 0 0 4.4 7.6Z M0 3 A11.6 11.6 0 0 1 16 3 L14.4 4.8 A9.2 9.2 0 0 0 1.6 4.8Z" fill="${P.navy}"/></svg>
-  <svg width="26" height="12" viewBox="0 0 26 12"><rect x="0.5" y="0.5" width="22" height="11" rx="3.5" fill="none" stroke="${P.navy}" opacity=".5"/><rect x="2" y="2" width="17" height="8" rx="2" fill="${P.navy}"/><rect x="24" y="4" width="2" height="4" rx="1" fill="${P.navy}" opacity=".5"/></svg>
+  <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="${P.ink}"/><rect x="5" y="5" width="3" height="7" rx="1" fill="${P.ink}"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="${P.ink}"/><rect x="15" y="0" width="3" height="12" rx="1" fill="${P.ink}"/></svg>
+  <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 L5.5 8.6 A3.6 3.6 0 0 1 10.5 8.6Z M2.8 5.8 A7.6 7.6 0 0 1 13.2 5.8 L11.6 7.6 A5.2 5.2 0 0 0 4.4 7.6Z M0 3 A11.6 11.6 0 0 1 16 3 L14.4 4.8 A9.2 9.2 0 0 0 1.6 4.8Z" fill="${P.ink}"/></svg>
+  <svg width="26" height="12" viewBox="0 0 26 12"><rect x="0.5" y="0.5" width="22" height="11" rx="3.5" fill="none" stroke="${P.ink}" opacity=".5"/><rect x="2" y="2" width="17" height="8" rx="2" fill="${P.ink}"/><rect x="24" y="4" width="2" height="4" rx="1" fill="${P.ink}" opacity=".5"/></svg>
 </span></div>`;
 
-const chev = (c = P.navy) => `<span class="chev">${icon.chevron(c)}</span>`;
+const chev = (c = P.ink) => `<span class="chev">${icon.chevron(c)}</span>`;
 
 function nav(active) {
   const items = [
@@ -85,9 +85,9 @@ export function welcome() {
   return `<div class="screen">
   <svg class="layer" width="390" height="844" viewBox="0 0 390 844"><defs>${meadowDefs()}</defs>
     ${cloud(-30, 96, 150, 0.95)}${cloud(250, 150, 130, 0.9)}${cloud(150, 520, 90, 0.6)}
-    ${star(40, 230, 8)}${star(352, 120, 7, P.lavender)}${star(330, 330, 9)}${twinkle(70, 380, 7)}${twinkle(300, 260, 6)}${star(30, 470, 6, P.peach)}
+    ${star(40, 230, 8)}${star(352, 120, 7, P.leaf)}${star(330, 330, 9)}${twinkle(70, 380, 7)}${twinkle(300, 260, 6)}${star(30, 470, 6, P.peach)}
     ${meadow(390, 844, 610)}
-    ${flower(46, 710, 11, P.peach)}${flower(80, 740, 8, '#fff')}${flower(330, 690, 11, P.lavender)}${flower(355, 728, 8, P.yellow, P.peach)}${flower(300, 750, 7, '#fff', P.yellow)}
+    ${flower(46, 710, 11, P.peach)}${flower(80, 740, 8, '#fff')}${flower(330, 690, 11, P.leaf)}${flower(355, 728, 8, P.yellow, P.peach)}${flower(300, 750, 7, '#fff', P.yellow)}
     ${leaf(22, 640, 26, -30)}${leaf(350, 610, 22, 210, P.mint600)}
   </svg>
   ${statusBar()}
@@ -111,7 +111,7 @@ export function home() {
     `<div style="width:${w}px;height:${h}px;border-radius:${radius.md}px;overflow:hidden;flex:none;${extra}">${scene(name, w, h)}</div>`;
   return `<div class="screen">
   <svg class="layer" width="390" height="844" viewBox="0 0 390 844">
-    ${cloud(220, 70, 120, 0.9)}${cloud(-40, 360, 120, 0.7)}${star(360, 210, 7)}${star(26, 150, 6, P.lavender)}${twinkle(340, 470, 6)}
+    ${cloud(220, 70, 120, 0.9)}${cloud(-40, 360, 120, 0.7)}${star(360, 210, 7)}${star(26, 150, 6, P.leaf)}${twinkle(340, 470, 6)}
     ${leaf(352, 560, 22, 200, P.mint600, 0.7)}
   </svg>
   ${statusBar()}
@@ -129,11 +129,11 @@ export function home() {
       </div>
     </div>
 
-    <div class="card" style="background:${grad({ colors: ['#C9BBFA', P.lavender, '#A893EA'], angle: 160 })};padding:20px;height:156px;position:relative;overflow:hidden;color:#fff;border-color:rgba(255,255,255,.6)">
+    <div class="card" style="background:${grad({ colors: ['#C9BBFA', P.leaf, '#A893EA'], angle: 160 })};padding:20px;height:156px;position:relative;overflow:hidden;color:#fff;border-color:rgba(255,255,255,.6)">
       <svg style="position:absolute;right:-6px;bottom:-10px" width="170" height="160" viewBox="0 0 170 160">
         <g transform="rotate(10 90 80)"><rect x="40" y="26" width="104" height="84" rx="16" fill="#fff"/><g transform="translate(48 34)">${scene('meadowHouse', 88, 68)}</g></g>
         <path d="M18 98 Q18 88 28 88 H36 A8 8 0 1 1 52 88 H60 Q70 88 70 98 V106 A8 8 0 1 1 70 122 V130 Q70 140 60 140 H28 Q18 140 18 130Z" fill="${P.yellow}" stroke="#fff" stroke-width="3"/>
-        <path d="M44 104 V124 M34 114 H54" stroke="${P.navy}" stroke-width="4.5" stroke-linecap="round"/>
+        <path d="M44 104 V124 M34 114 H54" stroke="${P.ink}" stroke-width="4.5" stroke-linecap="round"/>
         ${twinkle(150, 22, 9)}${star(26, 40, 7, '#fff')}
       </svg>
       <div class="t2" style="text-shadow:0 1px 3px rgba(106,85,168,.4)">Puzzle<br/>erstellen</div>
@@ -143,14 +143,14 @@ export function home() {
     <div class="card" style="padding:14px;display:flex;gap:14px;align-items:center;background:${P.yellow100}">
       ${thumb('seaBoat', 78, 78)}
       <div style="flex:1">
-        <div class="caption" style="color:${P.purple700}">WEITER SPIELEN</div>
+        <div class="caption" style="color:${P.forest}">WEITER SPIELEN</div>
         <div class="t3" style="font-size:19px">Segelboot</div>
         <div style="display:flex;align-items:center;gap:8px;margin-top:6px"><div class="progress" style="flex:1"><b style="width:62%"></b></div><span class="caption">10/16</span></div>
       </div>
-      <div class="round-btn" style="background:${grad(gradient.buttonAccent)}"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M6 4 L16 10 L6 16Z" fill="${P.navy}" stroke="${P.navy}" stroke-width="2" stroke-linejoin="round"/></svg></div>
+      <div class="round-btn" style="background:${grad(gradient.buttonAccent)}"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M6 4 L16 10 L6 16Z" fill="${P.ink}" stroke="${P.ink}" stroke-width="2" stroke-linejoin="round"/></svg></div>
     </div>
 
-    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:2px"><div class="t3">Meine Sammlung</div><div class="label" style="color:${P.purple700}">Alle ›</div></div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:2px"><div class="t3">Meine Sammlung</div><div class="label" style="color:${P.forest}">Alle ›</div></div>
     <div style="display:flex;gap:12px">
       ${['meadowHouse', 'nightSky', 'garden'].map((s, i) => `<div style="position:relative">${thumb(s, 104, 92, `border:3px solid #fff;box-shadow:${sh(shadow.card)}`)}${i !== 1 ? `<div class="badge" style="position:absolute;right:6px;bottom:6px;background:${P.mint600};color:#fff;height:24px;padding:0 6px">${icon.check()}</div>` : ''}</div>`).join('')}
     </div>
@@ -168,13 +168,13 @@ export function creator() {
   const h = 212;
   const pieces = jigsaw({ rows: 4, cols: 4, width: 400, height: 300, seed: 7 }).pieces;
   return `<div class="screen dream">
-  <svg class="layer" width="390" height="844" viewBox="0 0 390 844">${cloud(250, 60, 110, 0.8)}${star(30, 110, 6, P.lavender)}${twinkle(360, 420, 6)}${cloud(-50, 760, 140, 0.7)}</svg>
+  <svg class="layer" width="390" height="844" viewBox="0 0 390 844">${cloud(250, 60, 110, 0.8)}${star(30, 110, 6, P.leaf)}${twinkle(360, 420, 6)}${cloud(-50, 760, 140, 0.7)}</svg>
   ${statusBar()}
   <div class="content" style="gap:${spacing.md}px">
     <div style="display:flex;align-items:center;gap:12px">
       <div class="round-btn">${icon.back()}</div>
       <div style="flex:1"><div class="caption">SCHRITT 3 VON 4</div>
-        <div style="display:flex;gap:6px;margin-top:6px">${[1, 2, 3, 4].map((i) => `<div style="flex:1;height:8px;border-radius:4px;background:${i <= 3 ? P.purple : P.lavender200}"></div>`).join('')}</div></div>
+        <div style="display:flex;gap:6px;margin-top:6px">${[1, 2, 3, 4].map((i) => `<div style="flex:1;height:8px;border-radius:4px;background:${i <= 3 ? P.leaf600 : P.leaf200}"></div>`).join('')}</div></div>
     </div>
     <div class="t1" style="margin-top:4px">Wie viele Teile?</div>
     <div class="card" style="padding:8px;position:relative">
@@ -184,14 +184,14 @@ export function creator() {
           ${pieces.map((p) => `<path d="${p.d}" fill="none" stroke="#fff" stroke-width="3" stroke-opacity=".9"/>`).join('')}
         </svg>
       </div>
-      <div class="badge" style="position:absolute;left:18px;top:18px;background:rgba(255,255,255,.92);color:${P.navy};height:32px;font-size:14px">4 × 4 · 16 Teile</div>
+      <div class="badge" style="position:absolute;left:18px;top:18px;background:rgba(255,255,255,.92);color:${P.ink};height:32px;font-size:14px">4 × 4 · 16 Teile</div>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:nowrap;overflow:hidden;margin-right:-24px">
       ${sizes
         .slice(0, 6)
         .map(
           (s) =>
-            `<div class="chip ${s === sel ? 'on' : ''}" style="flex:none;height:52px;min-width:56px;justify-content:center;font-size:18px;font-weight:800;${s === sel ? '' : `color:${P.navy}`}">${s}</div>`,
+            `<div class="chip ${s === sel ? 'on' : ''}" style="flex:none;height:52px;min-width:56px;justify-content:center;font-size:18px;font-weight:800;${s === sel ? '' : `color:${P.ink}`}">${s}</div>`,
         )
         .join('')}
     </div>
@@ -201,8 +201,8 @@ export function creator() {
     </div>
     <div class="t3" style="font-size:18px;margin-top:2px">Form der Teile</div>
     <div style="display:flex;gap:12px">
-      <div class="card" style="flex:1;padding:12px;display:flex;align-items:center;gap:10px;border:3px solid ${P.lavender};background:${P.lavender100}">
-        <svg width="40" height="40" viewBox="0 0 40 40"><path d="M6 10 Q6 6 10 6 H15 A5 5 0 1 1 25 6 H30 Q34 6 34 10 V15 A5 5 0 1 1 34 25 V30 Q34 34 30 34 H10 Q6 34 6 30Z" fill="${P.lavender}"/></svg>
+      <div class="card" style="flex:1;padding:12px;display:flex;align-items:center;gap:10px;border:3px solid ${P.leaf};background:${P.leaf100}">
+        <svg width="40" height="40" viewBox="0 0 40 40"><path d="M6 10 Q6 6 10 6 H15 A5 5 0 1 1 25 6 H30 Q34 6 34 10 V15 A5 5 0 1 1 34 25 V30 Q34 34 30 34 H10 Q6 34 6 30Z" fill="${P.leaf}"/></svg>
         <div class="label">Klassisch</div></div>
       <div class="card" style="flex:1;padding:12px;display:flex;align-items:center;gap:10px">
         <svg width="40" height="40" viewBox="0 0 40 40"><rect x="7" y="7" width="26" height="26" rx="7" fill="${P.sky}"/></svg>
@@ -240,7 +240,7 @@ export function gameplay() {
     const p = pieces[k];
     return `<g clip-path="url(#pc${k})"><use href="#img"/></g>
       <path d="${p.d}" fill="none" stroke="#fff" stroke-width="2.2" stroke-opacity=".9"/>
-      <path d="${p.d}" fill="none" stroke="${P.navy}" stroke-width="1" stroke-opacity=".12"/>`;
+      <path d="${p.d}" fill="none" stroke="${P.ink}" stroke-width="1" stroke-opacity=".12"/>`;
   };
   const pad = 22; // margin around piece cell for tabs
   const looseSvg = ({ i, x, y, rot, lifted }) => {
@@ -261,21 +261,21 @@ export function gameplay() {
         <div class="progress" style="flex:1"><b style="width:${(10 / 16) * 100}%"></b></div>
         <span class="label">10/16</span>
       </div>
-      <div class="round-btn" style="background:${P.lavender100};border:2px solid ${P.lavender}" aria-label="Vorlage zeigen">${icon.eye()}</div>
+      <div class="round-btn" style="background:${P.leaf100};border:2px solid ${P.leaf}" aria-label="Vorlage zeigen">${icon.eye()}</div>
     </div>
   </div>
   <svg class="layer" width="390" height="844" viewBox="0 0 390 844">
     <defs>
       <g id="img">${g}</g>${defs}
-      <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="${P.navy}" flood-opacity=".18"/></filter>
-      <filter id="lift" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="14" stdDeviation="9" flood-color="${P.navy}" flood-opacity=".25"/></filter>
+      <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="${P.ink}" flood-opacity=".18"/></filter>
+      <filter id="lift" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="14" stdDeviation="9" flood-color="${P.ink}" flood-opacity=".25"/></filter>
       <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="4"/></filter>
     </defs>
     <!-- board -->
     <rect x="${boardX - 10}" y="${boardY - 10}" width="${342 + 20}" height="${SH * scale + 20}" rx="22" fill="#fff" filter="url(#soft)"/>
     <g transform="translate(${boardX} ${boardY}) scale(${scale})">
       <g opacity=".18">${g}</g>
-      ${pieces.map((p) => `<path d="${p.d}" fill="none" stroke="${P.purple}" stroke-opacity=".25" stroke-width="1.6" stroke-dasharray="5 6"/>`).join('')}
+      ${pieces.map((p) => `<path d="${p.d}" fill="none" stroke="${P.leaf600}" stroke-opacity=".25" stroke-width="1.6" stroke-dasharray="5 6"/>`).join('')}
       <path d="${target.d}" fill="${P.yellow}" fill-opacity=".35" stroke="${P.yellow600}" stroke-width="5" filter="url(#glow)"/>
       <path d="${target.d}" fill="none" stroke="${P.yellow600}" stroke-width="3"/>
       ${[...placed].map(pieceSvg).join('')}
@@ -308,10 +308,10 @@ export function collection() {
     it.st === 'done'
       ? `<div class="badge" style="background:${P.mint600};color:#fff">${icon.check()} Fertig</div>`
       : it.st === 'progress'
-        ? `<div class="badge" style="background:${P.yellow};color:${P.navy}">${it.p}%</div>`
-        : `<div class="badge" style="background:${P.lavender100};color:${P.purple700}">Neu</div>`;
+        ? `<div class="badge" style="background:${P.yellow};color:${P.ink}">${it.p}%</div>`
+        : `<div class="badge" style="background:${P.leaf100};color:${P.forest}">Neu</div>`;
   return `<div class="screen">
-  <svg class="layer" width="390" height="844" viewBox="0 0 390 844">${cloud(240, 56, 120, 0.9)}${star(352, 150, 7, P.lavender)}${twinkle(30, 120, 6)}</svg>
+  <svg class="layer" width="390" height="844" viewBox="0 0 390 844">${cloud(240, 56, 120, 0.9)}${star(352, 150, 7, P.leaf)}${twinkle(30, 120, 6)}</svg>
   ${statusBar()}
   <div class="content" style="gap:${spacing.md}px">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">

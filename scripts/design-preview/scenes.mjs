@@ -16,12 +16,12 @@ function meadowHouse(id) {
   <path d="M0 240 Q120 200 240 236 Q330 260 400 230 V300 H0Z" fill="#A6CF84"/>
   <rect x="88" y="148" width="92" height="74" rx="8" fill="#FFF3E2"/>
   <path d="M78 154 L134 108 L190 154Z" fill="${P.peach600}" stroke="${P.peach600}" stroke-width="10" stroke-linejoin="round"/>
-  <rect x="122" y="180" width="24" height="42" rx="10" fill="${P.purple}"/>
+  <rect x="122" y="180" width="24" height="42" rx="10" fill="${P.leaf600}"/>
   <rect x="98" y="164" width="18" height="18" rx="4" fill="${P.sky}"/><rect x="152" y="164" width="18" height="18" rx="4" fill="${P.sky}"/>
   <rect x="268" y="150" width="12" height="60" rx="6" fill="#B98A62"/>
   <circle cx="274" cy="140" r="34" fill="#8FC46E"/><circle cx="256" cy="152" r="22" fill="#9FCF7F"/><circle cx="294" cy="152" r="22" fill="#86BB66"/>
   <circle cx="264" cy="132" r="5" fill="${P.peach}"/><circle cx="286" cy="146" r="5" fill="${P.peach}"/>
-  ${flower(40, 256, 12, P.peach)}${flower(78, 272, 9, '#fff')}${flower(330, 262, 12, P.lavender)}${flower(366, 278, 9, P.yellow, P.peach)}${flower(220, 270, 10, '#fff', P.yellow)}`;
+  ${flower(40, 256, 12, P.peach)}${flower(78, 272, 9, '#fff')}${flower(330, 262, 12, P.leaf)}${flower(366, 278, 9, P.yellow, P.peach)}${flower(220, 270, 10, '#fff', P.yellow)}`;
 }
 
 function seaBoat(id) {
@@ -37,7 +37,7 @@ function seaBoat(id) {
   <rect x="272" y="96" width="6" height="100" fill="#8F6A4F"/>
   <path d="M280 100 L280 186 L330 186Z" fill="#fff"/><path d="M270 110 L270 186 L230 186Z" fill="${P.yellow}"/>
   <path d="M0 270 Q120 250 220 280 L220 300 H0Z" fill="#FFE7B8"/>
-  ${star(60, 268, 10, P.peach)}${star(150, 284, 7, P.lavender)}`;
+  ${star(60, 268, 10, P.peach)}${star(150, 284, 7, P.leaf)}`;
 }
 
 function nightSky(id) {
@@ -70,7 +70,7 @@ function nightSky(id) {
 
 function garden(id) {
   let fl = '';
-  const cols = [P.peach, P.lavender, P.yellow, '#fff', P.pink300, P.sky];
+  const cols = [P.peach, P.leaf, P.yellow, '#fff', P.pink300, P.sky];
   for (let i = 0; i < 14; i++) {
     const x = 20 + ((i * 53) % 380);
     const y = 170 + ((i * 37) % 110);
@@ -82,7 +82,7 @@ function garden(id) {
   ${cloud(250, 30, 110)}${cloud(30, 60, 70, 0.8)}
   <path d="M0 180 Q200 150 400 186 V300 H0Z" fill="#BFDDA0"/>
   ${fl}
-  <g transform="translate(70 70)"><ellipse cx="0" cy="0" rx="14" ry="10" fill="${P.peach}" transform="rotate(-30)"/><ellipse cx="12" cy="4" rx="14" ry="10" fill="${P.peach}" transform="rotate(30 12 4)"/><rect x="3" y="-6" width="4" height="16" rx="2" fill="${P.navy}"/></g>`;
+  <g transform="translate(70 70)"><ellipse cx="0" cy="0" rx="14" ry="10" fill="${P.peach}" transform="rotate(-30)"/><ellipse cx="12" cy="4" rx="14" ry="10" fill="${P.peach}" transform="rotate(30 12 4)"/><rect x="3" y="-6" width="4" height="16" rx="2" fill="${P.ink}"/></g>`;
 }
 
 const SCENES = { meadowHouse, seaBoat, nightSky, garden };

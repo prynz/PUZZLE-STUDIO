@@ -65,7 +65,7 @@ export function gameplayToddler() {
     const y = 428;
     const sc = 2.05;
     const hl = k === hint;
-    return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="28" fill="${hl ? P.yellow100 : P.white}" stroke="${hl ? P.yellow600 : P.lavender100}" stroke-width="${hl ? 4 : 2}"/>
+    return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="28" fill="${hl ? P.yellow100 : P.white}" stroke="${hl ? P.yellow600 : P.leaf100}" stroke-width="${hl ? 4 : 2}"/>
       ${hl ? `<rect x="${x - 5}" y="${y - 5}" width="${w + 10}" height="${h + 10}" rx="32" fill="none" stroke="${P.yellow}" stroke-width="5" opacity=".5" filter="url(#kglow)"/>` : ''}
       <g transform="translate(${x + w / 2} ${y + h / 2}) scale(${sc}) translate(${-(p.x + p.w / 2)} ${-(p.y + p.h / 2)})" filter="url(#ksoft)">${art(k, 0.9)}</g>`;
   };
@@ -75,7 +75,7 @@ export function gameplayToddler() {
   const done = 5;
   const dots = Array.from({ length: regionsTotal }, (_, i) => {
     const st = i < done ? 'done' : i === done ? 'active' : 'open';
-    const fill = st === 'done' ? P.mint600 : st === 'active' ? P.yellow600 : P.lavender200;
+    const fill = st === 'done' ? P.mint600 : st === 'active' ? P.yellow600 : P.leaf200;
     const r = st === 'active' ? 7 : 5;
     return `<circle cx="${12 + i * 17}" cy="12" r="${r}" fill="${fill}"/>`;
   }).join('');
@@ -95,13 +95,13 @@ export function gameplayToddler() {
     <defs>
       <g id="kimg">${g}</g>${defs}
       <clipPath id="kview"><rect x="0" y="0" width="${boardW}" height="${boardH}" rx="18"/></clipPath>
-      <filter id="ksoft" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="${P.navy}" flood-opacity=".2"/></filter>
+      <filter id="ksoft" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="${P.ink}" flood-opacity=".2"/></filter>
       <filter id="kglow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5"/></filter>
     </defs>
 
     <rect x="${boardX - 10}" y="${boardY - 10}" width="${boardW + 20}" height="${boardH + 20}" rx="26" fill="${P.white}" filter="url(#ksoft)"/>
     <g transform="translate(${boardX} ${boardY})" clip-path="url(#kview)">
-      <rect width="${boardW}" height="${boardH}" fill="${P.lavender100}"/>
+      <rect width="${boardW}" height="${boardH}" fill="${P.leaf100}"/>
       <g transform="scale(${z}) translate(${-vx} ${-vy})">
         <g opacity=".22">${g}</g>
         ${[...placed].map((k) => art(k, 0.25)).join('')}
@@ -109,7 +109,7 @@ export function gameplayToddler() {
           .filter((k) => !placed.has(k))
           .map(
             (k) =>
-              `<path d="${pieces[k].d}" fill="${P.white}" fill-opacity=".55" stroke="${P.purple}" stroke-opacity=".45" stroke-width="0.6" stroke-dasharray="2 2"/>`,
+              `<path d="${pieces[k].d}" fill="${P.white}" fill-opacity=".55" stroke="${P.leaf600}" stroke-opacity=".45" stroke-width="0.6" stroke-dasharray="2 2"/>`,
           )
           .join('')}
         <path d="${pieces[hint].d}" fill="${P.yellow}" fill-opacity=".5" stroke="${P.yellow600}" stroke-width="1.6" filter="url(#kglow)"/>

@@ -63,7 +63,7 @@ outlinePaint.setStyle(PaintStyle.Stroke);
 outlinePaint.setStrokeWidth(1);
 outlinePaint.setAntiAlias(true);
 outlinePaint.setColor(Skia.Color(withAlpha(palette.white, 0.9)));
-const liftShadow = withAlpha(palette.navy, 0.22);
+const liftShadow = withAlpha(palette.ink, 0.22);
 
 function drawPiece(
   canvas: SkCanvas,

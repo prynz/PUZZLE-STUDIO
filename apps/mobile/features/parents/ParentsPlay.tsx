@@ -18,7 +18,7 @@ export function ParentsPlay() {
     };
   return (
     <>
-      <Section title={t('parents.profile')} tone="lavender">
+      <Section title={t('parents.profile')} tone="leaf">
         <Text variant="body">{t('parents.profileHint')}</Text>
         <View style={styles.cards} accessibilityRole="radiogroup">
           {PLAY_PROFILES.map((profile) => (

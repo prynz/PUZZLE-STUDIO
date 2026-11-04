@@ -16,10 +16,10 @@ import { StyleSheet, View } from 'react-native';
 import { t } from '@/i18n';
 import { DEFAULT_PROFILE, useSettings, type PlayProfile } from '@/store/settings';
 
-const PROFILE_CARDS: readonly { id: PlayProfile; size: number; tone: 'mint' | 'yellow' | 'lavender' }[] = [
+const PROFILE_CARDS: readonly { id: PlayProfile; size: number; tone: 'mint' | 'yellow' | 'leaf' }[] = [
   { id: 'toddler', size: 48, tone: 'mint' },
   { id: 'kid', size: 60, tone: 'yellow' },
-  { id: 'pro', size: 72, tone: 'lavender' },
+  { id: 'pro', size: 72, tone: 'leaf' },
 ];
 
 /** Three-step onboarding: welcome → promise → "Wer puzzelt?" (play-help profile). Skippable. */

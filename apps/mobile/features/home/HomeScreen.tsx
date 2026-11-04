@@ -76,7 +76,7 @@ export function HomeScreen() {
       <Appear variant="rise" delay={staggerDelay(2)}>
         <Section
           title={t('home.collection.title')}
-          tone="lavender"
+          tone="leaf"
           aside={
             recent.length > 0 ? (
               <SecondaryButton

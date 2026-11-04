@@ -150,7 +150,7 @@ export function PlayCanvas(props: PlayCanvasProps) {
         {image && draggedPath ? (
           <>
             <Group transform={shadow}>
-              <Path path={draggedPath} color={withAlpha(palette.navy, 0.22)} />
+              <Path path={draggedPath} color={withAlpha(palette.ink, 0.22)} />
             </Group>
             <Group transform={transform} clip={draggedPath}>
               <SkiaImage
