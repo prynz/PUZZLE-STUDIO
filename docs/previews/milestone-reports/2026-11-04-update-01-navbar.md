@@ -14,6 +14,17 @@
 
 Farben, Größen und Feder kommen zentral aus dem Designsystem (`color.brand.purple`, `spring.glide`); die Form der Mulde ist eine getestete Funktion (`packages/ui/src/components/navShape.ts`).
 
+## Nachbesserung nach PO-Feedback (2026-11-04)
+
+> „Mir gefällt der Ausschnitt links und rechts nicht … es wirkt so, als wäre die Tableiste erneut dahinter gelegt.“
+
+| Problem                                                                           | Lösung                                                                                                                                                                                                                                                                                      |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Bei „Start“ und „Erfolge“ lief die Mulde in die runde Ecke – wirkte abgeschnitten | Die äußeren Tabs rücken so weit nach innen, dass neben der Mulde **immer ein Stück Leiste (≥ 8 pt) bis zur Ecke** bleibt – wie im Referenzbild. Ecken weicher wie im Referenzbild (`radius.md`). Die Tippfläche der äußeren Tabs reicht trotzdem bis zum Rand.                              |
+| In der Mulde lag ein blasser Schleier („Leiste dahinter“)                         | Ursache: der rechteckige Schatten der Leiste und der Schatten der Blase. Jetzt sind Leiste, Ecken und Mulde **eine** Form; ihr Schatten folgt der Form und liegt nur unter der Leiste. In der Mulde ist nur noch der Hintergrund zu sehen (nachgemessen: Farbe in der Mulde = Hintergrund). |
+| Fetter Name „Sammlung“ wurde abgeschnitten                                        | Aktiver Name bleibt gleich groß, nur kräftiger und dunkler.                                                                                                                                                                                                                                 |
+| Sehr schmale Handys (320 pt)                                                      | Leiste dort mit 8 statt 16 pt Seitenrand, damit jeder Tab ≥ 56 pt breit bleibt (getestet).                                                                                                                                                                                                  |
+
 ## Bilder
 
 | Alle Zustände (oben: Start; 2. Bild mitten im Gleiten)         | Animation (Aufnahme, Zeitverlauf nur ungefähr)                    |
@@ -22,7 +33,7 @@ Farben, Größen und Feder kommen zentral aus dem Designsystem (`color.brand.pur
 
 ## Prüfung
 
-TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 53, App 67, Engine 91 …) · Web ohne Fehlermeldungen ✅ · **Android-Emulator ✅** (Lauf 41797465551, kompletter Ablauf mit 23 Bildern; Tab-Wechsel per Maestro über die neuen Tabs) · **iOS-Simulator ✅** (Lauf 41797470037, kompletter Ablauf mit 23 Bildern).
+TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 53, App 67, Engine 91 …) · Web ohne Fehlermeldungen ✅ · **Android-Emulator ✅** (erste Fassung: Lauf 41797465551, kompletter Ablauf mit 23 Bildern; Tab-Wechsel per Maestro über die neuen Tabs) · **iOS-Simulator ✅** (erste Fassung: Lauf 41797470037, kompletter Ablauf mit 23 Bildern). Die Nachbesserung läuft gerade auf beiden; die Ausschnitte unten zeigen noch die erste Fassung und werden ersetzt.
 
 | Android-Emulator: Leiste in allen vier Tabs (Ausschnitte aus den Maestro-Bildern 04, 05, 14, 15) |
 | ------------------------------------------------------------------------------------------------ |
