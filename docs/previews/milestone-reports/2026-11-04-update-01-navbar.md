@@ -27,3 +27,7 @@ TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 53, App 67, Engine 91 …) · 
 | Android-Emulator: Leiste in allen vier Tabs (Ausschnitte aus den Maestro-Bildern 04, 05, 14, 15) |
 | ------------------------------------------------------------------------------------------------ |
 | ![](../screenshots/2026-11-04-update-01-android-navbar-tabs.png)                                 |
+
+| iOS-Simulator: Leiste in allen vier Tabs (Ausschnitte aus den Maestro-Bildern 04, 05, 14, 15) |
+| --------------------------------------------------------------------------------------------- |
+| ![](../screenshots/2026-11-04-update-01-ios-navbar-tabs.png)                                  |
