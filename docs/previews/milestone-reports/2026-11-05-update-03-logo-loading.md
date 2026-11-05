@@ -32,4 +32,10 @@ Erste Fassung (zuerst falsch verstanden): Der Ladescreen erschien beim Öffnen e
 
 ## 4. Prüfung
 
-TypeScript, ESLint, Prettier ✅ · Tests ✅ (neu: Mindestdauer 4,5 s, erst danach erscheint der erste Screen; Prozentzahl nie höher als wirklich geladen; ohne echten Fortschritt keine Zahl; Ladescreen „beschäftigt“) · Metro-Bundle Android + iOS ✅ · Web ohne Fehlermeldungen ✅ · Erste Fassung: Android-Emulator ✅ (Lauf 42039782187) und iOS-Simulator ✅ (Lauf 42039786985). **Korrigierte Fassung (Start-Preloader):** Android-Emulator ✅ (Lauf 42060584225, kompletter Ablauf mit 23 Bildern inkl. Neustart der App – der Preloader hält den Ablauf nicht auf). iOS-Simulator ✅ (Lauf 42060589706, kompletter Ablauf mit 23 Bildern). Ein zusätzliches Maestro-Bild direkt vom Startscreen (`00-startup`) folgt mit dem nächsten Lauf.
+TypeScript, ESLint, Prettier ✅ · Tests ✅ (neu: Mindestdauer 4,5 s, erst danach erscheint der erste Screen; Prozentzahl nie höher als wirklich geladen; ohne echten Fortschritt keine Zahl; Ladescreen „beschäftigt“) · Metro-Bundle Android + iOS ✅ · Web ohne Fehlermeldungen ✅ · **Endstand (Pino mit Puzzleteil, schwebend, ohne grauen Rand, weicher Schatten):** Android-Emulator ✅ (Lauf 42109674678) und iOS-Simulator ✅ (Lauf 42109679692), jeweils kompletter Ablauf mit 23 Bildern. Zusätzlich wird die App danach neu gestartet und alle 2 s ein direktes Bildschirmfoto gemacht (Maestro selbst kann den Startscreen nicht lesen, weil seine Endlos-Animationen die Testtechnik nie „zur Ruhe“ kommen lassen):
+
+| Android: Startbild → Startscreen 98 % → Startseite · iOS: Startscreen 40 % → Startseite |
+| --------------------------------------------------------------------------------------- |
+| ![](../screenshots/2026-11-05-update-03g-devices-startup.png)                           |
+
+Frühere Fassungen: Android-Läufe 42039782187, 42060584225 und iOS-Läufe 42039786985, 42060589706 (ebenfalls grün).
