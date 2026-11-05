@@ -72,15 +72,18 @@ export interface LoadingScreenProps {
   title: string;
   /** Pino's short line, e.g. "Pino legt die Teile bereit …". */
   message: string;
+  /** Real share of finished work (0…1). Shows a filling bar with percentage; omit when unknown. */
+  progress?: number;
   testID?: string;
 }
 
 /**
- * Full-screen loading moment in game style: Pino bobs inside a neon orbit, puzzle pieces drift
+ * App-start preloader in game style: Pino bobs inside a neon orbit, puzzle pieces drift
  * upwards and sparkles twinkle; a glowing bar shows that work is going on (no fake percentage).
  * Everything stands still with Reduced Motion. Announced as busy for screen readers.
  */
-export function LoadingScreen({ title, message, testID }: LoadingScreenProps) {
+export function LoadingScreen({ title, message, progress, testID }: LoadingScreenProps) {
+  const percent = progress === undefined ? null : Math.round(Math.max(0, Math.min(1, progress)) * 100);
   const orbit = useOrbit();
   return (
     <Screen background="dream" decor="meadow">
@@ -118,8 +121,17 @@ export function LoadingScreen({ title, message, testID }: LoadingScreenProps) {
             {message}
           </Text>
         </View>
-        <View style={styles.bar}>
-          <ActivityBar />
+        <View
+          style={styles.bar}
+          accessibilityRole="progressbar"
+          {...(percent === null ? {} : { accessibilityValue: { min: 0, max: 100, now: percent } })}
+        >
+          <ActivityBar {...(progress === undefined ? {} : { progress })} />
+          {percent === null ? null : (
+            <Text variant="label" tone="brand" align="center" testID="loading-percent">
+              {`${percent} %`}
+            </Text>
+          )}
         </View>
       </View>
     </Screen>
@@ -140,5 +152,5 @@ const styles = StyleSheet.create({
     boxShadow: `0px 0px 12px ${withAlpha(palette.neon, 0.9)}`,
   },
   text: { gap: spacing.xs, paddingHorizontal: spacing.lg },
-  bar: { alignSelf: 'stretch', paddingHorizontal: spacing.huge },
+  bar: { alignSelf: 'stretch', paddingHorizontal: spacing.huge, gap: spacing.xs },
 });
