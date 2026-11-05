@@ -36,4 +36,9 @@ Neue, gemeinsame Komponente `<LoadingScreen>` (in `packages/ui`) – ersetzt die
 
 ## 4. Prüfung
 
-TypeScript, ESLint, Prettier ✅ · Tests ✅ (neu: Ladescreen sagt Titel + Text an, ist „beschäftigt“, zeigt keine erfundene Prozentzahl) · Metro-Bundle Android + iOS ✅ · Web ohne Fehlermeldungen ✅ · Android-Emulator / iOS-Simulator: Läufe gestartet, Ergebnis wird hier nachgetragen.
+TypeScript, ESLint, Prettier ✅ · Tests ✅ (neu: Ladescreen sagt Titel + Text an, ist „beschäftigt“, zeigt keine erfundene Prozentzahl) · Metro-Bundle Android + iOS ✅ · Web ohne Fehlermeldungen ✅ · **Android-Emulator ✅** (Lauf 42039782187) und **iOS-Simulator ✅** (Lauf 42039786985), jeweils kompletter Ablauf mit 23 Bildern. Der Ladescreen ist dort nur kurz sichtbar; der Test wartet, bis „Pino legt die Teile bereit …“ verschwunden ist, und prüft danach den Spieltisch.
+
+| Android: Willkommen | Android: Spieltisch nach dem Laden | iOS: Willkommen | iOS: Spieltisch nach dem Laden |
+| ------------------- | ---------------------------------- | --------------- | ------------------------------ |
+
+![](../screenshots/2026-11-05-update-03-devices.png)
