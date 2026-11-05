@@ -9,7 +9,17 @@ import {
   type Rotation,
   type Size,
 } from '@puzzle-studio/image-processing';
-import { Chip, Icon, IconButton, LoadingState, PrimaryButton, Screen, Surface, Text, spacing } from '@puzzle-studio/ui';
+import {
+  Chip,
+  Icon,
+  IconButton,
+  LoadingScreen,
+  PrimaryButton,
+  Screen,
+  Surface,
+  Text,
+  spacing,
+} from '@puzzle-studio/ui';
 import { Redirect, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
@@ -97,13 +107,7 @@ export function CropScreen() {
   };
 
   if (busy) {
-    return (
-      <Screen background="dream">
-        <View style={styles.center}>
-          <LoadingState testID="crop-busy" message={t('crop.working')} />
-        </View>
-      </Screen>
-    );
+    return <LoadingScreen testID="crop-busy" title={t('loading.title')} message={t('crop.working')} />;
   }
 
   return (
@@ -194,5 +198,4 @@ const styles = StyleSheet.create({
   header: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   area: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   row: { flexDirection: 'row', justifyContent: 'center', gap: spacing.sm },
-  center: { flex: 1, justifyContent: 'center' },
 });

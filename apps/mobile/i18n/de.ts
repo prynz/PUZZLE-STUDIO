@@ -75,6 +75,7 @@ export const de = {
   'play.board': 'Puzzle-Brett mit {total} Teilen. Teil in der Ablage antippen, dann auf das Brett tippen.',
   'play.progress': '{placed} von {total} Teilen gelegt',
   'play.progressShort': '{placed}/{total}',
+  'loading.title': 'Wird geladen …',
   'play.hint': 'Pino-Tipp',
   'play.hintSay': 'Schau mal – dieses Teil passt hier!',
   'play.offerSay': 'Soll ich dir ein Teil zeigen?',
