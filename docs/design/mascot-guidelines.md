@@ -47,7 +47,8 @@ Die Screens ändern sich dafür nicht – `<Mascot>` zeigt für jede Stimmung mi
 | ---------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- |
 | `greeting` | **Original PO – Hauptlogo** (Pino mit Funkeln, 2026-11-05), auch App-Icon, Startbild, Ladescreen | 1312 × 1199 px; Hintergrund war eingebrannt (Karomuster) und wurde freigestellt |
 | `thinking` | **Original PO** (Pino mit Lupe)                                                                  | 517 × 401 px – größer besser                                                    |
-| übrige 6   | Vektor-Nachzeichnung (`pino.ts`)                                                                 | Bilder folgen vom PO                                                            |
+| `excited`  | **Original PO** (Pino umarmt ein Puzzleteil, „!“-Striche), Startscreen u. a.                     | 1312 × 1199 px, transparent vom PO                                              |
+| übrige 5   | Vektor-Nachzeichnung (`pino.ts`)                                                                 | Bilder folgen vom PO                                                            |
 
 **So kommt ein neues Bild in die App:** Original unverändert nach `docs/design/mascot-art/` (Datum + Stimmung im Namen), daraus die quadratisch zugeschnittene, transparente App-Fassung nach `packages/ui/assets/mascot/<emotion>.png`, Eintrag in `mascot/art.ts` und `mascot/artSources.ts` (ein Test prüft, dass beide übereinstimmen und die Datei existiert), danach `pnpm brand:assets` und `pnpm design:preview`.
 

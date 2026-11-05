@@ -5,7 +5,7 @@ Status: **umgesetzt (2026-11-05, Wunsch des PO)** – `apps/mobile/features/star
 ## Ablauf
 
 1. **Natives Startbild** (Pino auf Grau-Grün), bis die Schrift geladen ist – nur Sekundenbruchteile.
-2. **Startscreen** „Wird geladen … – Deine Puzzles bereiten sich vor.“: Pino im Neon-Ring mit kreisendem Lichtpunkt, schwebende Puzzleteile, funkelnde Sterne, Balken mit Prozentzahl.
+2. **Startscreen** „Wird geladen … – Deine Puzzles bereiten sich vor.“: Pino mit Puzzleteil im Arm schwebt sanft auf und ab (ohne Ring), Puzzleteile ziehen langsam durch den Hintergrund, Balken mit Prozentzahl.
 3. Im Hintergrund wird **alles vorgeladen**: Einstellungen, Bilder, Puzzles, Sterne/Erfolge (Datenbank), Pino-Bilder, Grafik-Engine für den Spieltisch (Web: CanvasKit).
 4. Der Startscreen bleibt **mindestens 4,5 Sekunden** (`STARTUP_MIN_MS`) – damit die Animationen ruhig wirken und nichts nur kurz aufblitzt – und **länger, falls das Laden länger dauert**.
 5. Danach erscheint der erste Screen (Begrüßung bzw. Start), der Startscreen **blendet weich darüber aus**.

@@ -18,7 +18,8 @@ Erste Fassung (zuerst falsch verstanden): Der Ladescreen erschien beim Öffnen e
 
 - Lädt im Hintergrund vor: Einstellungen, Bilder, Puzzles, Sterne/Erfolge, Pino-Bilder, Grafik-Engine des Spieltischs.
 - Bleibt **mindestens 4,5 s**, länger wenn nötig; danach blendet er **weich** über den ersten Screen aus.
-- **Gestaltung nach dem Beispiel des PO** ([Vorlage](../../design/reference/2026-11-05-po-loading-screen-reference.png), keine App-Aufnahme): Wiese mit Wolken · Pino (Hauptlogo) wippt · Neon-Ring oben hinter und unten vor Pino mit kreisendem Lichtpunkt · funkelnde Sterne · schwebende Puzzleteile im Hintergrund · „Wird geladen … / Deine Puzzles bereiten sich vor.“
+- **Gestaltung nach dem Beispiel des PO** ([Vorlage](../../design/reference/2026-11-05-po-loading-screen-reference.png), keine App-Aufnahme): Wiese mit Wolken · schwebende Puzzleteile im Hintergrund · „Wird geladen … / Deine Puzzles bereiten sich vor.“
+- **Pino (PO-Wunsch, 2026-11-05):** eigene Figur des PO für den Startscreen – Pino umarmt ein Puzzleteil (transparentes PNG vom PO, als Stimmung „Begeistert“ hinterlegt). **Kein Ring, kein Lichtpunkt, keine Funken um ihn** – er **schwebt nur sanft** auf und ab (10 dp, 1,8 s je Richtung), sein weicher Schatten am Boden wird dabei etwas kleiner.
 - **Prozentzahl wie im Beispiel** – ehrlich: nie mehr als wirklich geladen ist; sie füllt sich gleichmäßig über die Mindestdauer, der Balken gleitet weich.
 - „Bewegung reduzieren“: alles steht still; Screenreader hören „beschäftigt“ und den Fortschritt.
 
