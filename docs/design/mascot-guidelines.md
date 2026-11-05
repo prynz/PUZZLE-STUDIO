@@ -1,6 +1,6 @@
 # Maskottchen „Pino“
 
-Status: **Umgesetzt (Phase 2); seit 2026-11-04 nach dem Konzeptbild des PO als glänzendes Puzzleteil (Vektor-Nachzeichnung, bis die Original-Dateien des PO eingesetzt werden).** Quelle: [`packages/ui/src/mascot/pino.ts`](../../packages/ui/src/mascot/pino.ts) (Zeichnung), [`theme.ts`](../../packages/ui/src/mascot/theme.ts) (Farben), App-Komponente `<Mascot emotion=… />`. Übersicht: [`concept/concept-mascot-sheet.png`](concept/concept-mascot-sheet.png).
+Status: **Umgesetzt; seit 2026-11-04 nach dem Konzeptbild des PO als glänzendes Puzzleteil. Gelieferte Original-Bilder des PO: `greeting`, `thinking` (seit 2026-11-05 in der App); übrige Stimmungen vorerst als Vektor-Nachzeichnung.** Quelle: [`packages/ui/src/mascot/pino.ts`](../../packages/ui/src/mascot/pino.ts) (Zeichnung), [`theme.ts`](../../packages/ui/src/mascot/theme.ts) (Farben), App-Komponente `<Mascot emotion=… />`. Übersicht: [`concept/concept-mascot-sheet.png`](concept/concept-mascot-sheet.png).
 Die React-Native-Komponente `<Mascot emotion="…" />` entsteht in Phase 2 aus derselben Geometrie.
 
 ## Charakter
@@ -39,7 +39,17 @@ Damit Pino **pixelgenau** wie im Konzeptbild aussieht, werden die Original-Datei
 - Optional: App-Icon hell/dunkel als 1024 × 1024 px ohne abgerundete Ecken (die Ecken setzt das System).
 - Ablage: einfach hier im Chat senden oder ins Repo unter `apps/mobile/assets/mascot/`.
 
-Die Screens ändern sich dafür nicht – nur `pinoSvg`/`<Mascot>` liefert dann die Dateien.
+Die Screens ändern sich dafür nicht – `<Mascot>` zeigt für jede Stimmung mit geliefertem Bild dieses Bild, sonst die Vektor-Fassung.
+
+**Stand der Lieferung**
+
+| `emotion`  | Quelle                                                          | Hinweis                      |
+| ---------- | --------------------------------------------------------------- | ---------------------------- |
+| `greeting` | **Original PO** (Pino mit Funkeln), auch App-Icon und Startbild | 510 × 389 px – größer besser |
+| `thinking` | **Original PO** (Pino mit Lupe)                                 | 517 × 401 px – größer besser |
+| übrige 6   | Vektor-Nachzeichnung (`pino.ts`)                                | Bilder folgen vom PO         |
+
+**So kommt ein neues Bild in die App:** Original unverändert nach `docs/design/mascot-art/` (Datum + Stimmung im Namen), daraus die quadratisch zugeschnittene, transparente App-Fassung nach `packages/ui/assets/mascot/<emotion>.png`, Eintrag in `mascot/art.ts` und `mascot/artSources.ts` (ein Test prüft, dass beide übereinstimmen und die Datei existiert), danach `pnpm brand:assets` und `pnpm design:preview`.
 
 ## Abgrenzung zu fremden Figuren
 

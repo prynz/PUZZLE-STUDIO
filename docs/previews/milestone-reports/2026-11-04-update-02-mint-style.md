@@ -1,6 +1,6 @@
 # Änderung 02 – Neuer Look: Pino als glänzendes Puzzleteil, Limette → Petrol
 
-**Datum:** 2026-11-04 · **Anlass:** Wunsch des PO – zuerst Stil-Referenz (weiches 3D, Mint), dann **eigenes Konzeptbild des PO**: Pino als glänzendes Puzzleteil mit Limette-Petrol-Verlauf und Neon-Effekten, „genau dieses Maskottchen, Stil auf die ganze App“ · **Status:** umgesetzt (Pino als Vektor-Nachzeichnung bis die Original-Dateien vom PO kommen), wartet auf Review
+**Datum:** 2026-11-04 · **Anlass:** Wunsch des PO – zuerst Stil-Referenz (weiches 3D, Mint), dann **eigenes Konzeptbild des PO**: Pino als glänzendes Puzzleteil mit Limette-Petrol-Verlauf und Neon-Effekten, „genau dieses Maskottchen, Stil auf die ganze App“ · **Status:** umgesetzt; seit 2026-11-05 mit den **ersten Original-Bildern des PO** (Begrüßung, Lupe), übrige Stimmungen vorerst Vektor-Nachzeichnung – wartet auf Review
 
 > Screenshots stammen aus der **laufenden App** (Web via Chromium; Android-/iOS-Läufe siehe unten). Die Pino-Übersicht ist direkt aus dem App-Code (`pinoSvg`) gerendert.
 
@@ -19,7 +19,7 @@
 
 Gelb, Himmelblau, Pfirsich und Rosa bleiben als **Akzente** (Sterne, Belohnungen, Kategorie-Karten).
 
-**Original-Dateien:** Der PO liefert Pino als PNG/SVG. Bis dahin ist Pino eine Vektor-Nachzeichnung im App-Code (`packages/ui/src/mascot/pino.ts`), damit er in allen Größen scharf bleibt und alle 8 Stimmungen funktionieren. Die gelieferten Dateien werden zentral an derselben Stelle eingesetzt – die Screens ändern sich dafür nicht. Lieferformat: siehe [Maskottchen-Richtlinien → Original-Dateien](../../design/mascot-guidelines.md#original-dateien-lieferung-durch-den-po).
+**Original-Bilder (2026-11-05):** Der PO hat die ersten zwei Bilder geliefert (transparente PNGs). Sie stehen jetzt in der App: **Begrüßung** (Pino mit Funkeln – Willkommen, Profilwahl, App-Icon, Startbild) und **Nachdenklich** (Pino mit Lupe – Eltern-Schranke u. a.). Die Originale liegen unverändert in `docs/design/mascot-art/`. Weitere Stimmungen folgen; bis dahin ist Pino dort eine Vektor-Nachzeichnung im App-Code (`packages/ui/src/mascot/pino.ts`), damit er in allen Größen scharf bleibt und alle 8 Stimmungen funktionieren. Die gelieferten Dateien werden zentral an derselben Stelle eingesetzt – die Screens ändern sich dafür nicht. Lieferformat: siehe [Maskottchen-Richtlinien → Original-Dateien](../../design/mascot-guidelines.md#original-dateien-lieferung-durch-den-po).
 
 **Barrierefreiheit:** Kontraste neu geprüft und als Tests festgeschrieben – Text ≥ 5,3 : 1 auf allen Flächen, dunkle Schrift auf jeder Farbe des Limette-Grün-Verlaufs ≥ 6,4 : 1, weiße Schrift auf jeder Farbe beider Knopf-Verläufe ≥ 4,5 : 1 (der Test hat einen zu hellen Knopf-Verlauf gefunden – korrigiert), Schalter ≥ 4 : 1.
 
@@ -35,7 +35,11 @@ Gelb, Himmelblau, Pfirsich und Rosa bleiben als **Akzente** (Sterne, Belohnungen
 | ----------------------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------------- |
 | ![](../screenshots/2026-11-04-update-02-web-02-profile.png) | ![](../screenshots/2026-11-04-update-02-web-05-new.png) | ![](../screenshots/2026-11-04-update-02-web-07-done.png) | ![](../screenshots/2026-11-04-update-02-web-08-awards.png) |
 
-**Pino in allen 8 Stimmungen** (aus dem App-Code gerendert):
+**Eltern-Schranke mit dem Lupen-Pino (Original):**
+
+![](../screenshots/2026-11-04-update-02-web-10-parent-gate.png)
+
+**Vektor-Nachzeichnung in allen 8 Stimmungen** (aus dem App-Code gerendert; `greeting` und `thinking` zeigen in der App inzwischen die Original-Bilder):
 
 ![](../screenshots/2026-11-04-update-02-pino-emotions.png)
 
@@ -43,7 +47,7 @@ Die Konzept-Mockups unter `docs/design/concept/` sind mit demselben Code neu ger
 
 ## Prüfung
 
-TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 60, App 67, Engine 91, image-processing 21, game-progression 10) · Web ohne Fehlermeldungen ✅ · Android-Emulator / iOS-Simulator: Läufe gestartet, Ergebnis wird hier nachgetragen.
+TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 62, App 67, Engine 91, image-processing 21, game-progression 10) · Web ohne Fehlermeldungen ✅ · Android-Emulator / iOS-Simulator: Läufe gestartet, Ergebnis wird hier nachgetragen.
 
 ## Bewusst noch offen
 
