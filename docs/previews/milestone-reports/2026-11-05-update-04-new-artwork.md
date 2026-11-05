@@ -36,4 +36,6 @@ Stimmungen **Geschafft!** (Feier nach dem Puzzle, Erfolge), **Ermutigung** (Erfo
 
 ## Prüfung
 
-TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 64 – u. a. jede eingetragene Bilddatei existiert und ist eingebunden; Hintergrund deckt jede Bildschirmgröße unverzerrt ab und bleibt unten verankert) · Web ohne Fehlermeldungen ✅ · Android-Emulator / iOS-Simulator: Läufe gestartet, Ergebnis wird hier nachgetragen.
+TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 64 – u. a. jede eingetragene Bilddatei existiert und ist eingebunden; Hintergrund deckt jede Bildschirmgröße unverzerrt ab und bleibt unten verankert) · Web ohne Fehlermeldungen ✅ · Android-Emulator ✅ (Lauf 42125162761) · iOS-Simulator ✅ (Lauf 42125166570) – jeweils kompletter Ablauf plus Fotos des Startbildschirms.
+
+![Startbildschirm mit gemaltem Hintergrund, Willkommen, Start mit fröhlichem Pino und Eltern-Tor mit Wächter-Pino – Android (oben) und iOS (unten)](../screenshots/2026-11-05-update-04b-devices.png)
