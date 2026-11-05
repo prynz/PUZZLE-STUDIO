@@ -47,11 +47,15 @@ Die Konzept-Mockups unter `docs/design/concept/` sind mit demselben Code neu ger
 
 ## Prüfung
 
-TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 62, App 67, Engine 91, image-processing 21, game-progression 10) · Web ohne Fehlermeldungen ✅ · **Android-Emulator ✅** (Lauf 41989807706, kompletter Ablauf mit 23 Bildern, mit den Original-Bildern des PO) · iOS-Simulator: Lauf läuft, Ergebnis wird nachgetragen.
+TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 62, App 67, Engine 91, image-processing 21, game-progression 10) · Web ohne Fehlermeldungen ✅ · **Android-Emulator ✅** (Lauf 41989807706, kompletter Ablauf mit 23 Bildern, mit den Original-Bildern des PO) · **iOS-Simulator ✅** (Lauf 41989811641, kompletter Ablauf mit 23 Bildern).
 
 | Android-Emulator: Willkommen, Profilwahl, Start, Eltern-Schranke (Maestro-Bilder 01, 03, 04, 16) |
 | ------------------------------------------------------------------------------------------------ |
 | ![](../screenshots/2026-11-05-update-02-android-pino-art.png)                                    |
+
+| iOS-Simulator: Willkommen, Profilwahl, Start, Eltern-Schranke (Maestro-Bilder 01, 03, 04, 16) |
+| --------------------------------------------------------------------------------------------- |
+| ![](../screenshots/2026-11-05-update-02-ios-pino-art.png)                                     |
 
 ## Bewusst noch offen
 
