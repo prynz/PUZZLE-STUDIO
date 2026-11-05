@@ -8,9 +8,9 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
+import Svg, { Defs, Ellipse, RadialGradient, Stop } from 'react-native-svg';
 
 import { useReduceMotion } from '../motion/MotionProvider.tsx';
-import { withAlpha } from '../styles/helpers.ts';
 import { palette, spacing } from '../tokens.ts';
 import { ActivityBar } from './ActivityBar.tsx';
 import { FloatingPieces } from './FloatingPieces.tsx';
@@ -21,6 +21,8 @@ import { Text } from './Text.tsx';
 const PINO = 220;
 const FLOAT = 10; // dp up and down
 const FLOAT_MS = 1800; // one way – a calm breath
+const SHADOW_W = PINO * 1.05; // wide, soft ground shadow
+const SHADOW_H = 34;
 
 /** Pino floats gently; his soft shadow on the ground shrinks a little while he rises. */
 function FloatingPino() {
@@ -36,12 +38,24 @@ function FloatingPino() {
   }, [reduceMotion, t]);
   const body = useAnimatedStyle(() => ({ transform: [{ translateY: -FLOAT * t.get() }] }));
   const shadow = useAnimatedStyle(() => ({
-    opacity: 1 - 0.35 * t.get(),
-    transform: [{ scaleX: 1 - 0.12 * t.get() }],
+    opacity: 1 - 0.3 * t.get(),
+    transform: [{ scaleX: 1 - 0.1 * t.get() }],
   }));
   return (
     <View style={styles.stage}>
-      <Animated.View style={[styles.shadow, shadow]} />
+      <Animated.View style={[styles.shadow, shadow]} pointerEvents="none">
+        {/* soft oval: strongest in the middle, fading out completely towards the sides */}
+        <Svg width={SHADOW_W} height={SHADOW_H}>
+          <Defs>
+            <RadialGradient id="pino-ground" cx="50%" cy="50%" rx="50%" ry="50%">
+              <Stop offset="0" stopColor={palette.teal} stopOpacity={0.14} />
+              <Stop offset="0.55" stopColor={palette.teal} stopOpacity={0.07} />
+              <Stop offset="1" stopColor={palette.teal} stopOpacity={0} />
+            </RadialGradient>
+          </Defs>
+          <Ellipse cx={SHADOW_W / 2} cy={SHADOW_H / 2} rx={SHADOW_W / 2} ry={SHADOW_H / 2} fill="url(#pino-ground)" />
+        </Svg>
+      </Animated.View>
       <Animated.View style={body}>
         <Mascot emotion="excited" size={PINO} accessibilityLabel={null} />
       </Animated.View>
@@ -103,16 +117,8 @@ export function LoadingScreen({ title, message, progress, testID }: LoadingScree
 
 const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: spacing.xl },
-  stage: { width: PINO, height: PINO + FLOAT + 16, alignItems: 'center', justifyContent: 'flex-end' },
-  shadow: {
-    position: 'absolute',
-    bottom: 0,
-    width: PINO * 0.62,
-    height: 18,
-    borderRadius: 999,
-    backgroundColor: withAlpha(palette.teal, 0.16),
-    boxShadow: `0px 0px 14px ${withAlpha(palette.teal, 0.22)}`,
-  },
+  stage: { width: SHADOW_W, height: PINO + FLOAT + 16, alignItems: 'center', justifyContent: 'flex-end' },
+  shadow: { position: 'absolute', bottom: -SHADOW_H / 4, width: SHADOW_W, height: SHADOW_H },
   text: { gap: spacing.xs, paddingHorizontal: spacing.lg },
   bar: { alignSelf: 'stretch', paddingHorizontal: spacing.huge, gap: spacing.xs },
 });
