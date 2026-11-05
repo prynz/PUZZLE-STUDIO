@@ -5,18 +5,6 @@ appId: com.puzzlestudio.app.preview
 - launchApp:
     clearState: true
 - runFlow: dismiss-system-dialogs.yaml
-# App-start preloader (stays at least 4.5 s) – optional so a slow cold start never breaks the flow
-- extendedWaitUntil:
-    visible:
-      id: 'startup'
-    timeout: 60000
-    optional: true
-- runFlow:
-    when:
-      visible:
-        id: 'startup'
-    commands:
-      - takeScreenshot: screenshots/shot-${PLATFORM}-00-startup
 - extendedWaitUntil:
     visible: 'Hallo, ich bin Pino!'
     timeout: 90000

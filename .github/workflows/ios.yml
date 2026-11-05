@@ -70,6 +70,14 @@ jobs:
             echo "Maestro attempt $attempt failed – retrying once"
           done
           exit 1
+      - name: Start screen screenshots (app-start preloader)
+        # Endless animations keep XCTest from settling, so Maestro cannot read this screen –
+        # relaunch the app and take plain simulator screenshots while it is up (>= 4.5 s).
+        run: |
+          mkdir -p screenshots
+          xcrun simctl terminate "$SIM_UDID" com.puzzlestudio.app.preview || true
+          xcrun simctl launch "$SIM_UDID" com.puzzlestudio.app.preview || true
+          for i in 1 2 3; do sleep 2; xcrun simctl io "$SIM_UDID" screenshot "screenshots/shot-ios-00-startup-$i.png" || true; done
       - name: Collect screenshots
         if: always()
         run: |

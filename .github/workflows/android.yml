@@ -122,6 +122,11 @@ jobs:
             adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS || true
             maestro test -e PLATFORM=android apps/mobile/.maestro/screenshots.yaml --test-output-dir=maestro-output-try1 || (adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS; sleep 10; echo 'Retrying Maestro once'; false) || maestro test -e PLATFORM=android apps/mobile/.maestro/screenshots.yaml --test-output-dir=maestro-output || (echo '=== logcat (errors) ==='; adb logcat -d '*:E' | tail -n 120; echo '=== logcat (ReactNativeJS) ==='; adb logcat -d -s ReactNativeJS:V ReactNative:V | tail -n 80; echo '=== top activity ==='; adb shell dumpsys activity activities | grep -E 'mResumedActivity|topResumedActivity' ; echo '=== ui texts ==='; maestro hierarchy > hierarchy.json; grep -oE '"(text|accessibilityText|resource-id|class)" : "[^"]+"' hierarchy.json | grep -v systemui | head -n 120; echo '=== window focus ==='; adb shell dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' ; exit 1)
             adb shell dumpsys gfxinfo com.puzzlestudio.app.preview > screenshots/gfxinfo.txt || true
+            # App-start preloader: endless animations keep UiAutomator busy, so Maestro cannot read it –
+            # restart the app and take plain screenshots while the start screen is up (>= 4.5 s).
+            adb shell am force-stop com.puzzlestudio.app.preview || true
+            adb shell monkey -p com.puzzlestudio.app.preview -c android.intent.category.LAUNCHER 1 > /dev/null 2>&1 || true
+            for i in 1 2 3; do sleep 2; adb exec-out screencap -p > "screenshots/shot-android-00-startup-$i.png" || true; done
       - name: Collect screenshots
         if: always()
         run: |
