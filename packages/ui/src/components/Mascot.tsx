@@ -1,5 +1,5 @@
 import { useEffect, useId, useMemo } from 'react';
-import { View, type StyleProp, type ViewStyle } from 'react-native';
+import { Image, View, type StyleProp, type ViewStyle } from 'react-native';
 import Animated, {
   Easing,
   cancelAnimation,
@@ -10,6 +10,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { SvgXml } from 'react-native-svg';
 
+import { MASCOT_ART_SOURCES } from '../mascot/artSources.ts';
 import { MASCOT_EMOTIONS, pinoSvg, type MascotEmotion } from '../mascot/pino.ts';
 import { useReduceMotion } from '../motion/MotionProvider.tsx';
 
@@ -25,7 +26,7 @@ export interface MascotProps {
   testID?: string;
 }
 
-/** The only way to show Pino in the app (see docs/design/mascot-guidelines.md). */
+/** The only way to show Pino in the app (see docs/design/mascot-guidelines.md): delivered artwork or the vector drawing. */
 export function Mascot({
   emotion = 'greeting',
   size = 160,
@@ -36,7 +37,9 @@ export function Mascot({
 }: MascotProps) {
   const reactId = useId();
   const idPrefix = `pino${reactId.replace(/[^a-zA-Z0-9]/g, '')}`;
-  const xml = useMemo(() => pinoSvg(emotion, idPrefix), [emotion, idPrefix]);
+  const art = MASCOT_ART_SOURCES[emotion];
+  // delivered artwork wins; the vector drawing covers emotions without artwork yet
+  const xml = useMemo(() => (art === undefined ? pinoSvg(emotion, idPrefix) : null), [art, emotion, idPrefix]);
   const reduceMotion = useReduceMotion();
   const bob = useSharedValue(0);
 
@@ -62,7 +65,11 @@ export function Mascot({
   return (
     <View style={[{ width: size, height: size }, style]} testID={testID} {...a11y}>
       <Animated.View style={animatedStyle}>
-        <SvgXml xml={xml} width={size} height={size} />
+        {art !== undefined ? (
+          <Image source={art} style={{ width: size, height: size }} resizeMode="contain" accessible={false} />
+        ) : xml ? (
+          <SvgXml xml={xml} width={size} height={size} />
+        ) : null}
       </Animated.View>
     </View>
   );

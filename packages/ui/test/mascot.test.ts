@@ -58,3 +58,22 @@ describe('background presets', () => {
     expect(backgroundSvg('calm', 390, 844)).toBe('');
   });
 });
+
+describe('delivered Pino artwork', () => {
+  it('only names known emotions and existing files', async () => {
+    const { MASCOT_ART_FILES } = await import('../src/mascot/art.ts');
+    const { existsSync } = await import('node:fs');
+    for (const [emotion, file] of Object.entries(MASCOT_ART_FILES)) {
+      expect(MASCOT_EMOTION_LIST).toContain(emotion);
+      expect(existsSync(new URL(`../assets/mascot/${file}`, import.meta.url))).toBe(true);
+    }
+  });
+
+  it('bundles exactly the listed files', async () => {
+    const { MASCOT_ART_FILES } = await import('../src/mascot/art.ts');
+    const { readFileSync } = await import('node:fs');
+    const sources = readFileSync(new URL('../src/mascot/artSources.ts', import.meta.url), 'utf8');
+    for (const [emotion, file] of Object.entries(MASCOT_ART_FILES))
+      expect(sources).toContain(`import ${emotion} from '../../assets/mascot/${file}'`);
+  });
+});
