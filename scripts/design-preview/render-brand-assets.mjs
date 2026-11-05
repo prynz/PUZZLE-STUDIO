@@ -30,9 +30,12 @@ try {
 }
 
 const bg = (size) => `<svg width="${size}" height="${size}" viewBox="0 0 1024 1024" style="position:absolute;inset:0">
-  <defs><linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="${P.mist}"/><stop offset="0.6" stop-color="${P.pink}"/><stop offset="1" stop-color="${P.leaf100}"/></linearGradient></defs>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.3" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="${P.mist200}"/></linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.55" r="0.5"><stop offset="0" stop-color="${P.neon}" stop-opacity="0.28"/><stop offset="1" stop-color="${P.neon}" stop-opacity="0"/></radialGradient>
+  </defs>
   <rect width="1024" height="1024" fill="url(#bg)"/>
-  ${star(170, 190, 34, P.yellow, 12)}${star(860, 250, 26, P.leaf, -10)}${twinkle(820, 820, 30, '#fff')}${star(190, 830, 22, P.peach, 8)}
+  <rect width="1024" height="1024" fill="url(#glow)"/>
 </svg>`;
 
 const box = (size, inner, transparent) =>
@@ -47,7 +50,7 @@ const ASSETS = [
     html: () =>
       box(
         1024,
-        bg(1024) + `<div style="position:relative;margin-top:30px">${mascot({ emotion: 'happy', size: 780 })}</div>`,
+        bg(1024) + `<div style="position:relative;margin-top:30px">${mascot({ emotion: 'greeting', size: 780 })}</div>`,
         false,
       ),
   },
@@ -56,7 +59,7 @@ const ASSETS = [
     file: 'android-icon-foreground.png',
     size: 1024,
     transparent: true,
-    html: () => box(1024, `<div style="margin-top:24px">${mascot({ emotion: 'happy', size: 560 })}</div>`, true),
+    html: () => box(1024, `<div style="margin-top:24px">${mascot({ emotion: 'greeting', size: 560 })}</div>`, true),
   },
   { file: 'android-icon-background.png', size: 1024, transparent: false, html: () => box(1024, bg(1024), false) },
   {
@@ -66,7 +69,7 @@ const ASSETS = [
     html: () =>
       box(
         1024,
-        `<div style="margin-top:24px;filter:brightness(0)">${mascot({ emotion: 'happy', size: 560 })}</div>`,
+        `<div style="margin-top:24px;filter:brightness(0)">${mascot({ emotion: 'greeting', size: 560 })}</div>`,
         true,
       ),
   },
@@ -96,7 +99,7 @@ const ASSETS = [
     html: () =>
       box(
         48,
-        `<div style="transform:scale(${48 / 1024});transform-origin:center;position:absolute;width:1024px;height:1024px;left:${(48 - 1024) / 2}px;top:${(48 - 1024) / 2}px">${box(1024, bg(1024) + `<div style="position:relative;margin-top:30px">${mascot({ emotion: 'happy', size: 780 })}</div>`, false)}</div>`,
+        `<div style="transform:scale(${48 / 1024});transform-origin:center;position:absolute;width:1024px;height:1024px;left:${(48 - 1024) / 2}px;top:${(48 - 1024) / 2}px">${box(1024, bg(1024) + `<div style="position:relative;margin-top:30px">${mascot({ emotion: 'greeting', size: 780 })}</div>`, false)}</div>`,
         false,
       ),
   },
