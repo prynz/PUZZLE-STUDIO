@@ -54,7 +54,7 @@ export function ParentGate({ onOpen, onCancel }: { onOpen: () => void; onCancel:
         </Text>
       </View>
       <View style={styles.pino}>
-        <Mascot emotion="thinking" size={80} accessibilityLabel={null} />
+        <Mascot emotion="guard" size={96} accessibilityLabel={null} />
         <SpeechBubble>
           <Text variant="body" accessibilityLiveRegion="polite">
             {wrong ? t('gate.wrong') : t('gate.intro')}

@@ -39,7 +39,7 @@ export function OnboardingScreen() {
   if (step === 0) {
     return (
       <Screen
-        decor="meadow"
+        decor="skyMeadow"
         footer={
           <View style={styles.footer}>
             {dots}
