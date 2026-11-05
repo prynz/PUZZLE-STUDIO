@@ -78,3 +78,24 @@ describe('delivered Pino artwork', () => {
       expect(sources).toContain(`import ${emotion} from '../../assets/mascot/${file}'`);
   });
 });
+
+describe('painted backgrounds', () => {
+  it('always cover the screen and keep the focus point (meadow at the bottom)', async () => {
+    const { coverLayout } = await import('../src/illustrations/backgroundArt.ts');
+    const art = { width: 1785, height: 881, focus: { x: 0.5, y: 1 } };
+    for (const [w, h] of [
+      [390, 844],
+      [498, 1138],
+      [1024, 1366],
+      [1440, 900],
+    ] as const) {
+      const l = coverLayout(art, w, h);
+      expect(l.width).toBeGreaterThanOrEqual(w - 0.01);
+      expect(l.height).toBeGreaterThanOrEqual(h - 0.01);
+      expect(l.left).toBeLessThanOrEqual(0.01);
+      expect(l.left + l.width).toBeGreaterThanOrEqual(w - 0.01);
+      expect(l.top + l.height).toBeCloseTo(h); // bottom edge stays at the bottom
+      expect(l.width / l.height).toBeCloseTo(1785 / 881); // never distorted
+    }
+  });
+});

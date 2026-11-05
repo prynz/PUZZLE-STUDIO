@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Image, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 
-import { BACKGROUND_ART } from '../illustrations/backgroundArt.ts';
+import { BACKGROUND_ART, coverLayout } from '../illustrations/backgroundArt.ts';
 import { backgroundSvg, type BackgroundPreset } from '../illustrations/backgrounds.ts';
 
 export type { BackgroundPreset };
@@ -32,10 +32,20 @@ export function DecorativeBackground({ preset }: { preset: BackgroundPreset }) {
       onLayout={onLayout}
     >
       {art !== undefined ? (
-        <Image source={art} style={StyleSheet.absoluteFill} resizeMode="cover" accessible={false} />
+        size ? (
+          // exactly one picture, sized and placed by us (no tiling, no intrinsic size on web)
+          <Image
+            source={art.source}
+            style={[styles.art, coverLayout(art, size.w, size.h)]}
+            resizeMode="stretch"
+            accessible={false}
+          />
+        ) : null
       ) : xml && size ? (
         <SvgXml xml={xml} width={size.w} height={size.h} />
       ) : null}
     </View>
   );
 }
+
+const styles = StyleSheet.create({ art: { position: 'absolute' } });
