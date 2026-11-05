@@ -8,5 +8,6 @@ import type { MascotEmotion } from './pino.ts';
  */
 export const MASCOT_ART_FILES: Partial<Record<MascotEmotion, string>> = {
   greeting: 'greeting.png',
+  excited: 'excited.png',
   thinking: 'thinking.png',
 };

@@ -7,9 +7,7 @@ import Animated, {
   useSharedValue,
   withRepeat,
   withTiming,
-  type SharedValue,
 } from 'react-native-reanimated';
-import Svg, { Defs, Ellipse, Path, RadialGradient, Stop } from 'react-native-svg';
 
 import { useReduceMotion } from '../motion/MotionProvider.tsx';
 import { withAlpha } from '../styles/helpers.ts';
@@ -18,59 +16,42 @@ import { ActivityBar } from './ActivityBar.tsx';
 import { FloatingPieces } from './FloatingPieces.tsx';
 import { Mascot } from './Mascot.tsx';
 import { Screen } from './Screen.tsx';
-import { Sparkles } from './Sparkles.tsx';
 import { Text } from './Text.tsx';
 
-const STAGE = 240;
-const RING = { rx: 112, ry: 28, cy: 150 };
-const CX = STAGE / 2;
-/** Upper half of the ring runs behind Pino, the lower half in front – reads as 3D. */
-const BACK = `M${CX - RING.rx} ${RING.cy} A${RING.rx} ${RING.ry} 0 0 1 ${CX + RING.rx} ${RING.cy}`;
-const FRONT = `M${CX + RING.rx} ${RING.cy} A${RING.rx} ${RING.ry} 0 0 1 ${CX - RING.rx} ${RING.cy}`;
+const PINO = 220;
+const FLOAT = 10; // dp up and down
+const FLOAT_MS = 1800; // one way – a calm breath
 
-function RingHalf({ d }: { d: string }) {
-  return (
-    <Svg width={STAGE} height={STAGE} style={StyleSheet.absoluteFill} pointerEvents="none">
-      <Path d={d} fill="none" stroke={palette.neon} strokeOpacity={0.3} strokeWidth={10} strokeLinecap="round" />
-      <Path d={d} fill="none" stroke={palette.neon} strokeWidth={3} strokeLinecap="round" />
-    </Svg>
-  );
-}
-
-/** Glowing dot travelling on the ring; `front` decides which half this copy shows. */
-function OrbitDot({ a, front }: { a: SharedValue<number>; front: boolean }) {
-  const style = useAnimatedStyle(() => {
-    const angle = a.get() * Math.PI * 2;
-    const inFront = Math.sin(angle) > 0;
-    return {
-      opacity: inFront === front ? 1 : 0,
-      transform: [
-        { translateX: CX + RING.rx * Math.cos(angle) - 8 },
-        { translateY: RING.cy + RING.ry * Math.sin(angle) - 8 },
-        { scale: inFront ? 1 : 0.7 },
-      ],
-    };
-  });
-  return <Animated.View style={[styles.dot, style]} />;
-}
-
-function useOrbit() {
+/** Pino floats gently; his soft shadow on the ground shrinks a little while he rises. */
+function FloatingPino() {
   const reduceMotion = useReduceMotion();
-  const a = useSharedValue(0.25);
+  const t = useSharedValue(0);
   useEffect(() => {
     if (reduceMotion) {
-      a.set(0.25);
+      t.set(0);
       return;
     }
-    a.set(withRepeat(withTiming(1.25, { duration: 2600, easing: Easing.linear }), -1, false));
-    return () => cancelAnimation(a);
-  }, [reduceMotion, a]);
-  return a;
+    t.set(withRepeat(withTiming(1, { duration: FLOAT_MS, easing: Easing.inOut(Easing.sin) }), -1, true));
+    return () => cancelAnimation(t);
+  }, [reduceMotion, t]);
+  const body = useAnimatedStyle(() => ({ transform: [{ translateY: -FLOAT * t.get() }] }));
+  const shadow = useAnimatedStyle(() => ({
+    opacity: 1 - 0.35 * t.get(),
+    transform: [{ scaleX: 1 - 0.12 * t.get() }],
+  }));
+  return (
+    <View style={styles.stage}>
+      <Animated.View style={[styles.shadow, shadow]} />
+      <Animated.View style={body}>
+        <Mascot emotion="excited" size={PINO} accessibilityLabel={null} />
+      </Animated.View>
+    </View>
+  );
 }
 
 export interface LoadingScreenProps {
   title: string;
-  /** Pino's short line, e.g. "Pino legt die Teile bereit …". */
+  /** Pino's short line, e.g. "Deine Puzzles bereiten sich vor.". */
   message: string;
   /** Real share of finished work (0…1). Shows a filling bar with percentage; omit when unknown. */
   progress?: number;
@@ -78,13 +59,12 @@ export interface LoadingScreenProps {
 }
 
 /**
- * App-start preloader in game style: Pino bobs inside a neon orbit, puzzle pieces drift
- * upwards and sparkles twinkle; a glowing bar shows that work is going on (no fake percentage).
+ * App-start preloader in game style: Pino (holding a puzzle piece) floats gently while puzzle
+ * pieces drift upwards in the background; a glowing bar shows the loading progress.
  * Everything stands still with Reduced Motion. Announced as busy for screen readers.
  */
 export function LoadingScreen({ title, message, progress, testID }: LoadingScreenProps) {
   const percent = progress === undefined ? null : Math.round(Math.max(0, Math.min(1, progress)) * 100);
-  const orbit = useOrbit();
   return (
     <Screen background="dream" decor="meadow">
       <FloatingPieces />
@@ -95,24 +75,7 @@ export function LoadingScreen({ title, message, progress, testID }: LoadingScree
         accessibilityLiveRegion="polite"
         accessibilityLabel={`${title} ${message}`}
       >
-        <View style={styles.stage}>
-          <Svg width={STAGE} height={STAGE} style={StyleSheet.absoluteFill} pointerEvents="none">
-            <Defs>
-              <RadialGradient id="loading-glow" cx="50%" cy="50%" r="50%">
-                <Stop offset="0" stopColor={palette.teal} stopOpacity={0.28} />
-                <Stop offset="1" stopColor={palette.teal} stopOpacity={0} />
-              </RadialGradient>
-            </Defs>
-            <Ellipse cx={CX} cy={226} rx={92} ry={12} fill="url(#loading-glow)" />
-          </Svg>
-          <RingHalf d={BACK} />
-          <OrbitDot a={orbit} front={false} />
-          <Sparkles>
-            <Mascot emotion="greeting" size={190} animated accessibilityLabel={null} />
-          </Sparkles>
-          <RingHalf d={FRONT} />
-          <OrbitDot a={orbit} front />
-        </View>
+        <FloatingPino />
         <View style={styles.text}>
           <Text variant="title1" align="center" accessibilityRole="header">
             {title}
@@ -140,16 +103,15 @@ export function LoadingScreen({ title, message, progress, testID }: LoadingScree
 
 const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: spacing.xl },
-  stage: { width: STAGE, height: STAGE, alignItems: 'center', justifyContent: 'center' },
-  dot: {
+  stage: { width: PINO, height: PINO + FLOAT + 16, alignItems: 'center', justifyContent: 'flex-end' },
+  shadow: {
     position: 'absolute',
-    left: 0,
-    top: 0,
-    width: 16,
-    height: 16,
-    borderRadius: 8,
-    backgroundColor: palette.white,
-    boxShadow: `0px 0px 12px ${withAlpha(palette.neon, 0.9)}`,
+    bottom: 0,
+    width: PINO * 0.62,
+    height: 18,
+    borderRadius: 999,
+    backgroundColor: withAlpha(palette.teal, 0.16),
+    boxShadow: `0px 0px 14px ${withAlpha(palette.teal, 0.22)}`,
   },
   text: { gap: spacing.xs, paddingHorizontal: spacing.lg },
   bar: { alignSelf: 'stretch', paddingHorizontal: spacing.huge, gap: spacing.xs },
