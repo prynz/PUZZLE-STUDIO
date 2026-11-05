@@ -5,7 +5,7 @@ import { MASCOT_EMOTION_LIST, MASCOT_EMOTIONS, pinoSvg } from '../src/mascot/pin
 import { mascotColors } from '../src/mascot/theme.ts';
 
 describe('Pino', () => {
-  it('has exactly the 8 specified emotions', () => {
+  it('has exactly the specified emotions', () => {
     expect(MASCOT_EMOTION_LIST).toEqual([
       'greeting',
       'happy',
@@ -15,6 +15,7 @@ describe('Pino', () => {
       'success',
       'encourage',
       'sleeping',
+      'guard',
     ]);
   });
 
@@ -42,7 +43,7 @@ describe('Pino', () => {
       expect(svg).toContain('id="x-shine"');
       expect(svg).toContain('id="x-clip"');
     }
-    // every emotion but the plain one carries a neon extra
+    // every emotion except the calm 'guard' carries a neon extra
     expect(MASCOT_EMOTION_LIST.filter((e) => pinoSvg(e, 'y').includes(mascotColors.neon))).toHaveLength(8);
   });
 });

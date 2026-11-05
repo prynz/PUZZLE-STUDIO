@@ -10,4 +10,7 @@ export const MASCOT_ART_FILES: Partial<Record<MascotEmotion, string>> = {
   greeting: 'greeting.png',
   excited: 'excited.png',
   thinking: 'thinking.png',
+  happy: 'happy.png',
+  sleeping: 'sleeping.png',
+  guard: 'guard.png',
 };

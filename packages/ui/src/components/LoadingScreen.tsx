@@ -80,7 +80,7 @@ export interface LoadingScreenProps {
 export function LoadingScreen({ title, message, progress, testID }: LoadingScreenProps) {
   const percent = progress === undefined ? null : Math.round(Math.max(0, Math.min(1, progress)) * 100);
   return (
-    <Screen background="dream" decor="meadow">
+    <Screen background="dream" decor="skyMeadow">
       <FloatingPieces />
       <View
         style={styles.center}

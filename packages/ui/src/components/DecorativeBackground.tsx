@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
-import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
+import { Image, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 
+import { BACKGROUND_ART } from '../illustrations/backgroundArt.ts';
 import { backgroundSvg, type BackgroundPreset } from '../illustrations/backgrounds.ts';
 
 export type { BackgroundPreset };
@@ -11,6 +12,7 @@ export type { BackgroundPreset };
  * Never interactive, never announced by screen readers.
  */
 export function DecorativeBackground({ preset }: { preset: BackgroundPreset }) {
+  const art = BACKGROUND_ART[preset];
   const [size, setSize] = useState<{ w: number; h: number } | null>(null);
   const xml = useMemo(() => (size ? backgroundSvg(preset, size.w, size.h) : ''), [preset, size]);
   const onLayout = (e: LayoutChangeEvent) => {
@@ -29,7 +31,11 @@ export function DecorativeBackground({ preset }: { preset: BackgroundPreset }) {
       importantForAccessibility="no-hide-descendants"
       onLayout={onLayout}
     >
-      {xml && size ? <SvgXml xml={xml} width={size.w} height={size.h} /> : null}
+      {art !== undefined ? (
+        <Image source={art} style={StyleSheet.absoluteFill} resizeMode="cover" accessible={false} />
+      ) : xml && size ? (
+        <SvgXml xml={xml} width={size.w} height={size.h} />
+      ) : null}
     </View>
   );
 }

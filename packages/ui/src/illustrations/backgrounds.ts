@@ -1,7 +1,8 @@
 import { palette as P } from '../tokens.ts';
 import { cloud, flower, leaf, meadow, meadowDefs, star, twinkle } from './svg.ts';
 
-export type BackgroundPreset = 'meadow' | 'sky' | 'dream' | 'table' | 'calm';
+/** `skyMeadow` is a painted picture (see backgroundArt.ts), the others are drawn here. */
+export type BackgroundPreset = 'meadow' | 'sky' | 'dream' | 'table' | 'calm' | 'skyMeadow';
 
 /** Builds the illustration layer for a preset. Positions are relative so every screen size works. */
 export function backgroundSvg(preset: BackgroundPreset, w: number, h: number): string {
@@ -48,6 +49,7 @@ export function backgroundSvg(preset: BackgroundPreset, w: number, h: number): s
       break;
     case 'table':
     case 'calm':
+    case 'skyMeadow':
       return '';
   }
   return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg"><defs>${defs}</defs>${body}</svg>`;

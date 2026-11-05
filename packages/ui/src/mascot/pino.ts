@@ -35,6 +35,8 @@ export const MASCOT_EMOTIONS = {
   success: { label: 'Geschafft!', eyes: 'proud', mouth: 'smile', extra: 'crown', tilt: -6 },
   encourage: { label: 'Ermutigung', eyes: 'happy', mouth: 'smile', extra: 'heart', tilt: -8 },
   sleeping: { label: 'Schläft', eyes: 'closed', mouth: 'tiny', extra: 'zzz', tilt: -12 },
+  /** Parents' area: Pino keeps the grown-up settings safe. */
+  guard: { label: 'Beschützt', eyes: 'proud', mouth: 'smile', extra: '', tilt: -6 },
 } as const satisfies Record<string, EmotionSpec>;
 
 export type MascotEmotion = keyof typeof MASCOT_EMOTIONS;
