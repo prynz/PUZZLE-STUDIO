@@ -76,6 +76,7 @@ export const de = {
   'play.progress': '{placed} von {total} Teilen gelegt',
   'play.progressShort': '{placed}/{total}',
   'loading.title': 'Wird geladen …',
+  'loading.start': 'Deine Puzzles bereiten sich vor.',
   'play.hint': 'Pino-Tipp',
   'play.hintSay': 'Schau mal – dieses Teil passt hier!',
   'play.offerSay': 'Soll ich dir ein Teil zeigen?',

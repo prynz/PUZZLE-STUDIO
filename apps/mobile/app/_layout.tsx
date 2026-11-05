@@ -14,6 +14,7 @@ import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { StartupGate } from '@/features/startup/StartupGate';
 import { keepDataOutOfBackups } from '@/services/backupExclusion';
 import { ImagesProvider } from '@/store/images';
 import { ProgressProvider } from '@/store/progress';
@@ -59,13 +60,15 @@ export default function RootLayout() {
               <PuzzlesProvider>
                 <ProgressProvider>
                   <StatusBar style="dark" />
-                  <Stack
-                    screenOptions={{
-                      headerShown: false,
-                      contentStyle: { backgroundColor: color.background.primary },
-                      animation: 'fade',
-                    }}
-                  />
+                  <StartupGate>
+                    <Stack
+                      screenOptions={{
+                        headerShown: false,
+                        contentStyle: { backgroundColor: color.background.primary },
+                        animation: 'fade',
+                      }}
+                    />
+                  </StartupGate>
                 </ProgressProvider>
               </PuzzlesProvider>
             </ImagesProvider>

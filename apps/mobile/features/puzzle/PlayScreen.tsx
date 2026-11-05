@@ -4,7 +4,7 @@ import {
   BACKGROUND_LOOKS,
   ConfirmDialog,
   EmptyState,
-  LoadingScreen,
+  LoadingState,
   Screen,
   SecondaryButton,
   Surface,
@@ -40,7 +40,7 @@ export function PlayScreen() {
   const { images } = useImages();
   const stored = puzzles.find((p) => p.id === id);
   const image = stored ? images.find((i) => i.id === stored.imageId) : undefined;
-  if (!ready) return <LoadingScreen title={t('loading.title')} message={t('play.loading')} />;
+  if (!ready) return <LoadingState message={t('play.loading')} />;
   if (!stored || !image) {
     return (
       <Screen background="dream">
@@ -135,13 +135,12 @@ function Game({ stored, image }: { stored: StoredPuzzle; image: StoredImage }) {
           ) : null
         }
       />
-      {game.bites ? null : <BasketRow puzzle={puzzle} game={game} />}
       {!ready ? (
-        // covers the table until Skia has drawn all pieces (the board keeps preparing underneath)
-        <View style={styles.loading}>
-          <LoadingScreen title={t('loading.title')} message={t('play.loading')} />
+        <View style={styles.loading} pointerEvents="none">
+          <LoadingState message={t('play.loading')} />
         </View>
       ) : null}
+      {game.bites ? null : <BasketRow puzzle={puzzle} game={game} />}
       <ConfirmDialog
         visible={confirmRestart}
         title={t('play.restartTitle')}
@@ -165,5 +164,5 @@ function Game({ stored, image }: { stored: StoredPuzzle; image: StoredImage }) {
 const styles = StyleSheet.create({
   content: { flex: 1, gap: spacing.xs, paddingBottom: spacing.md },
   notice: { marginHorizontal: spacing.md },
-  loading: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 },
+  loading: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' },
 });
