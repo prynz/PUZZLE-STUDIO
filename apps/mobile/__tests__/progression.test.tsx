@@ -212,5 +212,9 @@ describe('Start', () => {
     await waitFor(() => expect(screen.getAllByTestId('home-puzzle')).toHaveLength(1));
     await fireEvent.press(screen.getByTestId('home-puzzle'));
     expect(mockPush).toHaveBeenCalledWith({ pathname: '/puzzle/[id]', params: { id: 'a' } });
+    // the story card on top leads to the same puzzle
+    mockPush.mockClear();
+    await fireEvent.press(screen.getByTestId('home-continue'));
+    expect(mockPush).toHaveBeenCalledWith({ pathname: '/puzzle/[id]', params: { id: 'a' } });
   });
 });

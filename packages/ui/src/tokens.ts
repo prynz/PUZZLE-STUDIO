@@ -156,6 +156,9 @@ export const gradient = {
   brand: { colors: [palette.lime, '#8FD162', '#4DB97D'], angle: 135 },
   brandDeep: { colors: [palette.lime, '#4DB97D', palette.teal], angle: 135 },
   meadow: { colors: [palette.green, palette.green600], angle: 180 },
+  /** Story cards on the start screen (dark text on all stops). */
+  storySky: { colors: [palette.sky100, palette.sky], angle: 150 },
+  storySun: { colors: [palette.yellow100, palette.peach], angle: 150 },
   mascotBody: { colors: ['#E2F55A', '#4DB97D', palette.teal], angle: 160 },
 } as const satisfies Record<string, GradientToken>;
 

@@ -18,17 +18,23 @@ describe('Home', () => {
     );
     expect(screen.getByText('Was puzzeln wir heute?')).toBeTruthy();
     await fireEvent.press(screen.getByTestId('home-create'));
+    await fireEvent.press(screen.getByTestId('home-samples'));
     await fireEvent.press(screen.getByLabelText('Elternbereich'));
-    expect(mockPush.mock.calls).toEqual([['/create'], ['/parents']]);
+    expect(mockPush.mock.calls).toEqual([['/create'], ['/creator/samples'], ['/parents']]);
   });
 
-  it('shows Pino with an accessible label', async () => {
+  it('tells Pino’s journey: chapter, next goal and the stations', async () => {
     await render(
       <AppProviders>
         <HomeScreen />
       </AppProviders>,
     );
-    expect(screen.getByLabelText('Pino – Fröhlich')).toBeTruthy();
+    expect(screen.getByText('Kapitel 1 von 10')).toBeTruthy();
+    expect(screen.getByText('Nächstes Ziel: Puzzle ein Bild fertig.')).toBeTruthy();
+    expect(screen.getByLabelText('Pino – Begeistert')).toBeTruthy();
+    await fireEvent.press(screen.getByLabelText('Erstes Puzzle – nächstes Ziel'));
+    expect(screen.getByLabelText('Zehn Puzzles – kommt noch')).toBeTruthy();
+    expect(mockPush).toHaveBeenCalledWith('/awards');
   });
 });
 

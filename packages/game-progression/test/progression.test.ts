@@ -4,6 +4,7 @@ import {
   ACHIEVEMENTS,
   REWARDS,
   newlyReached,
+  nextMilestoneIndex,
   starsFor,
   statsFrom,
   unlockedRewards,
@@ -83,5 +84,17 @@ describe('rewards', () => {
     expect(validChoice('background_sky', unlocked, 'background')).toBeNull();
     expect(validChoice('frame_sun', unlocked, 'background')).toBeNull();
     expect(validChoice(null, unlocked, 'frame')).toBeNull();
+  });
+});
+
+describe('nextMilestoneIndex', () => {
+  it('points at the first milestone not reached yet – also when later ones came first', () => {
+    expect(nextMilestoneIndex(new Set())).toBe(0);
+    expect(nextMilestoneIndex(new Set(['first_puzzle']))).toBe(1);
+    expect(nextMilestoneIndex(new Set(['first_puzzle', 'own_photo']))).toBe(1);
+  });
+
+  it('reports a finished journey', () => {
+    expect(nextMilestoneIndex(new Set(ACHIEVEMENTS.map((a) => a.id)))).toBe(ACHIEVEMENTS.length);
   });
 });

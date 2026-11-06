@@ -148,6 +148,13 @@ appId: com.puzzlestudio.app.preview
 - takeScreenshot: screenshots/shot-${PLATFORM}-15-awards
 - tapOn:
     id: 'tab-home'
+# Update 05: start screen after the first puzzle – Pino has moved on to chapter 2
+- extendedWaitUntil:
+    visible: 'Kapitel 2 von 10'
+    timeout: 10000
+- waitForAnimationToEnd:
+    timeout: 3000
+- takeScreenshot: screenshots/shot-${PLATFORM}-15b-home-journey
 - tapOn:
     id: 'open-parents'
 # Phase 7: parent gate (number words) → parents' area with three areas

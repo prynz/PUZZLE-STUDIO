@@ -101,3 +101,12 @@ export function validChoice(choice: string | null, unlocked: ReadonlySet<string>
   if (!choice) return null;
   return unlockedRewards(unlocked, kind).some((r) => r.id === choice) ? choice : null;
 }
+
+/**
+ * The next milestone on Pino's journey (start screen): the first one in display order that is
+ * not unlocked yet. Returns ACHIEVEMENTS.length when the journey is complete.
+ */
+export function nextMilestoneIndex(unlocked: ReadonlySet<string>): number {
+  const i = ACHIEVEMENTS.findIndex((a) => !unlocked.has(a.id));
+  return i === -1 ? ACHIEVEMENTS.length : i;
+}

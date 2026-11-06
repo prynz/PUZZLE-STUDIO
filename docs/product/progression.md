@@ -1,6 +1,6 @@
 # Sterne, Meilensteine und Belohnungen
 
-Status: **umgesetzt (Phase 6)** – Logik in `packages/game-progression` (reines TypeScript, 10 Tests, 100 % Abdeckung), Oberfläche in `apps/mobile/features/awards` und `features/collection`.
+Status: **umgesetzt (Phase 6, Startseite mit „Pinos Reise“ seit Änderung 05)** – Logik in `packages/game-progression` (reines TypeScript, 12 Tests, 100 % Abdeckung), Oberfläche in `apps/mobile/features/awards` und `features/collection`.
 
 ## Grundsätze (aus dem Produktkonzept)
 
@@ -28,6 +28,10 @@ Pro fertigem Puzzle, nach Größe – nie nach Tempo: bis 16 Teile ⭐, bis 64 T
 | Riesen-Puzzle     | ein Puzzle mit 256 Teilen fertig                    | Sticker „Pokal“          |
 
 Die Ids (`first_puzzle`, …) werden gespeichert und dürfen nie umbenannt werden.
+
+## Pinos Reise (Startseite, Änderung 05)
+
+Die Meilensteine bilden zugleich eine kleine Geschichte, die sich durch das Spielen zieht: Auf der Startseite stehen sie als **Stationen auf einem Pfad**. Pino wartet an der **nächsten Station** (`nextMilestoneIndex` – der erste noch nicht erreichte Meilenstein in Anzeigereihenfolge), darüber steht „Kapitel n von 10“ und das nächste Ziel in Kinderworten. Erreichte Stationen zeigen ihre Belohnung, spätere ein Schloss. Jedes fertige Puzzle kann Pino ein Stück weiterbringen – **nie zurück** (Freischaltungen sind dauerhaft, keine Zeit- oder Serienzwänge). Ein Tipp auf eine Station öffnet „Erfolge“. Meilensteine, die außer der Reihe erreicht wurden (z. B. „Mein eigenes Bild“ vor „Drei Puzzles“), sind auf dem Pfad sofort als geschafft markiert; Pino bleibt trotzdem an der ersten offenen Station.
 
 ## Belohnungen anwenden
 
