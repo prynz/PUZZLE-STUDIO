@@ -159,6 +159,8 @@ export const gradient = {
   /** Story cards on the start screen (dark text on all stops). */
   storySky: { colors: [palette.sky100, palette.sky], angle: 150 },
   storySun: { colors: [palette.yellow100, palette.peach], angle: 150 },
+  /** Warm red-orange for the treasure card (stars & rewards). */
+  storyEmber: { colors: ['#FFC6A3', palette.peach600, '#EE7A63'], angle: 150 },
   mascotBody: { colors: ['#E2F55A', '#4DB97D', palette.teal], angle: 160 },
 } as const satisfies Record<string, GradientToken>;
 

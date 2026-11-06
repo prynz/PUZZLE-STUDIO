@@ -19,8 +19,10 @@ describe('Home', () => {
     expect(screen.getByText('Was puzzeln wir heute?')).toBeTruthy();
     await fireEvent.press(screen.getByTestId('home-create'));
     await fireEvent.press(screen.getByTestId('home-samples'));
+    await fireEvent.press(screen.getByTestId('home-awards'));
     await fireEvent.press(screen.getByLabelText('Elternbereich'));
-    expect(mockPush.mock.calls).toEqual([['/create'], ['/creator/samples'], ['/parents']]);
+    expect(mockPush.mock.calls).toEqual([['/create'], ['/creator/samples'], ['/awards'], ['/parents']]);
+    expect(screen.getByText('Puzzle ein Bild fertig – dann gibt es Sterne!')).toBeTruthy();
   });
 
   it('tells Pino’s journey: chapter, next goal and the stations', async () => {

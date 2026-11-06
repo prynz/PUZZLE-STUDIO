@@ -1,8 +1,9 @@
 import { useId, useState, type ReactNode } from 'react';
 import { Image, Pressable, StyleSheet, View, type ImageSourcePropType, type LayoutChangeEvent } from 'react-native';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
-import Svg, { Defs, LinearGradient, Path, Stop } from 'react-native-svg';
+import Svg, { Defs, LinearGradient, Path, Stop, SvgXml } from 'react-native-svg';
 
+import { starIcon } from '../illustrations/rewards.ts';
 import { usePressBounce } from '../motion/usePressBounce.ts';
 import { shadowStyle, withAlpha } from '../styles/helpers.ts';
 import { gradient, palette, radius, shadow, spacing, type GradientToken } from '../tokens.ts';
@@ -11,15 +12,21 @@ import { useSlideOffset } from './StoryCarousel.tsx';
 import { knobHeight, pieceCardPath, type PieceCardShape } from './storyShapes.ts';
 import { Text } from './Text.tsx';
 
-export type StoryCardTone = 'brand' | 'sky' | 'sun';
+export type StoryCardTone = 'brand' | 'sky' | 'sun' | 'ember';
 
 const TONES: Record<StoryCardTone, GradientToken> = {
   brand: gradient.brand,
   sky: gradient.storySky,
   sun: gradient.storySun,
+  ember: gradient.storyEmber,
 };
 
-const SHAPE: PieceCardShape = { radius: radius.xl, knobRadius: 20, knobAt: 0.74, socketRadius: 16 };
+// asymmetric: big soft corners top left and bottom right, tighter ones where the knob and the arrow sit
+const SHAPE: PieceCardShape = {
+  radii: [radius.sheet, radius.md, radius.sheet, radius.md],
+  knobRadius: 18,
+  knobAt: 0.72,
+};
 const TOP = knobHeight(SHAPE.knobRadius);
 const HEIGHT = 236;
 
@@ -39,7 +46,7 @@ export interface StoryCardProps {
 }
 
 /**
- * Story card shaped like a puzzle piece (knob on top, socket on the left) – used in a
+ * Story card shaped like a puzzle piece (asymmetric corners, soft knob on top) – used in a
  * StoryCarousel. Dark text on light gradients, the round arrow shows it can be tapped.
  */
 export function StoryCard({
@@ -140,13 +147,28 @@ export function StoryPicture({
   );
 }
 
+/** Art for a StoryCard: three stars on a little podium (big one in the middle), lit up to `stars`. Decorative. */
+export function StoryStars({ stars }: { stars: number }) {
+  const sizes = [36, 58, 36];
+  const order = [1, 0, 2]; // the middle star lights up first
+  return (
+    <View style={styles.stars} accessible={false}>
+      {sizes.map((size, i) => (
+        <View key={i} style={{ marginBottom: i === 1 ? spacing.lg : 0, transform: [{ rotate: `${(i - 1) * 14}deg` }] }}>
+          <SvgXml xml={starIcon((order[i] ?? 0) < stars, size)} width={size} height={size} />
+        </View>
+      ))}
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   card: { height: HEIGHT },
   body: {
     flex: 1,
     marginTop: TOP,
     paddingVertical: spacing.md,
-    paddingLeft: spacing.xl + spacing.xs,
+    paddingLeft: spacing.xl,
     paddingRight: spacing.md,
   },
   text: { width: '62%', gap: spacing.xxs },
@@ -170,5 +192,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   art: { position: 'absolute', right: spacing.xs, bottom: spacing.xxl },
+  stars: { flexDirection: 'row', alignItems: 'flex-end', marginRight: spacing.xs, marginBottom: spacing.huge },
   photo: { padding: 5, borderRadius: radius.md, backgroundColor: palette.white },
 });

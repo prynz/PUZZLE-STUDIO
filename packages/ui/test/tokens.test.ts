@@ -57,6 +57,11 @@ describe('color tokens', () => {
     for (const stop of gradient.brand.colors) expect(contrast(color.text.primary, stop)).toBeGreaterThanOrEqual(4.5);
   });
 
+  it('dark text stays readable on every stop of the story card gradients', () => {
+    for (const g of [gradient.storySky, gradient.storySun, gradient.storyEmber])
+      for (const stop of g.colors) expect(contrast(color.text.primary, stop)).toBeGreaterThanOrEqual(4.5);
+  });
+
   it('white labels stay readable on both button gradients', () => {
     for (const g of [gradient.buttonAccent, gradient.buttonPrimary])
       for (const stop of g.colors) expect(contrast(color.text.onPrimary, stop)).toBeGreaterThanOrEqual(4.5);

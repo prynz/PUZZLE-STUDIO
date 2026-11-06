@@ -1,66 +1,56 @@
 /**
  * Geometry for the story elements on the start screen (pure, tested in test/storyShapes.test.ts).
  *
- * - `pieceCardPath`: a card outline shaped like a puzzle piece – rounded rectangle with a knob
- *   on the top edge and a socket in the left edge, so the cards read as "pieces of a story".
+ * - `pieceCardPath`: a card outline shaped like a puzzle piece – asymmetric rounded body with a
+ *   soft knob on the top edge, so the cards read as "pieces of a story".
  * - `trailPoints` / `trailPath`: the winding path of Pino's journey through the milestones.
  */
 
 export interface PieceCardShape {
-  /** Corner radius of the card body. */
-  radius: number;
-  /** Radius of the knob on the top edge; the knob sticks out `knobHeight(knobRadius)` above the body. */
+  /** Corner radii clockwise from top left – unequal radii give the card its asymmetric, organic look. */
+  radii: readonly [number, number, number, number];
+  /** Size of the knob on the top edge; it sticks out `knobHeight(knobRadius)` above the body. */
   knobRadius: number;
   /** Knob centre as share of the width (0…1). */
   knobAt: number;
-  /** Radius of the socket in the left edge (0 = none). */
-  socketRadius: number;
 }
 
 /** Height the knob sticks out above the card body. */
-export const knobHeight = (knobRadius: number) => knobRadius * 2.1;
+export const knobHeight = (knobRadius: number) => knobRadius * 2.25;
 
 const f = (n: number) => Math.round(n * 10) / 10;
 
-/** SVG path of a puzzle-piece card that fills `width × height` (knob included). */
+/**
+ * SVG path of a puzzle-piece card that fills `width × height` (knob included): rounded body
+ * with a soft knob – a round head (circle of `knobRadius`) on a gently flaring neck. The neck
+ * curves meet the head along its tangent and leave the edge flat, so there are no corners.
+ */
 export function pieceCardPath(width: number, height: number, s: PieceCardShape): string {
   const top = knobHeight(s.knobRadius);
-  const r = Math.min(s.radius, (height - top) / 2, width / 2);
-  const kr = s.knobRadius;
-  const kx = width * s.knobAt;
-  const neck = kr * 0.6;
-  const fillet = kr * 0.25;
-  // the knob circle meets the neck lines a little above the card body
-  const cy = top - kr * 1.1;
-  const neckY = cy + Math.sqrt(kr * kr - neck * neck);
-  const my = top + (height - top) / 2;
-  const sr = s.socketRadius;
-  const socketNeck = sr * 0.75;
-  const parts = [
-    `M0 ${f(top + r)}`,
-    `A${f(r)} ${f(r)} 0 0 1 ${f(r)} ${f(top)}`,
-    `L${f(kx - neck - fillet)} ${f(top)}`,
-    `Q${f(kx - neck)} ${f(top)} ${f(kx - neck)} ${f(top - fillet)}`,
-    `L${f(kx - neck)} ${f(neckY)}`,
-    `A${f(kr)} ${f(kr)} 0 1 1 ${f(kx + neck)} ${f(neckY)}`,
-    `L${f(kx + neck)} ${f(top - fillet)}`,
-    `Q${f(kx + neck)} ${f(top)} ${f(kx + neck + fillet)} ${f(top)}`,
-    `L${f(width - r)} ${f(top)}`,
-    `A${f(r)} ${f(r)} 0 0 1 ${f(width)} ${f(top + r)}`,
-    `L${f(width)} ${f(height - r)}`,
-    `A${f(r)} ${f(r)} 0 0 1 ${f(width - r)} ${f(height)}`,
-    `L${f(r)} ${f(height)}`,
-    `A${f(r)} ${f(r)} 0 0 1 0 ${f(height - r)}`,
-  ];
-  if (sr > 0) {
-    parts.push(
-      `L0 ${f(my + socketNeck)}`,
-      // bulges into the card (counter-clockwise while walking up the left edge)
-      `A${f(sr)} ${f(sr)} 0 1 0 0 ${f(my - socketNeck)}`,
-    );
-  }
-  parts.push('Z');
-  return parts.join(' ');
+  const max = Math.min((height - top) / 2, width / 2);
+  const [tl, tr, br, bl] = s.radii.map((r) => Math.min(r, max)) as [number, number, number, number];
+  const k = s.knobRadius;
+  const kx = Math.min(Math.max(width * s.knobAt, tl + 1.7 * k), width - tr - 1.7 * k);
+  const y = (d: number) => f(top - d * k); // height above the body edge, in knob units
+  const x = (d: number) => f(kx + d * k);
+  // head: centre 1.25 k above the edge; the neck joins it 40° below its widest point
+  const jx = Math.cos((40 * Math.PI) / 180);
+  const jy = 1.25 - Math.sin((40 * Math.PI) / 180);
+  return [
+    `M0 ${f(top + tl)}`,
+    `A${f(tl)} ${f(tl)} 0 0 1 ${f(tl)} ${f(top)}`,
+    `L${x(-1.7)} ${f(top)}`,
+    `C${x(-0.95)} ${f(top)} ${x(-jx + 0.32)} ${y(jy - 0.38)} ${x(-jx)} ${y(jy)}`,
+    `A${f(k)} ${f(k)} 0 1 1 ${x(jx)} ${y(jy)}`,
+    `C${x(jx - 0.32)} ${y(jy - 0.38)} ${x(0.95)} ${f(top)} ${x(1.7)} ${f(top)}`,
+    `L${f(width - tr)} ${f(top)}`,
+    `A${f(tr)} ${f(tr)} 0 0 1 ${f(width)} ${f(top + tr)}`,
+    `L${f(width)} ${f(height - br)}`,
+    `A${f(br)} ${f(br)} 0 0 1 ${f(width - br)} ${f(height)}`,
+    `L${f(bl)} ${f(height)}`,
+    `A${f(bl)} ${f(bl)} 0 0 1 0 ${f(height - bl)}`,
+    'Z',
+  ].join(' ');
 }
 
 export interface TrailPoint {
