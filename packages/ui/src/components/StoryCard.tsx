@@ -24,11 +24,11 @@ const TONES: Record<StoryCardTone, GradientToken> = {
 // asymmetric: big soft corners top left and bottom right, tighter ones where the knob and the arrow sit
 const SHAPE: PieceCardShape = {
   radii: [radius.sheet, radius.md, radius.sheet, radius.md],
-  knobRadius: 18,
+  knobRadius: 25,
   knobAt: 0.72,
 };
 const TOP = knobHeight(SHAPE.knobRadius);
-const HEIGHT = 236;
+const HEIGHT = 252;
 
 export interface StoryCardProps {
   /** Small line above the title, e.g. "Kapitel 1" or "Weiter geht's". */

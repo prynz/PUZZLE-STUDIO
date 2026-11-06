@@ -33,6 +33,10 @@ _Von links: erster Start · Karten gewischt (die vorige Karte kippt weg) · nach
 - **Asymmetrische Form:** große, weiche Rundungen oben links und unten rechts, engere Ecken oben rechts (bei der Nase) und unten links – wirkt organischer und weniger wie eine Box.
 - **Vierte Kachel „Deine Schatzkiste – Sterne & Schätze“** in Rot-Orange: drei Sterne auf einem kleinen Podest, die mit den gesammelten Sternen aufleuchten; Untertitel mit echten Zahlen („5 Sterne · 2 von 10 Meilensteinen“), vor dem ersten Puzzle „Puzzle ein Bild fertig – dann gibt es Sterne!“. Führt zu „Erfolge“. Neuer Verlauf `storyEmber` (dunkle Schrift auf allen Stufen, getestet).
 - Die Wisch-Animationen sind unverändert.
+- **Einrasten (zweite Nachbesserung):** Nach dem Wischen bleibt jede Karte **genau mittig** stehen, links und rechts schauen die Nachbarn gleich weit herein. Vorher konnte die letzte Karte nicht ganz einrasten (der Rand rechts war kleiner als links) und im Browser rastete gar nichts. Jetzt: feste Rastpunkte für jede Karte (Android/iOS) und CSS-Scroll-Snapping im Web; pro Wisch höchstens eine Karte weiter.
+- **Nase größer und weicher (zweite Nachbesserung):** Kopf ca. 40 % größer, breiterer, länger ausschwingender Hals – passt besser zur Kartengröße.
+
+  ![](../screenshots/2026-11-06-update-05c-web-card-centred.png)
 
 ![](../screenshots/2026-11-06-update-05b-web-cards.png)
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { knobHeight, pieceCardPath, trailPath, trailPoints } from '../src/components/storyShapes.ts';
+import { KNOB_SHOULDER, knobHeight, pieceCardPath, trailPath, trailPoints } from '../src/components/storyShapes.ts';
 
 const numbers = (d: string) => (d.match(/-?\d+(\.\d+)?/g) ?? []).map(Number);
 
@@ -24,14 +24,14 @@ describe('pieceCardPath', () => {
   });
 
   it('keeps the knob clear of the corners on narrow cards', () => {
-    const d = pieceCardPath(120, 216, { ...shape, knobAt: 0.99 });
-    // the knob's shoulders (1.7 × 18 on each side) start after the top-left corner (40) …
+    const d = pieceCardPath(160, 216, { ...shape, knobAt: 0.99 });
+    // the knob's shoulders (KNOB_SHOULDER × 18 on each side) start after the top-left corner (40) …
     const start = Number(/L(\d+(?:\.\d+)?) [\d.]+ C/.exec(d)?.[1]);
     expect(start).toBeGreaterThanOrEqual(40);
     // … and end before the top-right corner (18)
     const end = Number(/ (\d+(?:\.\d+)?) [\d.]+ L[\d.]+ [\d.]+ A18/.exec(d)?.[1]);
-    expect(end).toBeLessThanOrEqual(120 - 18);
-    expect(end - start).toBeCloseTo(2 * 1.7 * 18, 0);
+    expect(end).toBeLessThanOrEqual(160 - 18);
+    expect(end - start).toBeCloseTo(2 * KNOB_SHOULDER * 18, 0);
   });
 });
 

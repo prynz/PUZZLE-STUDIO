@@ -18,6 +18,9 @@ export interface PieceCardShape {
 /** Height the knob sticks out above the card body. */
 export const knobHeight = (knobRadius: number) => knobRadius * 2.25;
 
+/** Half-width of the knob's base (where it flows into the edge), in knob radii. */
+export const KNOB_SHOULDER = 2.1;
+
 const f = (n: number) => Math.round(n * 10) / 10;
 
 /**
@@ -30,19 +33,23 @@ export function pieceCardPath(width: number, height: number, s: PieceCardShape):
   const max = Math.min((height - top) / 2, width / 2);
   const [tl, tr, br, bl] = s.radii.map((r) => Math.min(r, max)) as [number, number, number, number];
   const k = s.knobRadius;
-  const kx = Math.min(Math.max(width * s.knobAt, tl + 1.7 * k), width - tr - 1.7 * k);
+  const kx = Math.min(Math.max(width * s.knobAt, tl + KNOB_SHOULDER * k), width - tr - KNOB_SHOULDER * k);
   const y = (d: number) => f(top - d * k); // height above the body edge, in knob units
   const x = (d: number) => f(kx + d * k);
-  // head: centre 1.25 k above the edge; the neck joins it 40° below its widest point
-  const jx = Math.cos((40 * Math.PI) / 180);
-  const jy = 1.25 - Math.sin((40 * Math.PI) / 180);
+  // head: centre 1.25 k above the edge; the neck joins it 35° below its widest point, with long
+  // tangents (0.7 k) so the neck flares out in one soft sweep
+  const a = (35 * Math.PI) / 180;
+  const jx = Math.cos(a);
+  const jy = 1.25 - Math.sin(a);
+  const tx = 0.7 * Math.sin(a);
+  const ty = 0.7 * Math.cos(a);
   return [
     `M0 ${f(top + tl)}`,
     `A${f(tl)} ${f(tl)} 0 0 1 ${f(tl)} ${f(top)}`,
-    `L${x(-1.7)} ${f(top)}`,
-    `C${x(-0.95)} ${f(top)} ${x(-jx + 0.32)} ${y(jy - 0.38)} ${x(-jx)} ${y(jy)}`,
+    `L${x(-KNOB_SHOULDER)} ${f(top)}`,
+    `C${x(-1.15)} ${f(top)} ${x(-jx + tx)} ${y(jy - ty)} ${x(-jx)} ${y(jy)}`,
     `A${f(k)} ${f(k)} 0 1 1 ${x(jx)} ${y(jy)}`,
-    `C${x(jx - 0.32)} ${y(jy - 0.38)} ${x(0.95)} ${f(top)} ${x(1.7)} ${f(top)}`,
+    `C${x(jx - tx)} ${y(jy - ty)} ${x(1.15)} ${f(top)} ${x(KNOB_SHOULDER)} ${f(top)}`,
     `L${f(width - tr)} ${f(top)}`,
     `A${f(tr)} ${f(tr)} 0 0 1 ${f(width)} ${f(top + tr)}`,
     `L${f(width)} ${f(height - br)}`,

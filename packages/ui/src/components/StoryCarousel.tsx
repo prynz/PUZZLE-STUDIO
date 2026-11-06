@@ -1,5 +1,5 @@
 import { Children, createContext, useContext, useState, type ReactNode } from 'react';
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import { Platform, StyleSheet, View, useWindowDimensions, type ViewStyle } from 'react-native';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -36,8 +36,18 @@ export interface StoryCarouselProps {
 
 const GAP = spacing.sm;
 
+/*
+ * The web build has no snapToOffsets – there the browser's CSS scroll snapping centres the cards.
+ * The two CSS properties are not part of React Native's style types, hence the casts.
+ */
+const WEB_SNAP_CONTAINER = (Platform.OS === 'web' ? { scrollSnapType: 'x mandatory' } : {}) as ViewStyle;
+const WEB_SNAP_ITEM = (
+  Platform.OS === 'web' ? { scrollSnapAlign: 'center', scrollSnapStop: 'always' } : {}
+) as ViewStyle;
+
 /**
- * Swipeable row of story cards: one card in focus, the next one peeking in. Cards further away
+ * Swipeable row of story cards: one card centred in focus, its neighbours peeking in at both
+ * sides. After a swipe the row always snaps so that one card rests exactly in the middle. Cards further away
  * shrink and tilt a little, the dots stretch to show the position. With Reduced Motion the cards
  * simply slide (no tilt/scale).
  */
@@ -53,6 +63,9 @@ export function StoryCarousel({
   const slides = Children.toArray(children);
   const cardWidth = Math.max(220, screen - 2 * bleed - peek);
   const interval = cardWidth + GAP;
+  // equal space on both sides: every card – the first and the last too – can rest exactly centred
+  const side = (screen - cardWidth) / 2;
+  const offsets = slides.map((_, i) => i * interval);
   const x = useSharedValue(0);
   const [index, setIndex] = useState(0);
   const onScroll = useAnimatedScrollHandler((e) => {
@@ -71,14 +84,16 @@ export function StoryCarousel({
       <Animated.ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        snapToInterval={interval}
+        snapToOffsets={offsets}
+        snapToAlignment="start"
         decelerationRate="fast"
         disableIntervalMomentum
+        style={WEB_SNAP_CONTAINER}
         onScroll={onScroll}
         scrollEventThrottle={16}
         onMomentumScrollEnd={(e) => settle(e.nativeEvent.contentOffset.x)}
         onScrollEndDrag={(e) => settle(e.nativeEvent.contentOffset.x)}
-        contentContainerStyle={{ paddingHorizontal: bleed, paddingTop: headroom, gap: GAP }}
+        contentContainerStyle={{ paddingHorizontal: side, paddingTop: headroom, gap: GAP }}
       >
         {slides.map((slide, i) => (
           <Slide key={i} index={i} interval={interval} x={x} width={cardWidth}>
@@ -120,7 +135,7 @@ function Slide({ index, interval, x, width, children }: SlideProps) {
   });
   return (
     <SlideContext.Provider value={offset}>
-      <Animated.View style={[{ width }, style]}>{children}</Animated.View>
+      <Animated.View style={[{ width }, WEB_SNAP_ITEM, style]}>{children}</Animated.View>
     </SlideContext.Provider>
   );
 }
