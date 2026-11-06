@@ -53,7 +53,11 @@ _Die vier Karten nacheinander gewischt (Web, Chromium)._
 
 ## Prüfung
 
-TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 70, Fortschritt 12, App 72 – u. a. Karten führen zu Atelier/Beispielbildern/Erfolgen/angefangenem Puzzle, Kapitel und Stationen, Puzzleteil-Form bleibt in ihrer Fläche) · Android-/iOS-Bundle ✅ · Web ohne Fehlermeldungen ✅ · Android-Emulator / iOS-Simulator: Läufe gestartet, Ergebnis wird hier nachgetragen.
+TypeScript, ESLint, Prettier ✅ · Tests ✅ (UI 70, Fortschritt 12, App 72 – u. a. Karten führen zu Atelier/Beispielbildern/Erfolgen/angefangenem Puzzle, Kapitel und Stationen, Puzzleteil-Form bleibt in ihrer Fläche) · Android-/iOS-Bundle ✅ · Web ohne Fehlermeldungen ✅ · Android-Emulator ✅ · iOS-Simulator ✅ – erste Fassung (Läufe 42214840599 / 42214844836) und Endstand mit eingerasteten Karten und größerer Nase (Läufe 42224584297 / 42224588398), jeweils kompletter Ablauf.
+
+![Startseite vor und nach dem ersten Puzzle – Android (links), iOS (rechts)](../screenshots/2026-11-06-update-05-devices.png)
+
+_Je Gerät: erster Start (Kapitel 1) und Startseite nach dem ersten Puzzle (Kapitel 2, erste Station mit Belohnung). Die Karte steht mittig, die Nachbarkarte schaut herein. Der Hinweis oben im letzten Bild ist eine Systemmeldung des iOS-Simulators, nicht Teil der App._
 
 ## Ideen für weitere Seiten (noch nicht umgesetzt)
 
