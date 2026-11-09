@@ -24,6 +24,8 @@ interface Origin {
   x: number;
   y: number;
   scale: number;
+  /** Pieces in the piles lie a little turned. */
+  angle: number;
 }
 type Grab =
   | { kind: 'tray' | 'loose'; id: number; offX: number; offY: number; origin: Origin }
@@ -76,11 +78,13 @@ export function usePlayGestures(i: GestureInput) {
     return { x: x + ((c?.w ?? 0) * scale) / 2, y: y + ((c?.h ?? 0) * scale) / 2 };
   };
 
-  const beginDrag = (id: number, x: number, y: number) => {
+  const beginDrag = (id: number, x: number, y: number, origin: Origin) => {
     const c = centre(id, x, y, view.scale);
     drag.x.set(c.x);
     drag.y.set(c.y);
-    drag.tilt.set(0);
+    // a piece from the pile straightens up while it is lifted
+    drag.tilt.set(reduceMotion ? 0 : origin.angle);
+    if (!reduceMotion) drag.tilt.set(withSpring(0, tiltSpring));
     drag.scale.set(reduceMotion ? view.scale : withSpring(view.scale * LIFT, spring.bouncy));
     setDragging(id);
   };
@@ -91,12 +95,13 @@ export function usePlayGestures(i: GestureInput) {
     drag.x.set(withTiming(c.x, ease));
     drag.y.set(withTiming(c.y, ease));
     drag.scale.set(withTiming(origin.scale, ease));
+    drag.tilt.set(withTiming(origin.angle, ease));
     setTimeout(() => setDragging(null), BACK_MS + 20);
   };
 
   const finishDrag = (id: number, sx: number, sy: number, fingerY: number, origin: Origin, fromTray: boolean) => {
     drag.tilt.set(reduceMotion ? 0 : withSpring(0, tiltSpring));
-    // released over the tray: back into the tray (no move counted)
+    // released over a pile: back into the pile (no move counted)
     if (inTray(layout, fingerY)) {
       if (!fromTray) game.toTray(id);
       if (fromTray && !reduceMotion) floatBack(id, origin);
@@ -174,7 +179,13 @@ export function usePlayGestures(i: GestureInput) {
       const rt = id >= 0 ? state.pieces[id] : undefined;
       if (rt) {
         const s = toScreen(view, rt.x, rt.y);
-        grab.current = { kind: 'loose', id, offX: e.x - s.x, offY: e.y - s.y, origin: { ...s, scale: view.scale } };
+        grab.current = {
+          kind: 'loose',
+          id,
+          offX: e.x - s.x,
+          offY: e.y - s.y,
+          origin: { ...s, scale: view.scale, angle: 0 },
+        };
       } else grab.current = { kind: 'board' };
     },
     onUpdate: (e) => {
@@ -183,7 +194,7 @@ export function usePlayGestures(i: GestureInput) {
       const g = grab.current;
       if (!st.moved) {
         st.moved = true;
-        if (g.kind === 'tray' || g.kind === 'loose') beginDrag(g.id, e.x - g.offX, e.y - g.offY);
+        if (g.kind === 'tray' || g.kind === 'loose') beginDrag(g.id, e.x - g.offX, e.y - g.offY, g.origin);
       }
       if (g.kind === 'tray' || g.kind === 'loose') {
         const c = centre(g.id, e.x - g.offX, e.y - g.offY, view.scale);

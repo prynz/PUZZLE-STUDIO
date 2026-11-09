@@ -2,7 +2,7 @@ import { ENGINE_VERSION, assistFor, generatePuzzle, type PuzzleDefinition } from
 import { act, renderHook } from '@testing-library/react-native';
 
 import { basketViews, piecesIn } from '@/features/puzzle/game/baskets';
-import { playLayout, slotAt, slotRect } from '@/features/puzzle/game/layout';
+import { inTray, playLayout, slotAt, slotRect } from '@/features/puzzle/game/layout';
 import { SAVE_DEBOUNCE_MS } from '@/features/puzzle/game/useAutosave';
 import { useGame } from '@/features/puzzle/game/useGame';
 import { clampView, fitView, toScreen, toWorld, zoomed } from '@/features/puzzle/game/viewport';
@@ -36,20 +36,29 @@ const stored = (rows: number, cols: number, profile: StoredPuzzle['profile'] = '
 const AREA = { x: -300, y: -300, w: 1800, h: 1500 };
 
 describe('play layout', () => {
-  it('puts the tray below the board with child-sized slots', () => {
-    const l = playLayout(390, 700, 'kid', assistFor('kid', 100));
-    expect(l.rows).toBe(2);
-    expect(l.slot).toBeGreaterThanOrEqual(64);
+  it('lays loose pieces in two piles – above and below the board – with child-sized places', () => {
+    const l = playLayout(390, 700, 'kid', assistFor('kid', 25));
+    expect(l.slot).toBeGreaterThanOrEqual(72);
+    expect(l.perPage).toBe(6);
+    expect(l.pileTop.y + l.pileTop.h).toBeLessThanOrEqual(l.board.y);
     expect(l.board.y + l.board.h).toBeLessThanOrEqual(l.tray.y);
-    expect(slotAt(l, slotRect(l, 3).x + 5, slotRect(l, 3).y + 5)).toBe(3);
-    expect(slotAt(l, 1, 1)).toBe(-1);
+    // places alternate: even ones above the board, odd ones below
+    expect(l.spots[0]?.y).toBeLessThan(l.board.y);
+    expect(l.spots[1]?.y).toBeGreaterThan(l.tray.y);
+    for (const s of l.spots) expect(Math.abs(s.angle)).toBeLessThanOrEqual(0.21);
+    const r = slotRect(l, 3);
+    expect(slotAt(l, r.x + r.w / 2, r.y + r.h / 2)).toBe(3);
+    expect(slotAt(l, 195, l.board.y + l.board.h / 2)).toBe(-1);
+    expect(inTray(l, 5)).toBe(true);
+    expect(inTray(l, l.board.y + 10)).toBe(false);
+    // stable between renders
+    expect(playLayout(390, 700, 'kid', assistFor('kid', 25)).spots).toEqual(l.spots);
   });
 
-  it('gives toddlers few, very big slots', () => {
-    const l = playLayout(390, 700, 'toddler', assistFor('toddler', 256));
+  it('gives toddlers few, very big pieces', () => {
+    const l = playLayout(390, 700, 'toddler', assistFor('toddler', 9));
     expect(l.slot).toBeGreaterThanOrEqual(96);
     expect(l.perPage).toBeLessThanOrEqual(4);
-    expect(l.rows).toBe(1);
   });
 });
 

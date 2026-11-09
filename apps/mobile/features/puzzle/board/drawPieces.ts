@@ -12,7 +12,7 @@ import {
   type SkPath,
 } from '@shopify/react-native-skia';
 
-import { slotRect, type PlayLayout } from '../game/layout';
+import { boardBand, type PlayLayout } from '../game/layout';
 import type { View } from '../game/viewport';
 
 const imagePaint = Skia.Paint();
@@ -38,14 +38,13 @@ const selectPaint = Skia.Paint();
 selectPaint.setStyle(PaintStyle.Stroke);
 selectPaint.setAntiAlias(true);
 selectPaint.setColor(Skia.Color(palette.yellow700));
-const slotPaint = Skia.Paint();
-slotPaint.setColor(Skia.Color(withAlpha(palette.white, 0.75)));
-const slotSelectedPaint = Skia.Paint();
-slotSelectedPaint.setColor(Skia.Color(palette.yellow100));
-const slotRingPaint = Skia.Paint();
-slotRingPaint.setStyle(PaintStyle.Stroke);
-slotRingPaint.setStrokeWidth(3);
-slotRingPaint.setColor(Skia.Color(palette.yellow700));
+/** Soft shadow under pieces lying in the piles. */
+const pileShadowPaint = Skia.Paint();
+pileShadowPaint.setAntiAlias(true);
+pileShadowPaint.setColor(Skia.Color(withAlpha(palette.ink, 0.16)));
+const pileGlowPaint = Skia.Paint();
+pileGlowPaint.setAntiAlias(true);
+pileGlowPaint.setColor(Skia.Color(withAlpha(palette.yellow, 0.7)));
 
 /** Draws one piece at the canvas' current transform (piece in its home cell coordinates). */
 export function drawPiece(canvas: SkCanvas, image: SkImage, path: SkPath, w: number, h: number, stroke: number) {
@@ -64,13 +63,16 @@ export function trayScale(puzzle: Puzzle, slot: number): number {
   return (slot * 0.88) / m;
 }
 
-/** Screen position (cell top-left) and scale of a tray piece in slot `i`. */
+/** Screen position (unturned cell top-left), scale and turn of a piece lying in pile place `i`. */
 export function trayPlacement(puzzle: Puzzle, layout: PlayLayout, piece: PieceShape, i: number) {
-  const r = slotRect(layout, i);
+  const spot = layout.spots[i] ?? { x: 0, y: 0, angle: 0 };
   const s = trayScale(puzzle, layout.slot);
-  const cx = piece.cell.x + piece.cell.w / 2;
-  const cy = piece.cell.y + piece.cell.h / 2;
-  return { x: r.x + r.w / 2 - (cx - piece.cell.x) * s, y: r.y + r.h / 2 - (cy - piece.cell.y) * s, scale: s };
+  return {
+    x: spot.x - (piece.cell.w / 2) * s,
+    y: spot.y - (piece.cell.h / 2) * s,
+    scale: s,
+    angle: spot.angle,
+  };
 }
 
 export interface SceneInput {
@@ -98,8 +100,9 @@ export function recordScene(i: SceneInput) {
   return createPicture(
     (canvas) => {
       canvas.save();
-      // the board layer never reaches into the tray (zoom / toddler bites)
-      canvas.clipRect(rect(0, 0, layout.width, layout.tray.y), ClipOp.Intersect, true);
+      // the board layer never reaches into the piles (zoom / toddler bites)
+      const band = boardBand(layout);
+      canvas.clipRect(rect(band.x, band.y, band.w, band.h), ClipOp.Intersect, true);
       canvas.translate(view.x, view.y);
       canvas.scale(view.scale, view.scale);
       canvas.drawRRect(rrect(rect(0, 0, W, H), 12 * hair, 12 * hair), boardPaint);
@@ -139,19 +142,26 @@ export function recordScene(i: SceneInput) {
       }
       canvas.restore();
 
+      // the piles: pieces lie a little turned, with a soft shadow; the selected one glows
       trayIds.forEach((id, slotIndex) => {
-        const r = slotRect(layout, slotIndex);
-        const sel = id === selected;
-        canvas.drawRRect(rrect(rect(r.x, r.y, r.w, r.h), 16, 16), sel ? slotSelectedPaint : slotPaint);
-        if (sel) canvas.drawRRect(rrect(rect(r.x, r.y, r.w, r.h), 16, 16), slotRingPaint);
         const p = puzzle.pieces[id];
         const path = paths[id];
         if (id === hidden || !p || !path) return;
         const t = trayPlacement(puzzle, layout, p, slotIndex);
+        const cx = p.cell.x + p.cell.w / 2;
+        const cy = p.cell.y + p.cell.h / 2;
         canvas.save();
-        canvas.translate(t.x, t.y);
+        canvas.translate(t.x + (p.cell.w / 2) * t.scale, t.y + (p.cell.h / 2) * t.scale);
+        canvas.rotate((t.angle * 180) / Math.PI, 0, 0);
         canvas.scale(t.scale, t.scale);
-        canvas.translate(-p.cell.x, -p.cell.y);
+        canvas.translate(-cx, -cy);
+        if (id === selected) {
+          canvas.drawCircle(cx, cy, Math.max(p.cell.w, p.cell.h) * 0.75, pileGlowPaint);
+        }
+        canvas.save();
+        canvas.translate(3 / t.scale, 6 / t.scale);
+        canvas.drawPath(path, pileShadowPaint);
+        canvas.restore();
         drawPiece(canvas, image, path, W, H, 1.2 / t.scale);
         canvas.restore();
       });

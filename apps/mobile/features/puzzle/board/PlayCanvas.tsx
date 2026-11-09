@@ -14,7 +14,7 @@ import {
 } from 'react-native-reanimated';
 
 import type { Game } from '../game/useGame';
-import type { PlayLayout } from '../game/layout';
+import { boardBand, type PlayLayout } from '../game/layout';
 import type { View } from '../game/viewport';
 import { recordScene } from './drawPieces';
 import { usePlayGestures } from './usePlayGestures';
@@ -164,6 +164,8 @@ export function PlayCanvas(props: PlayCanvasProps) {
     pulse.set(withRepeat(withSequence(withTiming(0.25, { duration: 600 }), withTiming(1, { duration: 600 })), -1));
   }, [game.hint, reduceMotion, pulse]);
   const hintPath = game.hint === null ? null : paths[game.hint];
+  const b = boardBand(layout);
+  const band = { x: b.x, y: b.y, width: b.w, height: b.h };
   const boardTransform = [{ translateX: view.x }, { translateY: view.y }, { scale: view.scale }];
 
   return (
@@ -171,7 +173,7 @@ export function PlayCanvas(props: PlayCanvasProps) {
       <Canvas style={{ width: layout.width, height: layout.height }} accessibilityLabel={props.accessibilityLabel}>
         {picture ? <Picture picture={picture} /> : null}
         {hintPath ? (
-          <Group clip={{ x: 0, y: 0, width: layout.width, height: layout.tray.y }}>
+          <Group clip={band}>
             <Group transform={boardTransform}>
               <Path
                 path={hintPath}
@@ -184,7 +186,7 @@ export function PlayCanvas(props: PlayCanvasProps) {
           </Group>
         ) : null}
         {flashPath ? (
-          <Group clip={{ x: 0, y: 0, width: layout.width, height: layout.tray.y }}>
+          <Group clip={band}>
             <Group transform={boardTransform}>
               <Path path={flashPath} color={palette.white} opacity={flash} />
             </Group>
