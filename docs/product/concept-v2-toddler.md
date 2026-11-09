@@ -1,6 +1,6 @@
 # Konzept 2 – Pino für die Kleinsten (Entwurf)
 
-Status: **Entwurf – wartet auf Entscheidungen des PO** (2026-11-09). Ersetzt nach Freigabe Teile von [product-concept.md](product-concept.md) und [gameplay-concept.md](gameplay-concept.md); bis dahin gelten diese weiter.
+Status: **vom PO freigegeben (2026-11-09)**, Umsetzung ab Schritt K1. Ersetzt nach Freigabe Teile von [product-concept.md](product-concept.md) und [gameplay-concept.md](gameplay-concept.md); bis dahin gelten diese weiter.
 
 Anlass (PO): Aufmachung und Design gefallen, aber es fehlt eine **logische Abfolge**, die daraus eine beliebte Kinder-App macht. Nur noch **kleine Kinder mit kleinen Puzzles**, Puzzleteile mit **dynamischer Bewegung beim Ziehen**, dazu **Minispiele rund ums Puzzeln** mit Abwechslung und Lerneffekt. Pino und Farbkonzept bleiben.
 
@@ -10,9 +10,9 @@ Anlass (PO): Aufmachung und Design gefallen, aber es fehlt eine **logische Abfol
 
 ## 2. Zielgruppe
 
-| Bisher                                                            | Neu                                                                                                             |
-| ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| 2–10+ Jahre, 4–256 Teile, drei Profile (Kleinkind / Kind / Profi) | **ca. 2–5 Jahre**, **2–12 Teile**, ein durchgehendes Spielgefühl – die Schwierigkeit wächst mit dem Fortschritt |
+| Bisher                                                            | Neu                                                                                                                                    |
+| ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| 2–10+ Jahre, 4–256 Teile, drei Profile (Kleinkind / Kind / Profi) | **ca. 2–5 Jahre**, **4–25 Teile** (PO: „erstmal bis 25“), ein durchgehendes Spielgefühl – die Schwierigkeit wächst mit dem Fortschritt |
 
 - Kinder dieses Alters lesen nicht → **alles ohne Text bedienbar**: Bilder, Pino, Töne, Gesten. Text nur für Eltern.
 - Kurze Spielrunden (2–4 Minuten), viele kleine Erfolgserlebnisse, nie Druck, nie „falsch“.
@@ -32,11 +32,11 @@ App-Start (Preloader)
 
 - **Welten** mit eigenem Thema und Hintergrund: z. B. _Wiese_ (Tiere vom Bauernhof), _Meer_ (Boot, Fisch, Wal), _Wald_, _Nacht & Sterne_, _Stadt & Fahrzeuge_.
 - Jede Welt hat **6–8 Stationen** im festen Wechsel, z. B. Puzzle → Puzzle → Minispiel → Puzzle → Minispiel → **Abschluss-Puzzle** (großes Weltbild).
-- Die **Teilezahl wächst langsam** über die Reise: Welt 1 mit 2–4 Teilen, Welt 2 mit 4–6, Welt 3 mit 6–9, ab Welt 4 bis 12. Kein Kind muss einstellen; Eltern können „höchstens n Teile“ festlegen.
+- Die **Teilezahl wächst langsam** über die Reise: Welt 1 mit 4 Teilen, Welt 2 mit 4–6, Welt 3 mit 6–9, Welt 4 mit 9–12, danach bis 16, 20 und 25. Kein Kind muss einstellen; Eltern können „höchstens n Teile“ festlegen.
 - **Nichts wird gesperrt, was schon geschafft ist** – alle erreichten Stationen bleiben nochmal spielbar.
 - Eine Welt ist ein abgeschlossenes Kapitel mit Abschluss-Moment (Pino bekommt ein Andenken, z. B. Muschel aus der Meer-Welt).
 
-**Eigene Fotos** bleiben als freier Bereich **„Mein Atelier“** (Elternhilfe: Foto wählen/zuschneiden) – mit derselben kleinen Teilezahl (2–12).
+**Eigene Bilder** bleiben als **Extra-Option „Mein Atelier“** neben der Reise (PO): nicht Teil der Geschichte, aber jederzeit möglich (Elternhilfe: Foto wählen/zuschneiden), 4–25 Teile. In manchen Missionen kann die Reise das Kind bitten, ein eigenes Bild zu puzzeln (z. B. „Puzzle ein Foto von deinem Lieblingstier für Pino“).
 
 ## 4. Das Puzzle-Gefühl (Hauptspiel)
 
@@ -44,7 +44,7 @@ Bildaufbau für kleine Hände:
 
 - **Brett mit Umriss-Plätzen:** Das Bild ist als blasser Schatten zu sehen, jeder Platz hat einen sichtbaren Umriss. Wenige, **sehr große Teile** (bei 4 Teilen etwa ein Viertel des Bretts).
 - **Teile liegen verstreut um das Brett** (nicht in einer Ablage-Leiste) – leicht schräg, nie überlappend, gut greifbar.
-- Teilformen: bei 2–4 Teilen **weiche, große Formen** (Halbe, Viertel, Wellen), ab 6 Teilen klassische, aber dicke Puzzle-Nasen.
+- Teilformen: klassische Puzzleteile mit dicken, runden Nasen; bei 4 Teilen besonders große Nasen.
 
 **Dynamische Bewegung beim Ziehen** (gewünscht):
 
@@ -78,7 +78,7 @@ Alle Minispiele nutzen **dieselbe Zieh-Mechanik** wie das Puzzle (ein Lerneffekt
 
 | Bleibt                                                                                                                        | Ändert sich                                                                                                                                                                                                                                                             | Entfällt (Code wird entfernt, nicht nur versteckt)                                                                                               |
 | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Pino, Farben, Schrift, Tab-Leiste, Startbildschirm-Stil, Preloader, Elternbereich, Datenschutz, Offline, eigene Puzzle-Engine | Startseite: Reise wird Hauptweg, Karten zeigen „Weiterspielen“, „Mein Atelier“, „Album“ · Erfolge → **Sticker-Album** (Sticker pro Bild/Welt) · Onboarding ohne Profilwahl (stattdessen Eltern-Hinweis) · Teile: 2–12 · Eltern: „höchstens n Teile“, Töne/Stimme an/aus | Puzzles über 12 Teile, Schalen/Sortieren, Häppchen-Modus, Zoom, Profile Kind/Profi, 256-Teile-Test im Elternbereich (bleibt als Entwickler-Test) |
+| Pino, Farben, Schrift, Tab-Leiste, Startbildschirm-Stil, Preloader, Elternbereich, Datenschutz, Offline, eigene Puzzle-Engine | Startseite: Reise wird Hauptweg, Karten zeigen „Weiterspielen“, „Mein Atelier“, „Album“ · Erfolge → **Sticker-Album** (Sticker pro Bild/Welt) · Onboarding ohne Profilwahl (stattdessen Eltern-Hinweis) · Teile: 4–25 · Eltern: „höchstens n Teile“, Töne/Stimme an/aus | Puzzles über 25 Teile, Schalen/Sortieren, Häppchen-Modus, Zoom, Profile Kind/Profi, 256-Teile-Test im Elternbereich (bleibt als Entwickler-Test) |
 
 ## 7. Ton und Stimme
 
@@ -98,18 +98,32 @@ Pro Welt ca. 8–10 Bilder im Pino-Stil (gleiches Format, klare Motive, 1 Hauptf
 
 | Schritt | Inhalt                                                                                                          | Ergebnis zum Anschauen               |
 | ------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
-| K1      | **Neues Puzzle-Brett** für 2–12 Teile mit dynamischem Ziehen (Anheben, Neigen, Magnet, Federn, lebendiges Ende) | Probespiel im Browser + Geräte-Fotos |
+| K1      | **Neues Puzzle-Brett** für 4–25 Teile mit dynamischem Ziehen (Anheben, Neigen, Magnet, Federn, lebendiges Ende) | Probespiel im Browser + Geräte-Fotos |
 | K2      | **Reise als Herzstück**: Welten + Stationen, „Spielen“ = nächste Station, Sticker-Album                         | Durchspielbare erste Welt            |
 | K3      | **Minispiele 1–3** (Formen, Schatten, Farben) in die Reise eingebaut                                            | Abwechslung in Welt 1                |
 | K4      | Aufräumen: große Puzzles, Schalen, Häppchen, Profile entfernen; Eltern „höchstens n Teile“                      | schlanke App, Doku aktualisiert      |
 | K5      | Töne/Haptik, danach Stimme                                                                                      | Spielgefühl komplett                 |
 | K6      | Minispiele 4–6, weitere Welten (mit Bildern des PO)                                                             | mehr Inhalt                          |
 
-## 10. Offene Entscheidungen
+## 10. Beobachtungen aus dem Beispiel des PO (zwei Bildschirmvideos)
 
-1. Altersgruppe 2–5 Jahre und **höchstens 12 Teile** – passt das?
-2. Reise mit **festen Welten und Stationen** als Hauptweg (statt freier Auswahl) – einverstanden?
-3. Welche **Minispiele zuerst** (Vorschlag: Formen, Schatten, Farben)?
-4. Stimme: erst nur Töne/Bilder, Stimme später – oder gleich mitplanen?
-5. Bleiben **eigene Fotos** („Mein Atelier“) erhalten?
-6. Das Pinterest-Beispiel war von hier aus nicht erreichbar – bitte als Bildschirmfoto oder kurzes Video schicken, damit die Zieh-Bewegung genau getroffen wird.
+Gezeigt wird ein 3 × 3-Puzzle auf einem Holztisch:
+
+- Das ganze Bild liegt **als blasser, sepiafarbener Schatten** auf dem Brett, mit sichtbaren Teil-Umrissen – das Kind sieht genau, wo was hingehört.
+- Die losen Teile liegen **als lockere Stapel oben und unten neben dem Brett** (leicht verdreht, teils überlappend, teils über den Rand hinaus) – wie auf einem echten Tisch, nicht in einer Leiste.
+- Ein Teil wird direkt aus dem Stapel gezogen, rastet ein und **blitzt kurz hell auf**.
+- Ist das letzte Teil gelegt, **verschwinden die Fugen**, Konfetti fliegt, dann steht das fertige Bild ohne Linien da; danach folgt direkt das nächste Bild.
+- Oben steht eine Punktzahl.
+
+Übernommen (eigene Umsetzung im Pino-Stil, keine Figuren oder Grafiken aus dem Beispiel): Schattenbild auf dem Brett, Teile-Stapel neben dem Brett, Aufblitzen beim Einrasten, Fugen verschwinden am Ende, Konfetti, direkter Übergang zur nächsten Station.
+Nicht übernommen: **Punktzahl** – für 2–5-Jährige sind Zahlen bedeutungslos und erzeugen Druck; stattdessen Sterne und Sticker. Holztisch → ruhiger Tisch in unseren Farben (Hintergründe als spätere Belohnung bleiben möglich).
+
+## 11. Entscheidungen des PO (2026-11-09)
+
+| #   | Frage              | Entscheidung                                                                                         |
+| --- | ------------------ | ---------------------------------------------------------------------------------------------------- |
+| 1   | Alter und Teile    | 2–5 Jahre, **bis 25 Teile** (erstmal)                                                                |
+| 2   | Reise als Hauptweg | ja                                                                                                   |
+| 3   | Erste Minispiele   | Formen, Schatten, Farben – wird später geändert/erweitert                                            |
+| 4   | Stimme             | erst Töne und Bilder, Stimme später                                                                  |
+| 5   | Eigene Bilder      | Extra-Option außerhalb der Geschichte, weiterhin möglich; kann in manchen Missionen verwendet werden |
