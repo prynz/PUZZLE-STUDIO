@@ -1,4 +1,4 @@
-import type { PieceShape, Puzzle, PuzzleState } from '@puzzle-studio/puzzle-engine';
+import { isComplete, type PieceShape, type Puzzle, type PuzzleState } from '@puzzle-studio/puzzle-engine';
 import { palette, withAlpha } from '@puzzle-studio/ui';
 import {
   ClipOp,
@@ -17,7 +17,13 @@ import type { View } from '../game/viewport';
 
 const imagePaint = Skia.Paint();
 imagePaint.setAntiAlias(true);
+/** The picture as a soft sepia shadow on the board – shows where everything belongs (concept 2 §10). */
 const refPaint = Skia.Paint();
+refPaint.setColorFilter(
+  Skia.ColorFilter.MakeMatrix([
+    0.393, 0.769, 0.189, 0, 0, 0.349, 0.686, 0.168, 0, 0, 0.272, 0.534, 0.131, 0, 0, 0, 0, 0, 1, 0,
+  ]),
+);
 const boardPaint = Skia.Paint();
 boardPaint.setColor(Skia.Color(palette.white));
 const targetPaint = Skia.Paint();
@@ -97,6 +103,15 @@ export function recordScene(i: SceneInput) {
       canvas.translate(view.x, view.y);
       canvas.scale(view.scale, view.scale);
       canvas.drawRRect(rrect(rect(0, 0, W, H), 12 * hair, 12 * hair), boardPaint);
+      if (isComplete(state)) {
+        // finished: the joints disappear – one whole picture, like a real photo
+        canvas.save();
+        canvas.clipRRect(rrect(rect(0, 0, W, H), 12 * hair, 12 * hair), ClipOp.Intersect, true);
+        canvas.drawImageRect(image, rect(0, 0, image.width(), image.height()), rect(0, 0, W, H), imagePaint);
+        canvas.restore();
+        canvas.restore();
+        return;
+      }
       if (state.referenceVisible && i.refOpacity > 0) {
         refPaint.setAlphaf(i.refOpacity);
         canvas.drawImageRect(image, rect(0, 0, image.width(), image.height()), rect(0, 0, W, H), refPaint);

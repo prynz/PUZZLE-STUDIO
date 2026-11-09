@@ -28,7 +28,7 @@ const image: StoredImage = {
 };
 
 describe('Neues Puzzle', () => {
-  it('offers the usual piece counts and starts a puzzle with the chosen grid', async () => {
+  it('offers only small puzzles (4–25 pieces) and starts a puzzle with the chosen grid', async () => {
     const puzzles = createMemoryPuzzleStore();
     await render(
       <SettingsProvider store={createMemorySettingsStore({ 'play.profile': 'kid' })}>
@@ -39,9 +39,9 @@ describe('Neues Puzzle', () => {
         </ImagesProvider>
       </SettingsProvider>,
     );
-    await waitFor(() => expect(screen.getByTestId('pieces-64')).toBeTruthy());
-    for (const n of [4, 9, 16, 25, 36, 49, 64, 100, 144, 196, 256])
-      expect(screen.getByTestId(`pieces-${n}`)).toBeTruthy();
+    await waitFor(() => expect(screen.getByTestId('pieces-25')).toBeTruthy());
+    for (const n of [4, 6, 9, 12, 16, 20, 25]) expect(screen.getByTestId(`pieces-${n}`)).toBeTruthy();
+    expect(screen.queryByTestId('pieces-36')).toBeNull();
     await fireEvent.press(screen.getByTestId('pieces-16'));
     await fireEvent.press(screen.getByTestId('shape-square'));
     await fireEvent.press(screen.getByTestId('puzzle-start'));

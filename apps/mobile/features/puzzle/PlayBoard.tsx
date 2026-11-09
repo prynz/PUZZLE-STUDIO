@@ -16,8 +16,8 @@ const PlayCanvas = lazy(async () => {
   return { default: m.PlayCanvas };
 });
 
-/** Faint reference picture under the board – stronger help for younger players. */
-const REFERENCE_OPACITY = { toddler: 0.4, kid: 0.25, pro: 0.12 } as const;
+/** Sepia shadow of the picture on the board – clearly visible for small children (concept 2). */
+const REFERENCE_OPACITY = { toddler: 0.85, kid: 0.65, pro: 0.35 } as const;
 
 export interface PlayBoardProps {
   puzzle: Puzzle;

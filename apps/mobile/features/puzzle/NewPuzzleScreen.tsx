@@ -23,7 +23,7 @@ import { useImages } from '@/store/images';
 import { usePuzzles } from '@/store/puzzles';
 import { useSettings } from '@/store/settings';
 
-const DEFAULT_PIECES = { toddler: 9, kid: 25, pro: 64 } as const;
+const DEFAULT_PIECES = { toddler: 4, kid: 9, pro: 16 } as const;
 
 /** Choose piece count and shape for a saved picture – or continue a started puzzle. */
 export function NewPuzzleScreen() {

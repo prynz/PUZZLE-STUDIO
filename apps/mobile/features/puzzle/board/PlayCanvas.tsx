@@ -2,9 +2,16 @@ import { pieceColorGroups } from '@puzzle-studio/image-processing';
 import { hitShapesFor, toSvgPath, type Puzzle, type Rect } from '@puzzle-studio/puzzle-engine';
 import { palette, withAlpha } from '@puzzle-studio/ui';
 import { Canvas, Group, Image as SkiaImage, Path, Picture, Skia, useImage } from '@shopify/react-native-skia';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { GestureDetector } from 'react-native-gesture-handler';
-import { useDerivedValue, useSharedValue, withRepeat, withSequence, withTiming } from 'react-native-reanimated';
+import {
+  useDerivedValue,
+  useSharedValue,
+  withDelay,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated';
 
 import type { Game } from '../game/useGame';
 import type { PlayLayout } from '../game/layout';
@@ -30,6 +37,9 @@ export interface PlayCanvasProps {
   onReady: () => void;
   accessibilityLabel: string;
 }
+
+/** Flash starts when the piece has glided in (see usePlayGestures SNAP_MS). */
+const SNAP_FLASH_DELAY = 160;
 
 /** The play surface: one Skia canvas with board, tray and the live dragged piece. Loaded lazily. */
 export function PlayCanvas(props: PlayCanvasProps) {
@@ -67,6 +77,21 @@ export function PlayCanvas(props: PlayCanvasProps) {
   const dragX = useSharedValue(0);
   const dragY = useSharedValue(0);
   const dragScale = useSharedValue(1);
+  const dragTilt = useSharedValue(0);
+
+  // ---- short bright flash on a piece that just snapped in ---------------------------------
+  const [flashId, setFlashId] = useState<number | null>(null);
+  const flash = useSharedValue(0);
+  const onLocked = useCallback(
+    (id: number) => {
+      if (reduceMotion) return;
+      setFlashId(id);
+      flash.set(
+        withSequence(withDelay(SNAP_FLASH_DELAY, withTiming(0.75, { duration: 90 })), withTiming(0, { duration: 420 })),
+      );
+    },
+    [reduceMotion, flash],
+  );
 
   const picture = useMemo(
     () =>
@@ -97,27 +122,38 @@ export function PlayCanvas(props: PlayCanvasProps) {
     reduceMotion,
     shapes,
     onPan: props.onPan,
-    drag: { x: dragX, y: dragY, scale: dragScale },
+    drag: { x: dragX, y: dragY, scale: dragScale, tilt: dragTilt },
     setDragging,
+    onLocked,
   });
 
   // ---- live layer: dragged piece + pulsing hint target --------------------------------
   const draggedPath = dragging === null ? null : paths[dragging];
   const draggedCell = dragging === null ? null : puzzle.pieces[dragging]?.cell;
+  // drag x/y is the piece's centre: it grows and leans around its middle
+  const cx = (draggedCell?.x ?? 0) + (draggedCell?.w ?? 0) / 2;
+  const cy = (draggedCell?.y ?? 0) + (draggedCell?.h ?? 0) / 2;
   const transform = useDerivedValue(() => [
     { translateX: dragX.value },
     { translateY: dragY.value },
+    { rotate: dragTilt.value },
     { scale: dragScale.value },
-    { translateX: -(draggedCell?.x ?? 0) },
-    { translateY: -(draggedCell?.y ?? 0) },
+    { translateX: -cx },
+    { translateY: -cy },
   ]);
-  const shadow = useDerivedValue(() => [
-    { translateX: dragX.value + 2 },
-    { translateY: dragY.value + 6 },
-    { scale: dragScale.value },
-    { translateX: -(draggedCell?.x ?? 0) },
-    { translateY: -(draggedCell?.y ?? 0) },
-  ]);
+  // the shadow drops further away the higher the piece is lifted
+  const shadow = useDerivedValue(() => {
+    const lift = Math.max(0, dragScale.value / view.scale - 1) * 60;
+    return [
+      { translateX: dragX.value + 2 + lift * 0.4 },
+      { translateY: dragY.value + 6 + lift },
+      { rotate: dragTilt.value },
+      { scale: dragScale.value },
+      { translateX: -cx },
+      { translateY: -cy },
+    ];
+  });
+  const flashPath = flashId === null ? null : paths[flashId];
 
   const pulse = useSharedValue(1);
   useEffect(() => {
@@ -144,6 +180,13 @@ export function PlayCanvas(props: PlayCanvasProps) {
                 color={palette.yellow700}
                 opacity={pulse}
               />
+            </Group>
+          </Group>
+        ) : null}
+        {flashPath ? (
+          <Group clip={{ x: 0, y: 0, width: layout.width, height: layout.tray.y }}>
+            <Group transform={boardTransform}>
+              <Path path={flashPath} color={palette.white} opacity={flash} />
             </Group>
           </Group>
         ) : null}

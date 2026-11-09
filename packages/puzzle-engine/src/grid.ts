@@ -3,8 +3,12 @@
 export const MIN_GRID = 2;
 export const MAX_GRID = 16;
 
-/** Piece counts offered when creating a puzzle. The actual count can differ slightly (aspect ratio). */
-export const PIECE_PRESETS = [4, 9, 16, 25, 36, 49, 64, 100, 144, 196, 256] as const;
+/**
+ * Piece counts offered when creating a puzzle – small puzzles for 2–5-year-olds (concept 2,
+ * docs/product/concept-v2-toddler.md). The actual count can differ slightly (aspect ratio).
+ * The engine itself still handles up to 16 × 16 (256-piece performance test).
+ */
+export const PIECE_PRESETS = [4, 6, 9, 12, 16, 20, 25] as const;
 
 export interface GridSize {
   rows: number;
