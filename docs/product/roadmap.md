@@ -15,6 +15,8 @@
 
 Spieltisch-Konzept (PO-Feedback nach Phase 1): [gameplay-concept.md](gameplay-concept.md)
 
+**Neu (Entwurf, 2026-11-09):** [Konzept 2 – Pino für die Kleinsten](concept-v2-toddler.md) – 2–5 Jahre, 2–12 Teile, Reise mit Welten, Minispiele. Wartet auf PO-Entscheidungen.
+
 ## Nach dem MVP
 
 1. Spielmodi: Easy Assist, Silhouette, Rotation, Memory, Educational, Family Puzzle
