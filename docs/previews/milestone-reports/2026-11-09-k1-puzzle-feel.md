@@ -33,4 +33,8 @@ _Von links: Teilezahl wählen (4–25) · Spieltisch mit Sepia-Schattenbild und 
 
 ## Prüfung
 
-TypeScript, ESLint, Prettier ✅ · Tests ✅ (Engine 91, UI 70, Fortschritt 12, App 72 – u. a. nur noch 4–25 Teile wählbar, Stapel-Plätze oben/unten, stabil zwischen Renderings, Treffer auf dem obersten Teil) · Android-/iOS-Bundle ✅ · Web ohne Fehlermeldungen ✅ · Android-Emulator / iOS-Simulator: Läufe gestartet, Ergebnis wird hier nachgetragen.
+TypeScript, ESLint, Prettier ✅ · Tests ✅ (Engine 91, UI 70, Fortschritt 12, App 72 – u. a. nur noch 4–25 Teile wählbar, Stapel-Plätze oben/unten, stabil zwischen Renderings, Treffer auf dem obersten Teil) · Android-/iOS-Bundle ✅ · Web ohne Fehlermeldungen ✅ · Android-Emulator ✅ (Lauf 42635277557) · iOS-Simulator ✅ (Lauf 42635283491) – jeweils kompletter Ablauf.
+
+![Teilezahl wählen, Spieltisch mit Stapeln, Pinos Tipp, Geschafft – Android (oben), iOS (unten)](../screenshots/2026-11-09-k1-devices.png)
+
+_Je Gerät: Teilezahl 4–25 · Spieltisch mit Sepia-Schattenbild und Teile-Stapeln oben und unten · Pinos Tipp (Teil im Stapel leuchtet, Zielplatz umrandet) · fertiges Puzzle._
