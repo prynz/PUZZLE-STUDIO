@@ -142,19 +142,72 @@ appId: com.puzzlestudio.app.preview
     visible:
       id: 'awards-stars'
     timeout: 10000
+- tapOn:
+    id: 'awards-milestones'
 - assertVisible:
     id: 'ach-first_puzzle'
 - waitForAnimationToEnd
 - takeScreenshot: screenshots/shot-${PLATFORM}-15-awards
 - tapOn:
     id: 'tab-home'
-# Update 05: start screen after the first puzzle – Pino has moved on to chapter 2
+# Concept 2 (K2): Pino's journey – "Spielen" starts station 1, finishing it moves Pino on
 - extendedWaitUntil:
-    visible: 'Kapitel 2 von 10'
+    visible: 'Station 1 von 6'
     timeout: 10000
 - waitForAnimationToEnd:
     timeout: 3000
 - takeScreenshot: screenshots/shot-${PLATFORM}-15b-home-journey
+- tapOn:
+    id: 'home-play'
+- extendedWaitUntil:
+    visible:
+      id: 'tray-slot-0'
+    timeout: 60000
+- extendedWaitUntil:
+    notVisible: 'Pino legt die Teile bereit …'
+    timeout: 30000
+- tapOn:
+    id: 'play-hint'
+- tapOn:
+    id: 'hint-target'
+- tapOn:
+    id: 'play-hint'
+- tapOn:
+    id: 'hint-target'
+- tapOn:
+    id: 'play-hint'
+- tapOn:
+    id: 'hint-target'
+- tapOn:
+    id: 'play-hint'
+- tapOn:
+    id: 'hint-target'
+- extendedWaitUntil:
+    visible:
+      id: 'done-sticker'
+    timeout: 15000
+- waitForAnimationToEnd:
+    timeout: 3000
+- takeScreenshot: screenshots/shot-${PLATFORM}-15c-station-done
+- tapOn:
+    id: 'done-next'
+- extendedWaitUntil:
+    visible: 'Station 2 von 6'
+    timeout: 15000
+- waitForAnimationToEnd:
+    timeout: 3000
+- takeScreenshot: screenshots/shot-${PLATFORM}-15d-journey-station-2
+- tapOn:
+    id: 'tab-awards'
+- extendedWaitUntil:
+    visible:
+      id: 'album-sticker-garden-1'
+    timeout: 10000
+- waitForAnimationToEnd:
+    timeout: 3000
+- takeScreenshot: screenshots/shot-${PLATFORM}-15e-album
+- tapOn:
+    id: 'tab-home'
 - tapOn:
     id: 'open-parents'
 # Phase 7: parent gate (number words) → parents' area with three areas
@@ -170,10 +223,11 @@ appId: com.puzzlestudio.app.preview
 - tapOn:
     id: 'parents-data'
 # counts sit at the top; "Alles löschen" may be below the fold on small screens
+# 2 pictures on the device: the own sample picture and the journey picture of station 1
 - extendedWaitUntil:
     visible:
       id: 'data-images'
-      text: '1'
+      text: '2'
     timeout: 10000
 - waitForAnimationToEnd
 - takeScreenshot: screenshots/shot-${PLATFORM}-18-parents-data

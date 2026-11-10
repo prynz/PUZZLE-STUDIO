@@ -1,6 +1,6 @@
 # Konzept 2 – Pino für die Kleinsten (Entwurf)
 
-Status: **vom PO freigegeben (2026-11-09)** · K1 umgesetzt ([Bericht](../previews/milestone-reports/2026-11-09-k1-puzzle-feel.md)), weiter mit K2. Ersetzt nach Freigabe Teile von [product-concept.md](product-concept.md) und [gameplay-concept.md](gameplay-concept.md); bis dahin gelten diese weiter.
+Status: **vom PO freigegeben (2026-11-09)** · K1 umgesetzt ([Bericht](../previews/milestone-reports/2026-11-09-k1-puzzle-feel.md)) · K2 umgesetzt ([Bericht](../previews/milestone-reports/2026-11-10-k2-journey.md)), weiter mit K3.
 
 Anlass (PO): Aufmachung und Design gefallen, aber es fehlt eine **logische Abfolge**, die daraus eine beliebte Kinder-App macht. Nur noch **kleine Kinder mit kleinen Puzzles**, Puzzleteile mit **dynamischer Bewegung beim Ziehen**, dazu **Minispiele rund ums Puzzeln** mit Abwechslung und Lerneffekt. Pino und Farbkonzept bleiben.
 

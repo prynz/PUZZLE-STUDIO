@@ -5,6 +5,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { t } from '@/i18n';
 import { useImages } from '@/store/images';
+import { useJourney } from '@/store/journey';
 import { useProgress } from '@/store/progress';
 import { usePuzzles } from '@/store/puzzles';
 import { useSettings } from '@/store/settings';
@@ -32,6 +33,7 @@ export function ParentsData() {
   const images = useImages();
   const puzzles = usePuzzles();
   const progress = useProgress();
+  const journey = useJourney();
   const settings = useSettings();
   const [usage, setUsage] = useState<Usage>({ status: 'loading' });
   const [confirm, setConfirm] = useState(false);
@@ -66,6 +68,7 @@ export function ParentsData() {
       await puzzles.clearAll();
       await images.clearAll();
       await progress.clearAll();
+      await journey.clearAll();
       await settings.resetAll();
       setConfirm(false);
       router.replace('/onboarding');

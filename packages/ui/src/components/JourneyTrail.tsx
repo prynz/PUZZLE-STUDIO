@@ -140,15 +140,7 @@ function Station({ station, next, onPress }: { station: JourneyStation; next: bo
           station.done || next ? shadowStyle(shadow.card) : null,
         ]}
       >
-        {station.done ? (
-          station.badge
-        ) : next ? (
-          <Text variant="title3" tone="brand">
-            ?
-          </Text>
-        ) : (
-          <Icon name="lock" size={20} />
-        )}
+        {station.done || next ? station.badge : <Icon name="lock" size={20} />}
       </View>
     </Pressable>
   );

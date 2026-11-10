@@ -22,6 +22,8 @@ export interface CelebrationProps {
   result: CompletionResult | null;
   onAgain: () => void;
   onAtelier: () => void;
+  /** Journey puzzle: "Weiter" back to Pino's journey instead of the atelier, plus the new sticker. */
+  onNext?: () => void;
 }
 
 const STAR_DELAY = 250;
@@ -31,7 +33,7 @@ const STAR_STEP = 260;
  * Finished puzzle: Pino celebrates with twinkling stars, the earned stars pop in one after
  * another, then new milestones – calm, no timer, no score pressure. Static with Reduced Motion.
  */
-export function Celebration({ visible, total, result, onAgain, onAtelier }: CelebrationProps) {
+export function Celebration({ visible, total, result, onAgain, onAtelier, onNext }: CelebrationProps) {
   return (
     <Sheet
       visible={visible}
@@ -41,7 +43,7 @@ export function Celebration({ visible, total, result, onAgain, onAtelier }: Cele
           <Mascot emotion="success" size={96} animated accessibilityLabel={null} />
         </Sparkles>
       }
-      onRequestClose={onAtelier}
+      onRequestClose={onNext ?? onAtelier}
       testID="puzzle-done"
     >
       <Text variant="bodyLarge" align="center">
@@ -71,8 +73,19 @@ export function Celebration({ visible, total, result, onAgain, onAtelier }: Cele
           </View>
         </Appear>
       ))}
+      {onNext ? (
+        <Appear variant="pop" delay={STAR_DELAY + (result?.stars ?? 1) * STAR_STEP + 100}>
+          <Text variant="label" tone="brand" align="center" testID="done-sticker">
+            {t('play.doneSticker')}
+          </Text>
+        </Appear>
+      ) : null}
       <View style={dialogStyles.actions}>
-        <PrimaryButton testID="done-atelier" label={t('play.doneAtelier')} onPress={onAtelier} />
+        {onNext ? (
+          <PrimaryButton testID="done-next" label={t('play.doneNext')} onPress={onNext} />
+        ) : (
+          <PrimaryButton testID="done-atelier" label={t('play.doneAtelier')} onPress={onAtelier} />
+        )}
         <SecondaryButton testID="done-again" label={t('play.doneAgain')} onPress={onAgain} />
       </View>
     </Sheet>

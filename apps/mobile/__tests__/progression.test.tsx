@@ -170,6 +170,7 @@ describe('Erfolge', () => {
       </AppProviders>,
     );
     await waitFor(() => expect(screen.getByText('Du hast 2 Sterne gesammelt!')).toBeTruthy());
+    await fireEvent.press(screen.getByTestId('awards-milestones'));
     expect(screen.getByLabelText('Erstes Puzzle. Belohnung: Rahmen „Sonne“')).toBeTruthy();
     expect(screen.getByLabelText('Zehn Puzzles. Puzzle zehn Bilder fertig.')).toBeTruthy();
     expect(screen.getByText('3 von 10 Meilensteinen geschafft')).toBeTruthy();

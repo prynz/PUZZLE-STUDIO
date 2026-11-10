@@ -5,7 +5,9 @@ import { extensionFor } from '@/services/imageSources';
 import { createMemoryImageStore } from '@/storage/images/memoryImageStore';
 import type { StoredImage } from '@/storage/images/types';
 import { createMemoryPuzzleStore } from '@/storage/puzzles/memoryPuzzleStore';
+import { createMemorySettingsStore } from '@/storage/settingsStore';
 import { ImagesProvider } from '@/store/images';
+import { JourneyProvider } from '@/store/journey';
 import { PuzzlesProvider } from '@/store/puzzles';
 
 const mockPush = jest.fn();
@@ -33,7 +35,9 @@ const renderCreate = async (initial: StoredImage[] = []) => {
   await render(
     <ImagesProvider store={store}>
       <PuzzlesProvider store={createMemoryPuzzleStore()}>
-        <CreateScreen />
+        <JourneyProvider store={createMemorySettingsStore()}>
+          <CreateScreen />
+        </JourneyProvider>
       </PuzzlesProvider>
     </ImagesProvider>,
   );

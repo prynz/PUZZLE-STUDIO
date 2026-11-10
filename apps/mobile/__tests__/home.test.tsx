@@ -25,18 +25,20 @@ describe('Home', () => {
     expect(screen.getByText('Puzzle ein Bild fertig – dann gibt es Sterne!')).toBeTruthy();
   });
 
-  it('tells Pino’s journey: chapter, next goal and the stations', async () => {
+  it('tells Pino’s journey: world, next station and the stations', async () => {
     await render(
       <AppProviders>
         <HomeScreen />
       </AppProviders>,
     );
-    expect(screen.getByText('Kapitel 1 von 10')).toBeTruthy();
-    expect(screen.getByText('Nächstes Ziel: Puzzle ein Bild fertig.')).toBeTruthy();
+    expect(screen.getByText('Pinos Garten · 1 von 6')).toBeTruthy();
+    expect(screen.getByText('Nächste Station: Haus auf der Wiese · 4 Teile')).toBeTruthy();
+    expect(screen.getByText('Station 1 von 6')).toBeTruthy();
     expect(screen.getByLabelText('Pino – Begeistert')).toBeTruthy();
-    await fireEvent.press(screen.getByLabelText('Erstes Puzzle – nächstes Ziel'));
-    expect(screen.getByLabelText('Zehn Puzzles – kommt noch')).toBeTruthy();
-    expect(mockPush).toHaveBeenCalledWith('/awards');
+    expect(screen.getByLabelText('Haus auf der Wiese – nächstes Ziel')).toBeTruthy();
+    // later stations wait – tapping them starts nothing
+    await fireEvent.press(screen.getByLabelText('Segelboot – kommt noch'));
+    expect(mockPush).not.toHaveBeenCalled();
   });
 });
 

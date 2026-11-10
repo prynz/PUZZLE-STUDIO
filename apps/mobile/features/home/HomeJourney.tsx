@@ -1,31 +1,35 @@
-import { ACHIEVEMENTS, nextMilestoneIndex } from '@puzzle-studio/game-progression';
-import { JourneyTrail, RewardBadge, Text, palette, radius, spacing, withAlpha } from '@puzzle-studio/ui';
-import { useRouter } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { isPlayable } from '@puzzle-studio/game-progression';
+import { JourneyTrail, Text, palette, radius, spacing, withAlpha } from '@puzzle-studio/ui';
+import { Image, StyleSheet, View } from 'react-native';
 
+import { journeyPicture } from '@/features/journey/pictures';
 import { t, type MessageKey } from '@/i18n';
-import { useProgress } from '@/store/progress';
+import { useJourney } from '@/store/journey';
+
+const BADGE = 52;
 
 /**
- * "Pinos Reise": the milestones as stations on a path – the story that runs through playing.
- * Pino waits at the next goal; every finished puzzle moves him on (rewards shown on the way).
+ * "Pinos Reise" – the heart of the app (concept 2 §3): the stations of the current world on a
+ * path. Pino waits at the next station; finished stations show their picture and can be played
+ * again, later ones wait with a lock.
  */
-export function HomeJourney() {
-  const router = useRouter();
-  const { unlocked } = useProgress();
-  const current = nextMilestoneIndex(unlocked);
-  const total = ACHIEVEMENTS.length;
-  const next = ACHIEVEMENTS[current];
-  const name = (id: string) => t(`ach.${id}` as MessageKey);
-  const stations = ACHIEVEMENTS.map((a, i) => {
-    const done = unlocked.has(a.id);
-    const state = done ? 'stationDone' : i === current ? 'stationNext' : 'stationLater';
+export function HomeJourney({ onPlay }: { onPlay: (stationId: string) => void }) {
+  const { done, position } = useJourney();
+  const { world, worldIndex, stationIndex, next } = position;
+  const name = (picture: string) => {
+    const p = journeyPicture(picture);
+    return p ? t(p.labelKey) : '';
+  };
+  const stations = world.stations.map((s, i) => {
+    const isDone = done.has(s.id);
+    const state = isDone ? 'stationDone' : i === stationIndex ? 'stationNext' : 'stationLater';
+    const picture = journeyPicture(s.picture);
     return {
-      id: a.id,
-      label: name(a.id),
-      done,
-      badge: <RewardBadge id={a.reward.id} size={44} />,
-      accessibilityLabel: t(`home.journey.${state}`, { name: name(a.id) }),
+      id: s.id,
+      label: name(s.picture),
+      done: isDone,
+      badge: picture ? <Image source={picture.module} style={styles.badge} accessible={false} /> : null,
+      accessibilityLabel: t(`home.journey.${state}`, { name: name(s.picture) }),
     };
   });
 
@@ -37,18 +41,27 @@ export function HomeJourney() {
         </Text>
         <View style={styles.chapter}>
           <Text variant="caption" tone="brand" testID="home-chapter">
-            {t('home.journey.chapter', { n: Math.min(current + 1, total), total })}
+            {t('home.journey.world', {
+              world: t(`world.${world.id}` as MessageKey),
+              n: Math.min(stationIndex + 1, world.stations.length),
+              total: world.stations.length,
+            })}
           </Text>
         </View>
       </View>
       <Text variant="body" tone="secondary">
-        {next ? t('home.journey.next', { how: t(`ach.${next.id}.how` as MessageKey) }) : t('home.journey.done')}
+        {next
+          ? t('home.journey.nextStation', { name: name(next.picture), pieces: next.pieces })
+          : t('home.journey.allDone')}
       </Text>
       <JourneyTrail
+        key={`${worldIndex}`}
         testID="home-journey"
         stations={stations}
-        current={current}
-        onPressStation={() => router.push('/awards')}
+        current={stationIndex}
+        onPressStation={(id) => {
+          if (isPlayable(id, done)) onPlay(id);
+        }}
       />
     </View>
   );
@@ -63,4 +76,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xxs,
   },
+  badge: { width: BADGE, height: BADGE, borderRadius: BADGE / 2 },
 });

@@ -1,4 +1,4 @@
-import { validChoice } from '@puzzle-studio/game-progression';
+import { findStation, validChoice } from '@puzzle-studio/game-progression';
 import {
   Appear,
   BOTTOM_NAV_HEIGHT,
@@ -18,7 +18,9 @@ import { StyleSheet, View } from 'react-native';
 
 import { collectionItems, continueItem } from '@/features/collection/collectionView';
 import { starsText, t } from '@/i18n';
+import { useStartStation } from '@/features/journey/useStartStation';
 import { useImages } from '@/store/images';
+import { useJourney } from '@/store/journey';
 import { useProgress } from '@/store/progress';
 import { usePuzzles } from '@/store/puzzles';
 import { useSettings } from '@/store/settings';
@@ -29,8 +31,9 @@ import { HomeStory } from './HomeStory';
 const SHELF_MAX = 6;
 
 /**
- * Start screen as a small story: greeting, swipeable story cards (continue · create · Pino's
- * pictures), Pino's journey through the milestones and a shelf with the latest puzzles.
+ * Start screen as a small story: greeting, swipeable story cards ("Spielen" = next station,
+ * own pictures, Pino's pictures, treasure chest), Pino's journey through the stations of the
+ * current world and a shelf with the latest puzzles.
  */
 export function HomeScreen() {
   const router = useRouter();
@@ -39,7 +42,14 @@ export function HomeScreen() {
   const { unlocked } = useProgress();
   const { settings } = useSettings();
   const all = useMemo(() => collectionItems(puzzles, images, 'all', 'newest'), [puzzles, images]);
-  const open = continueItem(all);
+  const { journeyImageIds } = useJourney();
+  // journey puzzles continue via "Spielen"; the extra card is for own pictures only
+  const open = continueItem(all.filter((i) => !journeyImageIds.has(i.image.id)));
+  const station = useStartStation();
+  const play = (id: string) => {
+    const s = findStation(id);
+    if (s) void station.start(s);
+  };
   const frame = validChoice(settings.cardFrame, unlocked, 'frame');
 
   return (
@@ -61,11 +71,16 @@ export function HomeScreen() {
       </Appear>
 
       <Appear variant="rise" delay={staggerDelay(1)}>
-        <HomeStory open={open} />
+        <HomeStory open={open} onPlay={play} />
+        {station.failed ? (
+          <Text variant="label" tone="secondary" align="center" testID="home-play-failed">
+            {t('home.story.playFailed')}
+          </Text>
+        ) : null}
       </Appear>
 
       <Appear variant="rise" delay={staggerDelay(2)}>
-        <HomeJourney />
+        <HomeJourney onPlay={play} />
       </Appear>
 
       <Appear variant="rise" delay={staggerDelay(3)} style={styles.block}>

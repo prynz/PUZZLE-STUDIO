@@ -17,6 +17,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StartupGate } from '@/features/startup/StartupGate';
 import { keepDataOutOfBackups } from '@/services/backupExclusion';
 import { ImagesProvider } from '@/store/images';
+import { JourneyProvider } from '@/store/journey';
 import { ProgressProvider } from '@/store/progress';
 import { PuzzlesProvider } from '@/store/puzzles';
 import { MotionFromSettings, SettingsProvider } from '@/store/settings';
@@ -59,16 +60,18 @@ export default function RootLayout() {
             <ImagesProvider>
               <PuzzlesProvider>
                 <ProgressProvider>
-                  <StatusBar style="dark" />
-                  <StartupGate>
-                    <Stack
-                      screenOptions={{
-                        headerShown: false,
-                        contentStyle: { backgroundColor: color.background.primary },
-                        animation: 'fade',
-                      }}
-                    />
-                  </StartupGate>
+                  <JourneyProvider>
+                    <StatusBar style="dark" />
+                    <StartupGate>
+                      <Stack
+                        screenOptions={{
+                          headerShown: false,
+                          contentStyle: { backgroundColor: color.background.primary },
+                          animation: 'fade',
+                        }}
+                      />
+                    </StartupGate>
+                  </JourneyProvider>
                 </ProgressProvider>
               </PuzzlesProvider>
             </ImagesProvider>

@@ -1,6 +1,6 @@
 # Sterne, Meilensteine und Belohnungen
 
-Status: **umgesetzt (Phase 6, Startseite mit „Pinos Reise“ seit Änderung 05)** – Logik in `packages/game-progression` (reines TypeScript, 12 Tests, 100 % Abdeckung), Oberfläche in `apps/mobile/features/awards` und `features/collection`.
+Status: **umgesetzt (Phase 6; Pinos Reise mit Welten und Album seit Konzept 2 / K2)** – Logik in `packages/game-progression` (reines TypeScript, 18 Tests), Oberfläche in `apps/mobile/features/awards` und `features/collection`.
 
 ## Grundsätze (aus dem Produktkonzept)
 
@@ -29,9 +29,14 @@ Pro fertigem Puzzle, nach Größe – nie nach Tempo: bis 16 Teile ⭐, bis 64 T
 
 Die Ids (`first_puzzle`, …) werden gespeichert und dürfen nie umbenannt werden.
 
-## Pinos Reise (Startseite, Änderung 05)
+## Pinos Reise (Konzept 2, Schritt K2)
 
-Die Meilensteine bilden zugleich eine kleine Geschichte, die sich durch das Spielen zieht: Auf der Startseite stehen sie als **Stationen auf einem Pfad**. Pino wartet an der **nächsten Station** (`nextMilestoneIndex` – der erste noch nicht erreichte Meilenstein in Anzeigereihenfolge), darüber steht „Kapitel n von 10“ und das nächste Ziel in Kinderworten. Erreichte Stationen zeigen ihre Belohnung, spätere ein Schloss. Jedes fertige Puzzle kann Pino ein Stück weiterbringen – **nie zurück** (Freischaltungen sind dauerhaft, keine Zeit- oder Serienzwänge). Ein Tipp auf eine Station öffnet „Erfolge“. Meilensteine, die außer der Reihe erreicht wurden (z. B. „Mein eigenes Bild“ vor „Drei Puzzles“), sind auf dem Pfad sofort als geschafft markiert; Pino bleibt trotzdem an der ersten offenen Station.
+Seit K2 ist die Reise der **Hauptweg** ([Konzept 2](concept-v2-toddler.md) §3): **Welten** mit einer festen Reihe von **Stationen** (`WORLDS` in `packages/game-progression/src/journey.ts`, getestet). „Spielen“ auf der Startseite startet immer die **nächste offene Station** (`journeyPosition`); geschaffte Stationen bleiben spielbar, spätere warten mit Schloss (`isPlayable`). Jede geschaffte Station legt ihr Bild als **Sticker ins Album** (Tab „Erfolge“ → „Album“).
+
+- Welt 1 „Pinos Garten“ nutzt bis zu den Bildern des PO die vier mitgelieferten Beispielbilder, 4 → 6 → 9 Teile (Platzhalter-Inhalt, klar im Bericht vermerkt).
+- Das Bild einer Station wird beim ersten Spielen **einmal** als ganzes Bild importiert (kein Zuschnitt) und danach wiederverwendet; diese Bilder erscheinen **nicht** unter „Meine Bilder“ im Atelier (eigene Bilder sind eine Extra-Option).
+- Gespeichert im Schlüssel/Wert-Speicher (SQLite): `journey.done` (geschaffte Stationen), `journey.active` (laufende Station + Puzzle), `journey.images` (Bild-Zuordnung). „Alles löschen“ im Elternbereich löscht auch den Reise-Fortschritt.
+- Die **Meilensteine** (oben) bleiben unverändert unter „Erfolge“ → „Meilensteine“.
 
 ## Belohnungen anwenden
 

@@ -21,12 +21,16 @@ import { Platform, StyleSheet, View } from 'react-native';
 import { t, type MessageKey } from '@/i18n';
 import { pickFromLibrary, takePhoto, type PickResult } from '@/services/imageSources';
 import { useImages } from '@/store/images';
+import { useJourney } from '@/store/journey';
 import { usePuzzles } from '@/store/puzzles';
 
 /** Puzzle-Atelier: choose a source, see and manage "Meine Bilder". */
 export function CreateScreen() {
   const router = useRouter();
-  const { images, setPending, remove } = useImages();
+  const { images: all, setPending, remove } = useImages();
+  // pictures of Pino's journey live in the journey, not in "Meine Bilder" (concept 2 §3)
+  const { journeyImageIds } = useJourney();
+  const images = all.filter((i) => !journeyImageIds.has(i.id));
   const { forgetImage } = usePuzzles();
   const [notice, setNotice] = useState<MessageKey | null>(null);
   const [toDelete, setToDelete] = useState<string | null>(null);

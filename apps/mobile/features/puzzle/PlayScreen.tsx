@@ -17,6 +17,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { t } from '@/i18n';
 import { useImages } from '@/store/images';
+import { useJourney } from '@/store/journey';
 import { useProgress } from '@/store/progress';
 import { usePuzzles } from '@/store/puzzles';
 import { useSettings } from '@/store/settings';
@@ -64,6 +65,9 @@ function Game({ stored, image }: { stored: StoredPuzzle; image: StoredImage }) {
   const { settings } = useSettings();
   const game = useGame(stored, puzzle, persist, settings.parent);
   const completion = useCompletion(stored, image, game.complete);
+  // pictures of Pino's journey lead back to the journey when finished
+  const { journeyImageIds } = useJourney();
+  const onJourney = journeyImageIds.has(image.id);
   const { unlocked } = useProgress();
   const background = validChoice(settings.boardBackground, unlocked, 'background');
   const decor = background ? BACKGROUND_LOOKS[background] : undefined;
@@ -156,6 +160,7 @@ function Game({ stored, image }: { stored: StoredPuzzle; image: StoredImage }) {
         result={completion.result}
         onAgain={restart}
         onAtelier={() => router.dismissTo('/create')}
+        {...(onJourney ? { onNext: () => router.dismissTo('/home') } : {})}
       />
     </Screen>
   );

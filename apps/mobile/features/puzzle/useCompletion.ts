@@ -2,14 +2,17 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { StoredImage } from '@/storage/images/types';
 import type { StoredPuzzle } from '@/storage/puzzles/types';
+import { useJourney } from '@/store/journey';
 import { useProgress, type CompletionResult } from '@/store/progress';
 
 /**
  * Records a finished puzzle once per completion (not when an already finished puzzle is
  * merely opened) and returns the stars and newly unlocked milestones for the celebration.
+ * A journey puzzle also finishes its station (Pino moves on).
  */
 export function useCompletion(stored: StoredPuzzle, image: StoredImage, complete: boolean) {
   const { complete: record } = useProgress();
+  const { finishPuzzle } = useJourney();
   const [result, setResult] = useState<CompletionResult | null>(null);
   const handled = useRef(complete);
   useEffect(() => {
@@ -28,7 +31,8 @@ export function useCompletion(stored: StoredPuzzle, image: StoredImage, complete
     })
       .then(setResult)
       .catch(() => undefined); // the celebration still shows; progress is retried with the next puzzle
-  }, [complete, record, stored, image.sourceKind]);
+    finishPuzzle(stored.id).catch(() => undefined); // the station stays open and can simply be played again
+  }, [complete, record, finishPuzzle, stored, image.sourceKind]);
   const clear = useCallback(() => setResult(null), []);
   return { result, clear };
 }

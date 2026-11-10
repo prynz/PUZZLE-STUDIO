@@ -22,19 +22,21 @@ import { starsText, t, type MessageKey } from '@/i18n';
 import { useProgress } from '@/store/progress';
 import { useSettings } from '@/store/settings';
 
+import { JourneyAlbum } from './JourneyAlbum';
 import { RewardPicker } from './RewardPicker';
 
-type Area = 'milestones' | 'rewards' | 'stickers';
-const AREAS: Area[] = ['milestones', 'rewards', 'stickers'];
+type Area = 'album' | 'milestones' | 'rewards' | 'stickers';
+const AREAS: Area[] = ['album', 'milestones', 'rewards', 'stickers'];
 
 /**
- * Tab "Erfolge": stars, then three areas to switch between (instead of one very long page):
- * milestones (2-column tiles), rewards to apply, sticker album.
+ * Tab "Erfolge": stars, then four areas to switch between (instead of one very long page):
+ * the album with the pictures of Pino's journey (first, concept 2), milestones (2-column
+ * tiles), rewards to apply and the reward stickers.
  */
 export function AwardsScreen() {
   const { stats, unlocked } = useProgress();
   const { settings, setReward } = useSettings();
-  const [area, setArea] = useState<Area>('milestones');
+  const [area, setArea] = useState<Area>('album');
   const stickers = unlockedRewards(unlocked, 'sticker');
   const reached = ACHIEVEMENTS.filter((a) => unlocked.has(a.id)).length;
   const segments = AREAS.map((key) => ({ key, label: t(`awards.${key}` as MessageKey) }));
@@ -55,6 +57,8 @@ export function AwardsScreen() {
       </Appear>
 
       <SegmentedControl segments={segments} value={area} onChange={setArea} testIDPrefix="awards" />
+
+      {area === 'album' ? <JourneyAlbum /> : null}
 
       {area === 'milestones' ? (
         <View style={styles.grid}>
