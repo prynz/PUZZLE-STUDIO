@@ -199,6 +199,9 @@ appId: com.puzzlestudio.app.preview
 - takeScreenshot: screenshots/shot-${PLATFORM}-15d-journey-station-2
 - tapOn:
     id: 'tab-awards'
+# the tab remembers the area chosen earlier (milestones) – switch to the album
+- tapOn:
+    id: 'awards-album'
 - extendedWaitUntil:
     visible:
       id: 'album-sticker-garden-1'
