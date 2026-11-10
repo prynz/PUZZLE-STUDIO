@@ -151,8 +151,9 @@ appId: com.puzzlestudio.app.preview
 - tapOn:
     id: 'tab-home'
 # Concept 2 (K2): Pino's journey – "Spielen" starts station 1, finishing it moves Pino on
+# the chapter line is a plain text on both platforms (the card's eyebrow is part of its button label on iOS)
 - extendedWaitUntil:
-    visible: 'Station 1 von 6'
+    visible: 'Pinos Garten · 1 von 6'
     timeout: 10000
 - waitForAnimationToEnd:
     timeout: 3000
@@ -192,7 +193,7 @@ appId: com.puzzlestudio.app.preview
 - tapOn:
     id: 'done-next'
 - extendedWaitUntil:
-    visible: 'Station 2 von 6'
+    visible: 'Pinos Garten · 2 von 6'
     timeout: 15000
 - waitForAnimationToEnd:
     timeout: 3000

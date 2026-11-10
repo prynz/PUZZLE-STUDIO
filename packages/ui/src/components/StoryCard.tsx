@@ -74,7 +74,7 @@ export function StoryCard({
         {...bounce.handlers}
         testID={testID}
         accessibilityRole="button"
-        accessibilityLabel={accessibilityLabel ?? [title, subtitle].filter(Boolean).join(', ')}
+        accessibilityLabel={accessibilityLabel ?? [eyebrow, title, subtitle].filter(Boolean).join(', ')}
         onPress={onPress}
         onLayout={onLayout}
         style={styles.card}
